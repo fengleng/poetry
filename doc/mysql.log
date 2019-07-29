@@ -1,0 +1,131 @@
+poetry_category： （诗文类别表）
+  id int
+  cat_name varchar 类别名
+  show_position （展示位置，1:首页，2：诗文，3：名句）
+  pid    （父ID， 主要用于名句那里）
+
+
+poetry_genre（诗文体裁）
+     id int
+     genre_name varchar()   诗文体裁名
+
+
+poetry_category_genre(诗文类别体裁关联表)
+  id int
+  cat_id  与poetry_category表ID对应
+  genre_ids  保存poetry_genre下的id， 多个id用,分割
+
+
+
+poetry_detail_category(诗文详情类别表)
+ id int
+ poetry_id int  (诗词表ID相对应)
+ category_id int (与 poetry_category表ID相对应， 一篇诗可能有多个category_id)
+
+
+
+poetry_content_relation:（诗词关联表）
+   id int
+   poetry_id：诗词内容id 与（诗词表ID相对应）
+   author_id :与作者表相对应
+   genre_id :与poetry_genre表的ID对应，体裁ID
+   form：形式（形式：诗，词，曲，文言文）
+   sort 排序
+
+
+
+poetry_content (诗词表)
+   id int  (诗词内容id)
+   title   (诗词标题)
+   content (诗词内容)
+
+
+
+poetry_detail_notes(诗词译文及注释)
+   id int
+   poetry_id   诗词内容id
+   translation: 译文
+   notes: 注释
+   appreciation：赏析
+   creative_background：创作背景
+   material: 参考资料
+
+
+
+poetry_author (作者表)
+  id int
+  author 作者姓名
+  dynasty_id 朝代ID
+  authors_id:(作者合称ID)
+  photo_url ：照片地址
+  author_detail：作者简介
+  poetry_count :诗词总数
+  is_recommend :是否推荐(主要应用于 诗词名句网)
+  pinyin: 作者对应的拼音
+  acronym：作者对应的拼音首字母
+  author_title:作者称号
+
+
+
+poetry_authors_name (作者合称--诗词名句网)
+   id int
+   authors_name:作者合称名字
+   introduction:作者合称简介
+   sort
+
+
+
+
+poetry_dynasty (朝代表)
+   id
+   dynasty_name 朝代名称
+
+
+poetry_famous_sentence (名句表)
+   id int
+   cat_id 分类ID
+   content  （名句内容）
+   poetry_title （诗词标题）
+   author_id  作者ID
+   sort 排序
+
+
+
+poetry_ancient_category  (古籍-栏目分类表)
+  id
+  cat_name
+  pid
+  sort
+    （诗词名句网史书典籍在这个表里为“其它” 这一栏，后面的逻辑就都一样）
+
+
+poetry_ancient_book (古籍-书名表)
+    id
+    cat_id   分类ID
+    book_title 书的标题
+    book_introduction 书的简介
+
+
+
+poetry_ancient_book_catalog_category (古籍-书名目录分类表)
+    id int
+    book_id  (与poetry_ancient_book表ID对应)
+    cat_name  目录分类名称
+
+
+poetry_ancient_book_catalog（古籍-书名目录表）
+  id int
+  book_id (与poetry_ancient_book表ID对应)
+  catalog_title (目录列表标题)
+  sort
+
+
+poetry_ancient_book_content(古籍-书名目录详情)
+  id int
+  book_id  (与poetry_ancient_book表ID对应)
+  catalog_id (目录ID)
+  content (具体内容)
+  translation（译文）
+  author: 作者名
+
+

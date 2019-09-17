@@ -1,0 +1,6 @@
+{
+  "MetricsPortStr": ":5050",
+  "HttpPortStr": ":81",
+  "httpReadTimeOut":5000,
+  "httpWriteTimeOut":5000
+}

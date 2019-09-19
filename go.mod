@@ -3,6 +3,8 @@ module poetry
 go 1.12
 
 require (
+	github.com/astaxie/beego v1.12.0
+	github.com/go-sql-driver/mysql v1.4.1
 	github.com/google/go-cmp v0.3.1 // indirect
 	github.com/json-iterator/go v1.1.7
 	github.com/mattn/go-colorable v0.1.2 // indirect

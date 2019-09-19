@@ -8,8 +8,10 @@ package bootstrap
 
 import (
 	"net/http"
+	"poetry/app/controllers"
 	"poetry/libary/metrics"
 	"poetry/libary/middleware"
+	"poetry/tools"
 	"time"
 )
 
@@ -20,9 +22,8 @@ var (
 //路由配置， 初始路由
 func InitRouting(mux *http.ServeMux) {
 	InitMiddleWare()
-	mux.HandleFunc("/a", CallMiddleWare(func(writer http.ResponseWriter, request *http.Request) {
-
-	}))
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.HandleFunc("/", CallMiddleWare(controllers.Index))
 }
 
 //初始化中间件
@@ -34,6 +35,11 @@ func InitMiddleWare() {
 //中间件处理
 func CallMiddleWare(handlerFunc http.HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
+		defer func() {
+			if err := recover(); err != nil {
+				tools.WriteRecover(err)
+			}
+		}()
 		for _, middle := range middleObj.AllMiddle() {
 			middle.Before(writer, request)
 		}

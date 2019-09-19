@@ -17,6 +17,7 @@ type Config struct {
 	HttpPortStr      string `json:"HttpPortStr"`
 	HttpReadTimeOut  int    `json:"httpReadTimeOut"`
 	HttpWriteTimeOut int    `json:"httpWriteTimeOut"`
+	DataSource       string `json:"dataSource"`
 }
 
 var (

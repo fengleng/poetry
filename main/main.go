@@ -45,12 +45,7 @@ func init()  {
 
 func main() {
 	var err error
-	//加载日志配置
-	bootstrap.InitLogger()
-	//加载 prometheus
-	bootstrap.InitMetrics()
-	//加载 配置文件
-	if err = bootstrap.InitConfig(confFile);err!=nil{
+	if err = bootstrap.InitBootstrap(confFile);err!=nil{
          goto PrintErr
 	}
     //启动prometheus  metrics端口

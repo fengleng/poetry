@@ -18,6 +18,7 @@ type Config struct {
 	HttpReadTimeOut  int    `json:"httpReadTimeOut"`
 	HttpWriteTimeOut int    `json:"httpWriteTimeOut"`
 	DataSource       string `json:"dataSource"`
+	ENV              string `json:"env"`
 }
 
 var (

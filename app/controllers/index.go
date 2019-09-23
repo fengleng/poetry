@@ -9,6 +9,8 @@ package controllers
 import (
 	"net/http"
 	"poetry/app/logic"
+	"poetry/config/define"
+	templateHtml "poetry/libary/template"
 )
 
 //首页
@@ -17,5 +19,15 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 	          1.推荐数据，分页
 		      2.诗词分类
 	*/
-	logic.NewRecommendLogic().GetSameDayPoetryData(0, 10)
+	var (
+		err         error
+		contentData define.ContentAll
+		html        *templateHtml.Html
+	)
+	html = templateHtml.NewHtml(writer, request)
+	if contentData, err = logic.NewRecommendLogic().GetSameDayPoetryData(0, 10); err != nil {
+		html.DisplayErrorPage(err)
+		return
+	}
+	html.Display("index.html", contentData)
 }

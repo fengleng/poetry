@@ -7,6 +7,7 @@
 package bootstrap
 
 import (
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"poetry/app/controllers"
 	"poetry/libary/metrics"
@@ -38,10 +39,16 @@ func CallMiddleWare(handlerFunc http.HandlerFunc) http.HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				tools.WriteRecover(err)
+				if G_Conf.ENV != "product" {
+					logrus.Infoln(err)
+				}
 			}
 		}()
 		for _, middle := range middleObj.AllMiddle() {
 			middle.Before(writer, request)
+		}
+		if request.RequestURI == "/favicon.ico" {
+			return
 		}
 		now := time.Now()
 		handlerFunc(writer, request)

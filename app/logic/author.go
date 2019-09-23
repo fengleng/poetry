@@ -19,7 +19,14 @@ func NewAuthorLogic() *AuthorLogic {
 }
 
 //根据id查询作者信息
-func (a *AuthorLogic) GetAuthorInfoByIds(ids []int64) (data []models.Author, err error) {
-	data, err = a.authorModel.GetAuthorInfoByIds(ids)
-	return
+func (a *AuthorLogic) GetAuthorInfoByIds(ids []int64) (authorList map[int]models.Author, err error) {
+	var authorData []models.Author
+	authorList = make(map[int]models.Author)
+	if authorData, err = a.authorModel.GetAuthorInfoByIds(ids); err != nil {
+		return
+	}
+	for _, author := range authorData {
+		authorList[author.Id] = author
+	}
+	return authorList, err
 }

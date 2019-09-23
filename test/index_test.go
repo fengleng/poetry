@@ -7,10 +7,26 @@
 package test
 
 import (
+	"github.com/sirupsen/logrus"
 	"poetry/app/logic"
 	"testing"
 )
 
 func TestRecommend(t *testing.T) {
-	logic.NewRecommendLogic().GetSameDayPoetryData(0, 10)
+	contentData, _ := logic.NewRecommendLogic().GetSameDayPoetryData(0, 10)
+	for _, c := range contentData.ContentArr {
+		logrus.Infof("%+v\n\n", c)
+	}
+
+	//根据诗词ID查询诗词表数据
+	//logrus.Infoln("contentData:")
+	//logrus.Infof("%+v\n\n\n", contentData)
+	//logrus.Infoln("authorData:")
+	//logrus.Infof("%+v\n", authorData)
+	//logrus.Infoln("contentList:")
+	//logrus.Infof("%+v\n", contentList)
+	//logrus.Infoln("recommendData:")
+	//logrus.Infof("%+v", r.recommendData)
+	return
+
 }

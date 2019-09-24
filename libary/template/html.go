@@ -48,6 +48,7 @@ func (h *Html) AddTemplate(template string) {
 func (h *Html) Display(page string, data interface{}) {
 	layout := []string{
 		h.ViewPath + "/views/public/header.html",
+		h.ViewPath + "/views/public/naver.html",
 		h.ViewPath + "/views/public/footer.html",
 	}
 	h.templateFiles = append(h.templateFiles, layout...)

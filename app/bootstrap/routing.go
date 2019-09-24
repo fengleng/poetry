@@ -13,6 +13,7 @@ import (
 	"poetry/libary/metrics"
 	"poetry/libary/middleware"
 	"poetry/tools"
+	"strings"
 	"time"
 )
 
@@ -50,6 +51,10 @@ func CallMiddleWare(handlerFunc http.HandlerFunc) http.HandlerFunc {
 		if request.RequestURI == "/favicon.ico" {
 			return
 		}
+		if strings.Contains(request.RequestURI, ".") {
+			return
+		}
+		logrus.Infoln("url:", request.RequestURI)
 		now := time.Now()
 		handlerFunc(writer, request)
 		metrics.G_Metrics.RequestCostInc(request.Method, request.URL.Path, time.Since(now).Seconds())

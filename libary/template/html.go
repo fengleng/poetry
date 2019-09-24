@@ -44,16 +44,28 @@ func (h *Html) AddTemplate(template string) {
 	h.templateFiles = append(h.templateFiles, template)
 }
 
+//解析字符串为html
+func unescaped(x string) template.HTML {
+	return template.HTML(x)
+}
+
 //显示模板页
 func (h *Html) Display(page string, data interface{}) {
-	layout := []string{
+	htmlPath := []string{
 		h.ViewPath + "/views/public/header.html",
 		h.ViewPath + "/views/public/naver.html",
 		h.ViewPath + "/views/public/footer.html",
+		h.ViewPath + "/views/" + page,
 	}
-	h.templateFiles = append(h.templateFiles, layout...)
-	h.templateFiles = append(h.templateFiles, h.ViewPath+"/views/"+page)
-	tpl := template.Must(template.ParseFiles(
+	if len(h.templateFiles) > 0 {
+		h.templateFiles = append(h.templateFiles, htmlPath...)
+	} else {
+		h.templateFiles = htmlPath
+	}
+	tpl := template.New(page)
+	//切记：加的自定义函数在Parse之前
+	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped})
+	tpl = template.Must(tpl.ParseFiles(
 		h.templateFiles...,
 	))
 	if err := tpl.ExecuteTemplate(h.Writer, page, data); err != nil {

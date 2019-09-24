@@ -15,7 +15,11 @@ import (
 func TestRecommend(t *testing.T) {
 	contentData, _ := logic.NewRecommendLogic().GetSameDayPoetryData(0, 10)
 	for _, c := range contentData.ContentArr {
-		logrus.Infof("%+v\n\n", c)
+		for _, tag := range c.Tags {
+			logrus.Infof("%+v\n\n", tag)
+		}
+		//	logrus.Infof("%+v\n\n", c.Tags)
+
 	}
 
 	//根据诗词ID查询诗词表数据

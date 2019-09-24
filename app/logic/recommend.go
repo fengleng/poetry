@@ -9,6 +9,7 @@ package logic
 import (
 	"poetry/app/models"
 	"poetry/config/define"
+	"poetry/tools"
 )
 
 type RecommendLogic struct {
@@ -86,6 +87,7 @@ func (r *RecommendLogic) ProcContentAuthorTagData(contentList []models.Content, 
 			author       models.Author
 			content      define.Content
 		)
+		poetryText.Content = tools.AddHtmlLabel(poetryText.Content)
 		author, _ = authorData[int(poetryText.AuthorId)]
 		text.PoetryInfo = poetryText
 		author.Id = poetryText.AuthorId

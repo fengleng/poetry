@@ -23,11 +23,14 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		err         error
 		contentData define.ContentAll
 		html        *templateHtml.Html
+		assign      map[string]interface{}
 	)
+	assign = make(map[string]interface{})
 	html = templateHtml.NewHtml(writer, request)
 	if contentData, err = logic.NewRecommendLogic().GetSameDayPoetryData(0, 10); err != nil {
 		html.DisplayErrorPage(err)
 		return
 	}
-	html.Display("index.html", contentData)
+	assign["contentData"] = contentData
+	html.Display("index.html", assign)
 }

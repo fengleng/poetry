@@ -32,7 +32,8 @@ func (c *categoryLogic) GetDataByIds(ids []int) (data MpCategory, err error) {
 	}
 	data = make(MpCategory, len(categoryData))
 	for _, category := range categoryData {
-		data[category.Id] = &category
+		tempCate := category
+		data[category.Id] = &tempCate
 	}
 	return
 }

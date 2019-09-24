@@ -6,6 +6,8 @@
 */
 package define
 
+import "poetry/app/models"
+
 //诗词列表
 type ContentAll struct {
 	ContentArr []*Content
@@ -14,36 +16,26 @@ type ContentAll struct {
 //诗词正文和作者总数据
 type Content struct {
 	PoetryText
-	Author
+	PoetryAuthor
+	Tags []*models.Category
 }
 
 //诗词正文数据
 type PoetryText struct {
-	Id          int
-	Title       string
-	Content     string
-	AuthorId    int64
-	SourceUrl   string
-	GenreId     int64
-	CreatBackId int64
-	Sort        int
+	PoetryInfo models.Content
+}
+
+//诗词标签
+type PoetryTextTag struct {
+	Id             int
+	Pid            int
+	TagName        string
+	SourceUrlCrc32 uint32
+	ShowPosition   int
 }
 
 //作者信息
-type Author struct {
-	Id            int64
-	Author        string
-	SourceUrl     string
-	WorksUrl      string
-	DynastyId     int
-	DynastyName   string
-	AuthorsId     int
-	PhotoUrl      string
-	PhotoFileName string
-	AuthorIntro   string
-	PoetryCount   int
-	IsRecommend   int
-	Pinyin        string
-	Acronym       string
-	AuthorTitle   string
+type PoetryAuthor struct {
+	AuthorInfo  models.Author
+	DynastyName string
 }

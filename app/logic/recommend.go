@@ -31,6 +31,7 @@ func (r *RecommendLogic) GetSameDayPoetryData(offset, limit int) (contentData de
 		poetryIdList []int64               //诗词ID集合
 		authorIds    []int64               //作者ID集合
 		authorData   map[int]models.Author //作者信息集合
+		tags         TagMp                 //诗词的分类标签信息
 	)
 	defer func() {
 		r.contentLogic = nil
@@ -51,7 +52,10 @@ func (r *RecommendLogic) GetSameDayPoetryData(offset, limit int) (contentData de
 	if authorData, err = r.authorLogic.GetAuthorInfoByIds(authorIds); err != nil {
 		return
 	}
-	contentData = r.ProcContentAuthorData(contentList, authorData)
+	//根据诗词ID查询分类标签表数据
+	tags, _ = NewContentTagLogic().GetDataByPoetryId(poetryIdList)
+	//将诗词数据，作者数据，朝代数据,分类整合一起
+	contentData = r.ProcContentAuthorTagData(contentList, authorData, tags)
 	return contentData, nil
 }
 
@@ -65,9 +69,9 @@ func (r *RecommendLogic) extractPoetryId() (poetryIdList []int64) {
 }
 
 /**
-将诗词数据，作者数据，朝代数据整合一起
+将诗词数据，作者数据，朝代数据,分类整合一起
 */
-func (r *RecommendLogic) ProcContentAuthorData(contentList []models.Content, authorData map[int]models.Author) (contentData define.ContentAll) {
+func (r *RecommendLogic) ProcContentAuthorTagData(contentList []models.Content, authorData map[int]models.Author, tags TagMp) (contentData define.ContentAll) {
 	dynastyList := NewDynastyLogic().GetDynastyIds(authorData)
 	contentData.ContentArr = make([]*define.Content, len(contentList))
 	defer func() {
@@ -78,36 +82,18 @@ func (r *RecommendLogic) ProcContentAuthorData(contentList []models.Content, aut
 	for k, poetryText := range contentList {
 		var (
 			text         define.PoetryText
-			defineAuthor define.Author
+			defineAuthor define.PoetryAuthor
 			author       models.Author
 			content      define.Content
 		)
 		author, _ = authorData[int(poetryText.AuthorId)]
-		text.Id = poetryText.Id
-		text.SourceUrl = poetryText.SourceUrl
-		text.Sort = poetryText.Sort
-		text.AuthorId = poetryText.AuthorId
-		text.Content = poetryText.Content
-		text.Title = poetryText.Content
-		text.CreatBackId = poetryText.CreatBackId
-		text.GenreId = poetryText.GenreId
-		defineAuthor.Id = text.AuthorId
-		defineAuthor.Author = author.Author
-		defineAuthor.SourceUrl = author.SourceUrl
-		defineAuthor.DynastyId = author.DynastyId
-		defineAuthor.AuthorIntro = author.AuthorIntro
-		defineAuthor.PhotoUrl = author.PhotoUrl
-		defineAuthor.WorksUrl = author.WorksUrl
-		defineAuthor.Pinyin = author.Pinyin
-		defineAuthor.Acronym = author.Acronym
-		defineAuthor.IsRecommend = author.IsRecommend
-		defineAuthor.AuthorsId = author.AuthorsId
-		defineAuthor.AuthorTitle = author.AuthorTitle
-		defineAuthor.PhotoFileName = author.PhotoFileName
-		defineAuthor.PoetryCount = author.PoetryCount
+		text.PoetryInfo = poetryText
+		author.Id = poetryText.AuthorId
+		defineAuthor.AuthorInfo = author
 		defineAuthor.DynastyName = dynastyList[author.DynastyId]
 		content.PoetryText = text
-		content.Author = defineAuthor
+		content.PoetryAuthor = defineAuthor
+		content.Tags = tags[poetryText.Id]
 		contentData.ContentArr[k] = &content
 	}
 	return

@@ -32,6 +32,15 @@ func (c *contentLogic) extractAuthorId(contentList []models.Content) (authorIds 
 	return
 }
 
+//根据诗词数据获取诗词ID
+func (c *contentLogic) extractPoetryId(contentList []models.Content) (poetryIds []int) {
+	poetryIds = make([]int, len(contentList))
+	for k, content := range contentList {
+		poetryIds[k] = content.Id
+	}
+	return
+}
+
 ////根据诗词ID数组查询诗词所有详情信息
 //func (c *contentLogic) GetPoetryDataByIdList(ids []int64) (data []models.Content, err error) {
 //	if len(ids) == 0 {

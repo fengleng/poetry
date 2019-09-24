@@ -11,7 +11,7 @@ import (
 )
 
 type Author struct {
-	Id            int    `orm:"column(id);auto"`
+	Id            int64  `orm:"column(id);auto"`
 	Author        string `orm:"column(author)"`
 	SourceUrl     string `orm:"column(source_url)"`
 	WorksUrl      string `orm:"column(works_url)"`

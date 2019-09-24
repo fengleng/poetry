@@ -26,7 +26,7 @@ func (a *AuthorLogic) GetAuthorInfoByIds(ids []int64) (authorList map[int]models
 		return
 	}
 	for _, author := range authorData {
-		authorList[author.Id] = author
+		authorList[int(author.Id)] = author
 	}
 	return authorList, err
 }

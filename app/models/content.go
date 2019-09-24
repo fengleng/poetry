@@ -37,7 +37,7 @@ func (c *Content) TableName() string {
 
 //根据诗词ID查询正文数据
 func (c *Content) GetContentByIdList(poetryId []int64) (data []Content, err error) {
-	fields := []string{"id", "title", "content", "author_id", "source_url", "genre_id", "creat_back_id"}
+	fields := []string{"id", "title", "content", "author_id", "source_url", "sourceurl_crc32", "genre_id", "creat_back_id"}
 	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("id__in", poetryId).All(&data, fields...)
 	return
 }

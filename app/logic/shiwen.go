@@ -21,6 +21,11 @@ func NewShiWenLogic() *ShiWenLogic {
 	}
 }
 
+const (
+	NotesShangXiType = "shangxi"
+	NotesYiWenType   = "yiwen"
+)
+
 //查询诗词赏析信息，注释信息
 //typeStr:shangxi,zhushi
 func (n *ShiWenLogic) GetNotesByPoetryCrcId(poetryId int, typeStr string) (notesData *models.Notes, err error) {
@@ -34,12 +39,12 @@ func (n *ShiWenLogic) GetNotesByPoetryCrcId(poetryId int, typeStr string) (notes
 		appRecData = nil
 		notesList = nil
 	}()
-	if typeStr == "zhushi" {
+	if typeStr == NotesYiWenType {
 		if transData, err = models.NewTrans().FindNotesIdByPoetryId(poetryId); err != nil {
 			return
 		}
 	}
-	if typeStr == "shangxi" {
+	if typeStr == NotesShangXiType {
 		if appRecData, err = models.NewAppRec().FindNotesIdByPoetryId(poetryId); err != nil {
 			return
 		}
@@ -53,7 +58,10 @@ func (n *ShiWenLogic) GetNotesByPoetryCrcId(poetryId int, typeStr string) (notes
 }
 
 //将翻译数据和诗文详情整合成HTML格式字符串，用于页面点击AJAX获取具体内容时用到
-func (n *ShiWenLogic) GetNotesContentHtml(notesData *models.Notes) string {
+func (n *ShiWenLogic) GetNotesContentHtml(notesData *models.Notes, typeStr string) string {
+	if typeStr == NotesShangXiType {
+		return "<div class='hr'></div><strong>赏析<br></strong>" + notesData.Content
+	}
 	return "<div class='hr'></div>" + notesData.Content
 }
 

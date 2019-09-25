@@ -12,6 +12,7 @@ import (
 	"poetry/app/models"
 	"poetry/tools"
 	"strconv"
+	"strings"
 )
 
 //注释和译文控制器
@@ -34,6 +35,7 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	if len(id) == 0 || len(value) == 0 {
 		goto OutPutEmptyStr
 	}
+	value = strings.ToLower(value)
 	if crcId, err = strconv.ParseUint(id, 10, 32); err != nil {
 		goto OutPutEmptyStr
 	}
@@ -44,10 +46,10 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	if notesData, err = swLogic.GetNotesByPoetryCrcId(poetryData.Id, value); err != nil {
 		goto OutPutEmptyStr
 	}
-	htmlStr = swLogic.GetNotesContentHtml(notesData)
+	htmlStr = swLogic.GetNotesContentHtml(notesData, value)
 	tools.OutputString(w, htmlStr)
 	return
 OutPutEmptyStr:
-	tools.OutputString(w, "")
+	tools.OutputString(w, "<div class='hr'></div><p>暂无内容</p>")
 	return
 }

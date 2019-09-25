@@ -14,3 +14,38 @@ open views/index.html: The system cannot find the path specified.
 open views/index.html: The system cannot find the path specified.
 open /app/views/public/header.html: The system cannot find the path specified.
 open /app/views/public/header.html: The system cannot find the path specified.
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "Unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "Ta" not defined
+template: index.html:38: function "Ta" not defined
+template: index.html:38: function "Ta" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:38: function "Abc" not defined
+template: index.html:38: function "Abc" not defined
+template: index.html:38: function "abc" not defined
+template: index.html:38: function "Abc" not defined
+template: index.html:38: function "Abc" not defined
+template: index.html:38: function "Abc" not defined
+template: index.html:38: function "abc" not defined
+template: index.html:38: function "unescaped" not defined
+template: index.html:50: function "cdnDomain" not defined
+runtime error: invalid memory address or nil pointer dereference
+runtime error: invalid memory address or nil pointer dereference
+runtime error: invalid memory address or nil pointer dereference
+runtime error: invalid memory address or nil pointer dereference
+runtime error: invalid memory address or nil pointer dereference
+runtime error: invalid memory address or nil pointer dereference
+runtime error: invalid memory address or nil pointer dereference

@@ -8,6 +8,11 @@ package define
 
 import "poetry/app/models"
 
+const (
+	ProductEnvStr = "product"
+	DevEnvStr     = "test"
+)
+
 //诗词列表
 type ContentAll struct {
 	ContentArr []*Content
@@ -15,14 +20,16 @@ type ContentAll struct {
 
 //诗词正文和作者总数据
 type Content struct {
-	PoetryText
-	PoetryAuthor
-	Tags []*models.Category
+	PoetryText                      //诗词信息
+	PoetryAuthor                    //作者信息
+	Tags         []*models.Category //标签分类信息
 }
 
 //诗词正文数据
 type PoetryText struct {
-	PoetryInfo models.Content
+	PoetryInfo models.Content //诗词信息
+	OriContent string         //诗词正文内容
+	LinkUrl    string         //诗词详情页链接地址
 }
 
 //诗词标签
@@ -36,6 +43,8 @@ type PoetryTextTag struct {
 
 //作者信息
 type PoetryAuthor struct {
-	AuthorInfo  models.Author
-	DynastyName string
+	AuthorInfo     models.Author //作者信息
+	DynastyName    string        //朝代名称
+	DynastyLinkUrl string        //朝代详情页链接地址
+	AuthorLinkUrl  string        //作者详情页链接地址
 }

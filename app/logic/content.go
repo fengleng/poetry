@@ -41,6 +41,14 @@ func (c *contentLogic) extractPoetryId(contentList []models.Content) (poetryIds 
 	return
 }
 
+//根据sourceurl_crc32 查询正文数据
+func (c *contentLogic) GetContentByCrc32Id(crc32Id uint32) (data models.Content, err error) {
+	if crc32Id == 0 {
+		return
+	}
+	return c.contentModel.GetContentByCrc32Id(crc32Id)
+}
+
 ////根据诗词ID数组查询诗词所有详情信息
 //func (c *contentLogic) GetPoetryDataByIdList(ids []int64) (data []models.Content, err error) {
 //	if len(ids) == 0 {

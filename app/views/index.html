@@ -16,10 +16,9 @@
             <div class="sons">
             <div class="cont">
                 <div class="yizhu">
-                    <img src="https://song.gushiwen.org/siteimg/beipic.png"  width="25" height="25" alt="背诵" onclick="OnBeisong('0795b7d63e8d','http://www.gushiwen.org/default.aspx')" id="btnBeisong0795b7d63e8d"/>
-                    <img src="https://song.gushiwen.org/siteimg/shangpic.png"  width="25" height="25" alt="赏析" onclick="OnShangxi('0795b7d63e8d')" id="btnShangxi0795b7d63e8d"/>
-                    <img  src="https://song.gushiwen.org/siteimg/zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('0795b7d63e8d')" id="btnZhushi0795b7d63e8d"/>
-                    <img  src="https://song.gushiwen.org/siteimg/yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('0795b7d63e8d')" id="btnYiwen0795b7d63e8d" />
+                    <img src="{{$cdnDomain}}/static/images//shangpic.png"  width="25" height="25" alt="赏析" onclick="OnNewShangxi('{{$poetryInfo.SourceUrlCrc32}}')" id="btnShangxi{{$poetryInfo.SourceUrlCrc32}}"/>
+                    <img  src="{{$cdnDomain}}/static/images//zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('{{$poetryInfo.SourceUrlCrc32}}')" id="btnZhushi{{$poetryInfo.SourceUrlCrc32}}"/>
+                    <img  src="{{$cdnDomain}}/static/images//yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('{{$poetryInfo.SourceUrlCrc32}}')" id="btnYiwen{{$poetryInfo.SourceUrlCrc32}}" />
                  </div>
                 <p>
                     <a style="font-size:18px; line-height:22px; height:22px;" href="{{$content.PoetryText.LinkUrl}}" target="_blank">

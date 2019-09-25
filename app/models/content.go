@@ -35,9 +35,16 @@ func (c *Content) TableName() string {
 	return ContentTable
 }
 
+var Fields = []string{"id", "title", "content", "author_id", "source_url", "sourceurl_crc32", "genre_id", "creat_back_id"}
+
 //根据诗词ID查询正文数据
 func (c *Content) GetContentByIdList(poetryId []int64) (data []Content, err error) {
-	fields := []string{"id", "title", "content", "author_id", "source_url", "sourceurl_crc32", "genre_id", "creat_back_id"}
-	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("id__in", poetryId).All(&data, fields...)
+	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("id__in", poetryId).All(&data, Fields...)
+	return
+}
+
+//根据sourceurl_crc32 查询正文数据
+func (c *Content) GetContentByCrc32Id(crc32Id uint32) (data Content, err error) {
+	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("sourceurl_crc32", crc32Id).All(&data, Fields...)
 	return
 }

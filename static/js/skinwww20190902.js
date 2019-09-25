@@ -268,6 +268,30 @@ function OnShangxi(id) {
     xmlhttp.send();
 }
 
+
+
+
+
+function OnNewShangxi(id) {
+    var value = "shangxi";
+    var xmlhttp;
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("contson" + id).innerHTML = xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET", "/nocdn/ajaxshiwencont?id=" + id + "&value=" + value, false);
+    xmlhttp.send();
+}
+
+
+
 //取得cookie值
 function getCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");

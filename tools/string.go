@@ -7,6 +7,7 @@
 package tools
 
 import (
+	"net/http"
 	"strings"
 )
 
@@ -17,4 +18,10 @@ func AddHtmlLabel(content string) string {
 	}
 	content = strings.Replace(content, "。", "。</p><p>", -1)
 	return "<p>" + content
+}
+
+//输出string到ResponseWriter
+func OutputString(w http.ResponseWriter, str string) {
+	w.Write([]byte(str))
+	return
 }

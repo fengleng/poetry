@@ -14,6 +14,7 @@ import (
 	"strconv"
 )
 
+//推荐数据服务
 type RecommendLogic struct {
 	recommendData []models.Recommend //查询的推荐数据
 	contentLogic  *contentLogic

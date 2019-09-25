@@ -48,22 +48,3 @@ func (c *contentLogic) GetContentByCrc32Id(crc32Id uint32) (data models.Content,
 	}
 	return c.contentModel.GetContentByCrc32Id(crc32Id)
 }
-
-////根据诗词ID数组查询诗词所有详情信息
-//func (c *contentLogic) GetPoetryDataByIdList(ids []int64) (data []models.Content, err error) {
-//	if len(ids) == 0 {
-//		return
-//	}
-//	var (
-//		contentData []models.Content
-//	)
-//	//根据诗词ID查询诗词表数据
-//	if contentData, err = c.contentModel.GetContentByIdList(ids); err != nil || len(contentData) == 0 {
-//		return
-//	}
-//	//根据诗词ID查询作者表数据
-//
-//	//根据诗词ID查询诗词详情表数据
-//
-//	return
-//}

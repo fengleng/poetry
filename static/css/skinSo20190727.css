@@ -86,7 +86,7 @@ a:hover {text-decoration:underline;}
 
 .main3 .left .sons .source a{font-size:12px; color:#65645F;}
 .main3 .left .sons .source span{ color:#65645F;font-size:12px;}
-.main3 .left .sons .tool{ height:32px; clear:both; margin-top:20px; margin-left:20px; margin-right:20px; margin-bottom:3px;}
+.main3 .left .sons .tool{ height:32px; clear:both; margin-top:5px; margin-left:20px; margin-right:20px; margin-bottom:3px;}
 .main3 .left .sons .tool .shoucang{ height:30px; float:left; width:auto;}
 .main3 .left .sons .tool .shoucang img{cursor:pointer;}
 .main3 .left .sons .tool .toolpinglun{ height:30px; float:left; width:auto; margin-left:20px;}

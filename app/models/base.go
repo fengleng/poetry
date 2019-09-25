@@ -13,4 +13,7 @@ const (
 	DynastyTable    = "poetry_dynasty"         //朝代表
 	ContentTagTable = "poetry_detail_category" //诗词标签表
 	CategoryTable   = "poetry_category"        //诗文分类表
+	TransTable      = "poetry_content_trans"   //诗词详情翻译信息关联表
+	RecTable        = "poetry_content_apprec"  //诗词详情赏析信息关联表
+	NotesTable      = "poetry_detail_notes"    //诗词详情内容表
 )

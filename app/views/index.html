@@ -12,12 +12,10 @@
             <div style=" width:1px; height:1px; overflow:hidden;">
                 <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare{{$poetryInfo.SourceUrlCrc32}}">{{$content.PoetryText.OriContent}} {{$content.PoetryText.LinkUrl}}</textarea>
             </div>
-
             <div class="sons">
             <div class="cont">
                 <div class="yizhu">
                     <img src="{{$cdnDomain}}/static/images//shangpic.png"  width="25" height="25" alt="赏析" onclick="OnNewShangxi('{{$poetryInfo.SourceUrlCrc32}}')" id="btnShangxi{{$poetryInfo.SourceUrlCrc32}}"/>
-                    <img  src="{{$cdnDomain}}/static/images//zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('{{$poetryInfo.SourceUrlCrc32}}')" id="btnZhushi{{$poetryInfo.SourceUrlCrc32}}"/>
                     <img  src="{{$cdnDomain}}/static/images//yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('{{$poetryInfo.SourceUrlCrc32}}')" id="btnYiwen{{$poetryInfo.SourceUrlCrc32}}" />
                  </div>
                 <p>
@@ -34,7 +32,7 @@
                 </div>
             </div>
             <div class="tool">
-                <div class="toolpinglun"><a href="javascript:copy({{$poetryInfo.SourceUrlCrc32}})"><img src="{{$cdnDomain}}/static/images/copy.png" alt="复制" width="18" height="18" /></a></div>
+                <div class="toolpinglun"><a title="复制" href="javascript:copy({{$poetryInfo.SourceUrlCrc32}})"><img src="{{$cdnDomain}}/static/images/copy.png" alt="复制" width="18" height="18" /></a></div>
                 <div class="jiucuo"><a href="/perfect?u={{$poetryInfo.SourceUrlCrc32}}" target="_blank">完善</a></div>
             </div>
             <div class="tag">

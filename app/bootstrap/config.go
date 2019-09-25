@@ -20,6 +20,7 @@ type Config struct {
 	DataSource       string `json:"dataSource"`
 	ENV              string `json:"env"`
 	WebDomain        string `json:"webDomain"`
+	CdnStaticDomain  string `json:"cdnStaticDomain"`
 }
 
 var (

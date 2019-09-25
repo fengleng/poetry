@@ -8,6 +8,7 @@ package controllers
 
 import (
 	"net/http"
+	"poetry/app/bootstrap"
 	"poetry/app/logic"
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
@@ -33,6 +34,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	assign["contentData"] = contentData
+	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	html.Display("index.html", assign)
 	return
 }

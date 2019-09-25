@@ -4,11 +4,12 @@
 @File : routing
 @Software: GoLand
 */
-package bootstrap
+package server
 
 import (
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"poetry/app/bootstrap"
 	"poetry/app/controllers"
 	"poetry/libary/metrics"
 	"poetry/libary/middleware"
@@ -26,7 +27,10 @@ func InitRouting(mux *http.ServeMux) {
 	InitMiddleWare()
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/", CallMiddleWare(controllers.Index))
-	mux.HandleFunc("/tag.html", CallMiddleWare(controllers.Tag))
+	//mux.HandleFunc("/search", CallMiddleWare(controllers.Search))
+	//mux.HandleFunc("/perfect", CallMiddleWare(controllers.Perfect))
+	//mux.HandleFunc("/author", CallMiddleWare(controllers.Author))
+	//mux.HandleFunc("/shiwen", CallMiddleWare(controllers.Shiwen))
 }
 
 //初始化中间件
@@ -41,7 +45,7 @@ func CallMiddleWare(handlerFunc http.HandlerFunc) http.HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				tools.WriteRecover(err)
-				if G_Conf.ENV != "product" {
+				if bootstrap.G_Conf.ENV != "product" {
 					logrus.Infoln(err)
 				}
 			}

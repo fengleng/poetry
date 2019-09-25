@@ -4,58 +4,46 @@
 {{template "nav" .}}
 <div class="main3" >
     <div class="left">
+        {{$cdnDomain := .cdnDomain}}
         {{range $i,$content := .contentData.ContentArr}}
             {{$poetryInfo := $content.PoetryText.PoetryInfo}}
-            {{$authorInfo := $content.PoetryAuthor.AuthorInfo}}
+            {{$authorInfo := $content.PoetryAuthor}}
 
             <div style=" width:1px; height:1px; overflow:hidden;">
-                <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare{{$poetryInfo.SourceUrlCrc32}}">{{$poetryInfo.OriContent}} {{$poetryInfo.LinkUrl}}</textarea>
+                <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare{{$poetryInfo.SourceUrlCrc32}}">{{$content.PoetryText.OriContent}} {{$content.PoetryText.LinkUrl}}</textarea>
             </div>
 
             <div class="sons">
             <div class="cont">
                 <div class="yizhu">
                     <img src="https://song.gushiwen.org/siteimg/beipic.png"  width="25" height="25" alt="背诵" onclick="OnBeisong('0795b7d63e8d','http://www.gushiwen.org/default.aspx')" id="btnBeisong0795b7d63e8d"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/shangpic.png"  width="25" height="25" alt="赏析" onclick="OnShangxi('0795b7d63e8d')" id="btnShangxi0795b7d63e8d"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('0795b7d63e8d')" id="btnZhushi0795b7d63e8d"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('0795b7d63e8d')" id="btnYiwen0795b7d63e8d" />
-
-                    <script type="text/javascript">
-                        document.getElementById("btnShangxi0795b7d63e8d").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnZhushi0795b7d63e8d").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnYiwen0795b7d63e8d").style.display = "block";
-                    </script>
-
-                </div>
+                    <img src="https://song.gushiwen.org/siteimg/shangpic.png"  width="25" height="25" alt="赏析" onclick="OnShangxi('0795b7d63e8d')" id="btnShangxi0795b7d63e8d"/>
+                    <img  src="https://song.gushiwen.org/siteimg/zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('0795b7d63e8d')" id="btnZhushi0795b7d63e8d"/>
+                    <img  src="https://song.gushiwen.org/siteimg/yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('0795b7d63e8d')" id="btnYiwen0795b7d63e8d" />
+                 </div>
                 <p>
-                    <a style="font-size:18px; line-height:22px; height:22px;" href="{{$poetryInfo.LinkUrl}}" target="_blank">
+                    <a style="font-size:18px; line-height:22px; height:22px;" href="{{$content.PoetryText.LinkUrl}}" target="_blank">
                         <b>{{$poetryInfo.Title}}</b>
                     </a>
                 </p>
                 <p class="source">
-                    <a href="https://so.gushiwen.org/shiwen/default.aspx?cstr=%e5%ae%8b%e4%bb%a3" target="_blank">{{$content.PoetryAuthor.DynastyName}}</a>
-                    <span>：</span><a href="https://so.gushiwen.org/search.aspx?value=%e8%8c%83%e6%88%90%e5%a4%a7" target="_blank">{{$authorInfo.Author}}</a>
+                    <a href="{{$authorInfo.DynastyLinkUrl}}" target="_blank">{{$authorInfo.DynastyName}}</a>
+                    <span>：</span><a href="{{$authorInfo.AuthorLinkUrl}}" target="_blank">{{$authorInfo.AuthorInfo.Author}}</a>
                 </p>
                 <div class="contson" id="contson{{$poetryInfo.SourceUrlCrc32}}">
                     {{$poetryInfo.Content|unescaped}}
                 </div>
             </div>
             <div class="tool">
-                <div class="toolpinglun"><a href="javascript:copy({{$poetryInfo.SourceUrlCrc32}})"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="https://so.gushiwen.org/jiucuo.aspx?u=%e8%af%97%e6%96%87518399486d1e%e3%80%8a%e6%98%a5%e6%97%a5%e7%a7%a6%e5%9b%bd%e6%80%80%e5%8f%a4%e3%80%8b" target="_blank">完善</a></div>
+                <div class="toolpinglun"><a href="javascript:copy({{$poetryInfo.SourceUrlCrc32}})"><img src="{{$cdnDomain}}/static/images/copy.png" alt="复制" width="18" height="18" /></a></div>
+                <div class="jiucuo"><a href="/perfect?u={{$poetryInfo.SourceUrlCrc32}}" target="_blank">完善</a></div>
             </div>
             <div class="tag">
                 {{range $j,$tag := $content.Tags}}
                   {{if ge $j 1}}
                       <span>，</span>
                   {{end}}
-                <a href="/tag.html?tstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
+                <a href="/search/?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
                 {{end}}
             </div>
         </div>

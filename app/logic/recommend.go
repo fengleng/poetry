@@ -7,6 +7,7 @@
 package logic
 
 import (
+	"poetry/app/bootstrap"
 	"poetry/app/models"
 	"poetry/config/define"
 	"poetry/tools"
@@ -92,11 +93,13 @@ func (r *RecommendLogic) ProcContentAuthorTagData(contentList []models.Content, 
 		poetryText.Content = tools.AddHtmlLabel(poetryText.Content)
 		text.OriContent = oriContent
 		text.PoetryInfo = poetryText
-		text.LinkUrl = "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10) + ".html"
+		text.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10) + ".html"
 		author, _ = authorData[int(poetryText.AuthorId)]
 		author.Id = poetryText.AuthorId
 		defineAuthor.AuthorInfo = author
 		defineAuthor.DynastyName = dynastyList[author.DynastyId]
+		defineAuthor.AuthorLinkUrl = bootstrap.G_Conf.WebDomain + "/author/?type=author&value=" + author.Author
+		defineAuthor.DynastyLinkUrl = bootstrap.G_Conf.WebDomain + "/search/?type=dynasty&cstr=" + defineAuthor.DynastyName
 		content.PoetryText = text
 		content.PoetryAuthor = defineAuthor
 		content.Tags = tags[poetryText.Id]

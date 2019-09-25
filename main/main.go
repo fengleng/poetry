@@ -15,6 +15,7 @@ import (
 	"os"
 	"poetry/app/bootstrap"
 	"poetry/config/define"
+	"poetry/libary/server"
 	"runtime"
 )
 var (
@@ -54,7 +55,7 @@ func main() {
 		log.Fatal(http.ListenAndServe(bootstrap.G_Conf.MetricsPortStr, nil))
 	}()
 	//启动http端口
-	if err = bootstrap.StartHttp();err!=nil{
+	if err = server.StartHttp();err!=nil{
 		logrus.Debug("启动HTTP服务错误:", err)
 		return
 	}

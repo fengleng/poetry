@@ -4,12 +4,13 @@
 @File : http
 @Software: GoLand
 */
-package bootstrap
+package server
 
 import (
 	"github.com/sirupsen/logrus"
 	"log"
 	"net/http"
+	"poetry/app/bootstrap"
 	"time"
 )
 
@@ -19,16 +20,16 @@ func StartHttp() (err error) {
 		mux    *http.ServeMux
 		server *http.Server
 	)
-	logrus.Info("开始启动HTTP服务,监听端口是:", G_Conf.HttpPortStr)
+	logrus.Info("开始启动HTTP服务,监听端口是:", bootstrap.G_Conf.HttpPortStr)
 	mux = http.NewServeMux()
 	InitRouting(mux)
 	w := logrus.New().Writer()
 	defer w.Close()
 	server = &http.Server{
-		Addr:         G_Conf.HttpPortStr,
+		Addr:         bootstrap.G_Conf.HttpPortStr,
 		Handler:      mux,
-		ReadTimeout:  time.Duration(G_Conf.HttpReadTimeOut) * time.Millisecond,
-		WriteTimeout: time.Duration(G_Conf.HttpWriteTimeOut) * time.Millisecond,
+		ReadTimeout:  time.Duration(bootstrap.G_Conf.HttpReadTimeOut) * time.Millisecond,
+		WriteTimeout: time.Duration(bootstrap.G_Conf.HttpWriteTimeOut) * time.Millisecond,
 		ErrorLog:     log.New(w, "poetry", 0),
 	}
 	err = server.ListenAndServe()

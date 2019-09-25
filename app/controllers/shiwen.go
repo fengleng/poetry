@@ -26,6 +26,10 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 		swLogic    *logic.ShiWenLogic
 		htmlStr    string
 	)
+	defer func() {
+		notesData = nil
+		swLogic = nil
+	}()
 	id, value := r.FormValue("id"), r.FormValue("value")
 	if len(id) == 0 || len(value) == 0 {
 		goto OutPutEmptyStr
@@ -40,7 +44,7 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	if notesData, err = swLogic.GetNotesByPoetryCrcId(poetryData.Id, value); err != nil {
 		goto OutPutEmptyStr
 	}
-	htmlStr = swLogic.GetNotesContentHtml(notesData, poetryData)
+	htmlStr = swLogic.GetNotesContentHtml(notesData)
 	tools.OutputString(w, htmlStr)
 	return
 OutPutEmptyStr:

@@ -8,8 +8,6 @@ package logic
 
 import (
 	"poetry/app/models"
-	"poetry/tools"
-	"strings"
 )
 
 //诗词译文，注释服务
@@ -55,12 +53,8 @@ func (n *ShiWenLogic) GetNotesByPoetryCrcId(poetryId int, typeStr string) (notes
 }
 
 //将翻译数据和诗文详情整合成HTML格式字符串，用于页面点击AJAX获取具体内容时用到
-func (n *ShiWenLogic) GetNotesContentHtml(notesData *models.Notes, poetryData models.Content) string {
-	var builder strings.Builder
-	content := tools.AddHtmlLabel(poetryData.Content)
-	builder.WriteString(content)
-	builder.WriteString("<div class='hr'></div><span>" + notesData.Content + "</span>")
-	return builder.String()
+func (n *ShiWenLogic) GetNotesContentHtml(notesData *models.Notes) string {
+	return "<div class='hr'></div>" + notesData.Content
 }
 
 //获取notesId

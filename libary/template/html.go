@@ -77,7 +77,7 @@ func (h *Html) Display(page string, data interface{}) {
 //显示单页面
 func (h *Html) displaySinglePage(page string, data interface{}) {
 	file := h.ViewPath + "/views/" + page
-	must := template.Must(template.ParseFiles(file))
+	must := template.Must(template.New(page).Funcs(template.FuncMap{"unescaped": unescaped}).ParseFiles(file))
 	if err := must.ExecuteTemplate(h.Writer, page, data); err != nil {
 		logrus.Infoln("ExecuteTemplate error:", err)
 	}

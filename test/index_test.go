@@ -7,12 +7,21 @@
 package test
 
 import (
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"poetry/app/logic"
+	"strconv"
 	"testing"
 )
 
 func TestRecommend(t *testing.T) {
+	//
+	var i uint32 = 234432434
+	formatUint := strconv.FormatUint(uint64(i), 10)
+	fmt.Println(i)
+	fmt.Println(formatUint)
+
+	return
 	contentData, _ := logic.NewRecommendLogic().GetSameDayPoetryData(0, 10)
 	for _, c := range contentData.ContentArr {
 		for _, tag := range c.Tags {

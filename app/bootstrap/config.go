@@ -19,6 +19,7 @@ type Config struct {
 	HttpWriteTimeOut int    `json:"httpWriteTimeOut"`
 	DataSource       string `json:"dataSource"`
 	ENV              string `json:"env"`
+	WebDomain        string `json:"webDomain"`
 }
 
 var (

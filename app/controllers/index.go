@@ -18,6 +18,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 	/**
 	          1.推荐数据，分页
 		      2.诗词分类
+	明日继续：渲染首页模板.....播放声音文件
 	*/
 	var (
 		err         error
@@ -33,4 +34,5 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 	}
 	assign["contentData"] = contentData
 	html.Display("index.html", assign)
+	return
 }

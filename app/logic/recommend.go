@@ -10,6 +10,7 @@ import (
 	"poetry/app/models"
 	"poetry/config/define"
 	"poetry/tools"
+	"strconv"
 )
 
 type RecommendLogic struct {
@@ -87,9 +88,12 @@ func (r *RecommendLogic) ProcContentAuthorTagData(contentList []models.Content, 
 			author       models.Author
 			content      define.Content
 		)
+		oriContent := poetryText.Content
 		poetryText.Content = tools.AddHtmlLabel(poetryText.Content)
-		author, _ = authorData[int(poetryText.AuthorId)]
+		text.OriContent = oriContent
 		text.PoetryInfo = poetryText
+		text.LinkUrl = "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10) + ".html"
+		author, _ = authorData[int(poetryText.AuthorId)]
 		author.Id = poetryText.AuthorId
 		defineAuthor.AuthorInfo = author
 		defineAuthor.DynastyName = dynastyList[author.DynastyId]

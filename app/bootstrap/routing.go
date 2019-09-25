@@ -26,6 +26,7 @@ func InitRouting(mux *http.ServeMux) {
 	InitMiddleWare()
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/", CallMiddleWare(controllers.Index))
+	mux.HandleFunc("/tag.html", CallMiddleWare(controllers.Tag))
 }
 
 //初始化中间件

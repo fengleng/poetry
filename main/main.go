@@ -14,7 +14,7 @@ import (
 	"net/http"
 	"os"
 	"poetry/app/bootstrap"
-	"poetry/config"
+	"poetry/config/define"
 	"runtime"
 )
 var (
@@ -25,10 +25,10 @@ var (
 func initEnv() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	HttpEnv = os.Getenv("http_env")
-	if HttpEnv == config.DevEnvStr{
-		HttpEnv = config.DevEnvStr
+	if HttpEnv == define.DevEnvStr{
+		HttpEnv = define.DevEnvStr
 	}else{
-		HttpEnv = config.ProductEnvStr
+		HttpEnv = define.ProductEnvStr
 	}
 }
 

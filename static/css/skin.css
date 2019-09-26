@@ -1,0 +1,47 @@
+﻿html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{
+	padding:0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	color:#000000;
+}
+img,body,html{border:none;}
+address,caption,cite,code,dfn,th,var{font-style:normal;font-weight:normal;}
+ol,ul{list-style:none;}
+li{ float:left;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;}
+p{ line-height:160%;}
+button{border: 1px solid #87A2C0;}
+input[type="text"] {height:30px; line-height:30px;border:solid 1px #ABB4A4; color:#0F1600; float:left; padding-left:10px; width:470px;}   
+input[type="password"] { border:solid 1px #bcc5d0; height:20px; line-height:20px;}   
+input[type="submit"] {border:solid 1px #ABB4A4; line-height:30px; height:30px; float:left; margin-left:3px; font-size:14px; width:55px; margin-top:1px;}  
+input[type="reset"] {border:solid 1px #999; line-height:20px;}  
+input[type="button"] {border:solid 1px #999; line-height:20px;color:#d3d1ab;}  
+input[type="select"] {border:solid 1px #ABB4A4;}  
+
+textarea{border:solid 1px #bcc5d0; line-height:20px;margin-left:3px; margin-right:3px;} 
+select{border:solid 1px #999; line-height:20px;}
+html,body {background-color:#FFFFFF;}
+body {font-family: 宋体,Arial, Helvetica;font-size: 12px;line-height:20px;margin: 0px;background-attachment:fixed;}
+span{ line-height:16px;}
+a{color:#19537D;text-decoration: none; line-height:16px;}
+a:hover {text-decoration:underline;}
+
+.main1{ clear:both; margin-left:5px; height:20px; color:#969696; margin-top:5px;}
+.main1 span{ cursor:pointer;}
+.main2{ clear:both; margin-left:5px; margin-top:5px;}
+.main2 .song1{ height:50px; clear:both;}
+.main2 .song1 .bigImg{ width:50px; height:50px; float:left; background-image:url(/dict/imgs/bigImgbk.jpg); background-repeat:no-repeat; font-size:40px; line-height:50px; height:50px; font-weight:bold; text-align:center; font-family:楷体;}
+.main2 .song1 .pingyin{ width:235px; height:50px; float:left; margin-left:5px;}
+.main2 .song1 .pingyin span{ margin-top:10px; float:left;}
+.main2 .song1 .pingyin img{ float:left; margin-top:10px; margin-right:5px;}
+.main2 .song2{ clear:both; margin-top:5px;}
+.main2 .song2 span{ margin-right:6px;}
+
+.cmain1{ clear:both; margin-left:5px; height:20px; margin-top:5px; font-size:16px; font-weight:bold;}
+.cmain2{ clear:both; margin-left:5px; margin-top:5px;overflow:hidden;}
+.cmain2 span{float:left;}
+.cmain2 img{float:left; margin-left:4px;}
+.cmain3{ clear:both; margin-left:5px; margin-top:8px;overflow:hidden;}

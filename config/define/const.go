@@ -9,8 +9,9 @@ package define
 import "poetry/app/models"
 
 const (
-	ProductEnvStr = "product"
-	DevEnvStr     = "test"
+	ProductEnvStr   = "product"
+	DevEnvStr       = "test"
+	CdnStaticDomain = "http://127.0.0.1:81"
 )
 
 //诗词列表

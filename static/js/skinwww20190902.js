@@ -2357,7 +2357,7 @@ function eajaxkeyUp(num) {
     }
     var H = e("div");
     d.appendChild(H);
-    H.innerHTML = '<p></p><div><button id="aihuacibottombtn"></button></div><a href="//www.gushiwen.org/" target="_blank">&#21476;&#35799;&#25991;&#32593;</a><span></span>';
+    H.innerHTML = '<p></p><div><button id="aihuacibottombtn"></button></div><a href="/" target="_blank">\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0077\u0077\u0077\u002e\u0031\u0033\u0035\u0032\u0030\u0076\u002e\u0063\u006f\u006d\u002f</a><span></span>';
     H.className = "aihuacibottom";
     mb = H.getElementsByTagName("a");
     a(mb[0], "mousedown",
@@ -2703,7 +2703,7 @@ function eajaxkeyUp(num) {
     f.setAttribute("target", "aihuaciiframe");
     f.setAttribute("method", "post");
     if (R) f = e('<form target="aihuaciiframe" accept-charset="utf-8" method="post">');
-    f.setAttribute("action", "/dict/fancha.aspx");
+    f.setAttribute("action", "/dict/fancha");
     f.acceptCharset = "utf-8";
     i.appendChild(f);
     f.className = "aihuacitollbar";

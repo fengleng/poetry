@@ -28,6 +28,7 @@ func InitRouting(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/", CallMiddleWare(controllers.Index))
 	mux.HandleFunc("/shiwen/ajaxshiwencont", CallMiddleWare(controllers.AjaxShiWenCont))
+	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha))
 	//mux.HandleFunc("/search", CallMiddleWare(controllers.Search))
 	//mux.HandleFunc("/perfect", CallMiddleWare(controllers.Perfect))
 	//mux.HandleFunc("/author", CallMiddleWare(controllers.Author))

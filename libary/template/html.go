@@ -9,20 +9,18 @@ package template
 import (
 	"github.com/sirupsen/logrus"
 	"html/template"
-	"net/http"
+	"io"
 )
 
 type Html struct {
-	Writer        http.ResponseWriter
-	Request       *http.Request
+	Writer        io.Writer
 	templateFiles []string
 	ViewPath      string
 }
 
-func NewHtml(writer http.ResponseWriter, request *http.Request) *Html {
+func NewHtml(writer io.Writer) *Html {
 	return &Html{
 		Writer:   writer,
-		Request:  request,
 		ViewPath: "app",
 	}
 }

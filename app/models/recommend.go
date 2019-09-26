@@ -37,3 +37,9 @@ func (r *Recommend) GetRecommendByOffset(offset, limit int) (data []Recommend, e
 	_, err = orm.NewOrm().QueryTable(RecommendTable).Filter("status", 1).OrderBy("-recomme_time", "id").Limit(limit, offset).All(&data, "poetry_id", "sort")
 	return
 }
+
+//查询推荐总数
+func (r *Recommend) GetCount() (count int64, err error) {
+	count, err = orm.NewOrm().QueryTable(RecommendTable).Filter("status", 1).Count()
+	return
+}

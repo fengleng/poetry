@@ -6,7 +6,10 @@
 */
 package logic
 
-import "poetry/config/define"
+import (
+	"poetry/app/models"
+	"poetry/config/define"
+)
 
 type IndexLogic struct {
 }
@@ -20,4 +23,16 @@ func (i *IndexLogic) GetSameDayRecommendPoetryData(offset, limit int) (contentDa
 	recommendLogic := NewRecommendLogic()
 	contentData, err = recommendLogic.GetRecommendData(offset, limit)
 	return
+}
+
+//获取推荐总数
+func (i *IndexLogic) GetRecommendCount() int {
+	var (
+		count int64
+		err   error
+	)
+	if count, err = models.NewRecommendModel().GetCount(); err != nil {
+		return 0
+	}
+	return int(count)
 }

@@ -47,14 +47,24 @@
         </div>
         {{end}}
 
-        <form id="FromPage" method="get" action="/default.aspx" onsubmit="return PageSubmit()">
+        <form id="FromPage" method="get" action="/" onsubmit="return PageSubmit()">
             <div class="pagesright">
-                <a id="amore" class="amore" href="/default_2.aspx">下一页</a>
-                <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
-                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ 10页</span>
-                <span class="curent"><input id="putpage" name="page" value="1" autocomplete="off" onblur="SubPage()" /></span>
-                <label id="temppage" style="display:none;">1</label>
-                <label id="sumPage" style="display:none;">10</label>
+                {{if le .nextPage .countPage}}
+                    <a id="amore" class="amore" href="/?page={{.nextPage}}">下一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">下一页</a>
+                {{end}}
+
+                {{if gt .currPage 1}}
+                   <a href="/?page={{.prevPage}}">上一页</a>
+                {{else}}
+                   <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
+                {{end}}
+
+                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ {{.countPage}}页</span>
+                <span class="curent"><input id="putpage" name="page" value="{{.currPage}}" autocomplete="off" onblur="SubPage()" /></span>
+                <label id="temppage" style="display:none;">{{.currPage}}</label>
+                <label id="sumPage" style="display:none;">{{.countPage}}</label>
             </div>
         </form>
     </div>

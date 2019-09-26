@@ -12,6 +12,7 @@ import (
 	"poetry/app/logic"
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
+	"strconv"
 )
 
 //首页
@@ -27,15 +28,34 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		contentData define.ContentAll
 		html        *templateHtml.Html
 		assign      map[string]interface{}
+		currPage    int    //当前页数
+		offset      int    //偏移量
+		limit       = 10   //显示多少条
+		countPage   = 50   //总页数，先写死
+		pageStr     string //URL传过来的当前页数
 	)
-	assign = make(map[string]interface{})
-	html = templateHtml.NewHtml(writer, request)
-	if contentData, err = logic.NewIndexLogic().GetSameDayRecommendPoetryData(0, 10); err != nil {
+	if pageStr = request.FormValue("page"); len(pageStr) == 0 {
+		pageStr = "1"
+	}
+	currPage, _ = strconv.Atoi(pageStr)
+	offset = (currPage - 1) * limit
+	//count = logic.NewIndexLogic().GetRecommendCount()
+	//countPage = int(math.Ceil(float64(count / limit)))
+	if currPage > countPage {
+		currPage = 1
+		offset = 0
+	}
+	if contentData, err = logic.NewIndexLogic().GetSameDayRecommendPoetryData(offset, limit); err != nil {
 		html.DisplayErrorPage(err)
 		return
 	}
+	assign = make(map[string]interface{})
 	assign["contentData"] = contentData
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
-	html.Display("index.html", assign)
+	assign["currPage"] = currPage
+	assign["nextPage"] = currPage + 1
+	assign["prevPage"] = currPage - 1
+	assign["countPage"] = countPage
+	templateHtml.NewHtml(writer).Display("index.html", assign)
 	return
 }

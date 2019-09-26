@@ -8,6 +8,7 @@ package logic
 
 import (
 	"poetry/app/models"
+	"strings"
 )
 
 //诗词译文，注释服务
@@ -41,7 +42,20 @@ func (n *ShiWenLogic) GetOneNotesDetailByCrcId(crcId uint32, typeStr string) (no
 	if notesList, err = n.GetAllNotesByPoetryId(poetryData.Id, typeStr); err != nil || len(notesList) == 0 {
 		return
 	}
-	return notesList[0], nil
+	for _, notes := range notesList {
+		if typeStr == NotesShangXiType && strings.Contains(notes.Title, "赏析") == true {
+			notesData = notes
+			break
+		}
+		if typeStr == NotesYiWenType && strings.Contains(notes.Title, "注释") == true {
+			notesData = notes
+			break
+		}
+	}
+	if notesData == nil {
+		notesData = notesList[0]
+	}
+	return notesData, nil
 }
 
 //查询诗词所有的赏析信息，注释信息

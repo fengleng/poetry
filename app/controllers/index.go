@@ -21,7 +21,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		          1.推荐数据，分页
 			      2.诗词分类
 		明日继续：
-	首页推荐数据分页没做，分类导航没做，名句导航没做，古籍导航没做
+	 分类导航没做，名句导航没做，古籍导航没做
 	*/
 	var (
 		err         error
@@ -45,6 +45,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		currPage = 1
 		offset = 0
 	}
+	//获取推荐数据
 	if contentData, err = logic.NewIndexLogic().GetSameDayRecommendPoetryData(offset, limit); err != nil {
 		html.DisplayErrorPage(err)
 		return

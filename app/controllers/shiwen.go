@@ -17,15 +17,14 @@ import (
 
 //注释和译文控制器
 
-//ajax获取注释和译文
+//ajax获取注释和译文详情html
 func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	var (
-		err        error
-		crcId      uint64
-		notesData  *models.Notes
-		poetryData models.Content
-		swLogic    *logic.ShiWenLogic
-		htmlStr    string
+		err       error
+		crcId     uint64
+		notesData *models.Notes
+		swLogic   *logic.ShiWenLogic
+		htmlStr   string
 	)
 	defer func() {
 		notesData = nil
@@ -35,15 +34,12 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	if len(id) == 0 || len(value) == 0 {
 		goto OutPutEmptyStr
 	}
-	value = strings.ToLower(value)
 	if crcId, err = strconv.ParseUint(id, 10, 32); err != nil {
 		goto OutPutEmptyStr
 	}
-	if poetryData, err = logic.NewContentLogic().GetContentByCrc32Id(uint32(crcId)); err != nil || poetryData.Id == 0 {
-		goto OutPutEmptyStr
-	}
 	swLogic = logic.NewShiWenLogic()
-	if notesData, err = swLogic.GetNotesByPoetryCrcId(poetryData.Id, value); err != nil {
+	value = strings.ToLower(value)
+	if notesData, err = swLogic.GetOneNotesDetailByCrcId(uint32(crcId), value); err != nil || len(notesData.Content) == 0 {
 		goto OutPutEmptyStr
 	}
 	htmlStr = swLogic.GetNotesContentHtml(notesData, value)

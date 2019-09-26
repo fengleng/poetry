@@ -32,8 +32,8 @@ func NewRecommendModel() *Recommend {
 	return new(Recommend)
 }
 
-//获取当天的推荐数据
-func (r *Recommend) GetSameDayData(offset, limit int) (data []Recommend, err error) {
+//根据偏移量查询推荐数据
+func (r *Recommend) GetRecommendByOffset(offset, limit int) (data []Recommend, err error) {
 	_, err = orm.NewOrm().QueryTable(RecommendTable).Filter("status", 1).OrderBy("-recomme_time", "id").Limit(limit, offset).All(&data, "poetry_id", "sort")
 	return
 }

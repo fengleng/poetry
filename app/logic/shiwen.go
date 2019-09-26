@@ -26,18 +26,34 @@ const (
 	NotesYiWenType   = "yiwen"
 )
 
-//查询诗词赏析信息，注释信息
+//根据诗词URL CRC32 查询具体的翻译或详情内容,只返回一条数据
+func (n *ShiWenLogic) GetOneNotesDetailByCrcId(crcId uint32, typeStr string) (notesData *models.Notes, err error) {
+	if crcId == 0 {
+		return
+	}
+	var (
+		poetryData models.Content
+		notesList  []*models.Notes
+	)
+	if poetryData, err = models.NewContent().GetContentByCrc32Id(crcId); err != nil || poetryData.Id == 0 {
+		return
+	}
+	if notesList, err = n.GetAllNotesByPoetryId(poetryData.Id, typeStr); err != nil || len(notesList) == 0 {
+		return
+	}
+	return notesList[0], nil
+}
+
+//查询诗词所有的赏析信息，注释信息
 //typeStr:shangxi,zhushi
-func (n *ShiWenLogic) GetNotesByPoetryCrcId(poetryId int, typeStr string) (notesData *models.Notes, err error) {
+func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notesList []*models.Notes, err error) {
 	var (
 		transData  []models.Trans
 		appRecData []models.AppRec
-		notesList  []*models.Notes
 	)
 	defer func() {
 		transData = nil
 		appRecData = nil
-		notesList = nil
 	}()
 	if typeStr == NotesYiWenType {
 		if transData, err = models.NewTrans().FindNotesIdByPoetryId(poetryId); err != nil {
@@ -50,10 +66,7 @@ func (n *ShiWenLogic) GetNotesByPoetryCrcId(poetryId int, typeStr string) (notes
 		}
 	}
 	notesIds := n.extractNotesId(transData, appRecData)
-	if notesList, err = NewNotesLogic().GetNotesBytId(notesIds); err != nil || len(notesList) == 0 {
-		return
-	}
-	notesData = notesList[0]
+	notesList, err = NewNotesLogic().GetNotesBytId(notesIds)
 	return
 }
 

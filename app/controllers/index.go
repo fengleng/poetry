@@ -17,9 +17,10 @@ import (
 //首页
 func Index(writer http.ResponseWriter, request *http.Request) {
 	/**
-	          1.推荐数据，分页
-		      2.诗词分类
-	明日继续：渲染首页模板.....播放声音文件
+		          1.推荐数据，分页
+			      2.诗词分类
+		明日继续：
+	首页推荐数据分页没做，分类导航没做，名句导航没做，古籍导航没做
 	*/
 	var (
 		err         error
@@ -29,7 +30,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 	)
 	assign = make(map[string]interface{})
 	html = templateHtml.NewHtml(writer, request)
-	if contentData, err = logic.NewRecommendLogic().GetSameDayPoetryData(0, 10); err != nil {
+	if contentData, err = logic.NewIndexLogic().GetSameDayRecommendPoetryData(0, 10); err != nil {
 		html.DisplayErrorPage(err)
 		return
 	}

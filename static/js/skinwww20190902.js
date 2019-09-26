@@ -2692,7 +2692,7 @@ function eajaxkeyUp(num) {
     a(F, "resize", pb);
     a(F, "scroll",
     function() {
-        k && D[k] && setTimeout(function() {
+        typeof(k) != "undefined" && k && D[k] && setTimeout(function() {
             c(d, {
                 top: t() + D[k][3] + "px"
             })

@@ -8,6 +8,7 @@ package controllers
 
 import (
 	"net/http"
+	"poetry/app/bootstrap"
 	"poetry/app/logic"
 	"poetry/app/models"
 	"poetry/config/define"
@@ -22,13 +23,15 @@ import (
 //诗词详情页
 func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 	var (
-		crcId        uint64
-		poetryIdList []int64
-		html         *template.Html
-		content      models.Content    //诗词信息
-		contentAll   define.ContentAll //诗词所有关联的信息
-		err          error
-		assign       map[string]interface{}
+		crcId          uint64
+		poetryIdList   []int64
+		html           *template.Html
+		content        models.Content    //诗词信息
+		contentData    *define.Content   //发送给页面的数据
+		contentAll     define.ContentAll //诗词所有关联的信息
+		err            error
+		profileAddress string //作者头像
+		assign         map[string]interface{}
 	)
 	html = template.NewHtml(w)
 	contentLogic := logic.NewContentLogic()
@@ -39,11 +42,18 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 		goto ShowErrorPage
 	}
 	poetryIdList = []int64{int64(content.Id)}
-	if contentAll, err = contentLogic.GetPoetryContentAll(poetryIdList); err != nil {
+	if contentAll, err = contentLogic.GetPoetryContentAll(poetryIdList); err != nil || len(contentAll.ContentArr) == 0 {
 		goto ShowErrorPage
 	}
+	contentData = contentAll.ContentArr[0]
+	profileAddress = logic.NewAuthorLogic().GetProfileAddress(contentData.AuthorInfo)
 	assign = make(map[string]interface{})
-	assign["contentData"] = contentAll
+	assign["contentData"] = contentData
+	assign["authorProfileAddress"] = profileAddress
+	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
+	assign["webDomain"] = bootstrap.G_Conf.WebDomain
+	assign["title"] = content.Title
+	assign["description"] = content.Content
 	html.Display("sw_detail.html", assign)
 	return
 ShowErrorPage:

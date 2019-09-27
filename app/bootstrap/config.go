@@ -21,6 +21,7 @@ type Config struct {
 	ENV              string `json:"env"`
 	WebDomain        string `json:"webDomain"`
 	CdnStaticDomain  string `json:"cdnStaticDomain"`
+	CdnStoreDomain   string `json:"CdnStoreDomain"`
 }
 
 var (

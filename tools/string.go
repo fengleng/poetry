@@ -24,6 +24,15 @@ func AddHtmlLabel(content string) string {
 	return "<p>" + content
 }
 
+//去掉字符串右边某些字符
+func TrimRightHtml(str string) string {
+	if len(str) == 0 {
+		return ""
+	}
+	str = strings.TrimRight(str, "”</p>")
+	return str
+}
+
 //输出string到ResponseWriter
 func OutputString(w http.ResponseWriter, str string) {
 	w.Write([]byte(str))

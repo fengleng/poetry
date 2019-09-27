@@ -86,6 +86,8 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 	assign["authorData"] = authorData
 	assign["famousData"] = famousData
 	assign["ancientBookData"] = ancientBookData
+	assign["title"] = define.WebTitle
+	assign["description"] = define.WebDescription
 	html.Display("index.html", assign)
 	return
 }

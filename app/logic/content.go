@@ -55,6 +55,30 @@ func (c *contentLogic) GetContentByCrc32Id(crc32Id uint32) (data models.Content,
 	return c.contentModel.GetContentByCrc32Id(crc32Id)
 }
 
+//根据诗词ID获取诗词的作者，分类，诗词具体内容等信息
+func (c *contentLogic) GetPoetryContentAll(poetryIdList []int64) (contentData define.ContentAll, err error) {
+	var (
+		contentList []models.Content      //根据诗词ID查询出来的诗词数据
+		authorIds   []int64               //作者ID集合
+		authorData  map[int]models.Author //作者信息集合
+		tags        TagMp                 //诗词的分类标签信息
+	)
+	//根据诗词ID查询诗词表数据
+	if contentList, err = c.GetContentByIdList(poetryIdList); err != nil || len(contentList) == 0 {
+		return
+	}
+	authorIds = c.extractAuthorId(contentList)
+	//根据作者ID查询作者表数据
+	if authorData, err = NewAuthorLogic().GetAuthorInfoByIds(authorIds); err != nil {
+		return
+	}
+	//根据诗词ID查询分类标签表数据
+	tags, _ = NewContentTagLogic().GetDataByPoetryId(poetryIdList)
+	//将诗词数据，作者数据，朝代数据,分类整合一起
+	contentData = c.ProcContentAuthorTagData(contentList, authorData, tags)
+	return
+}
+
 /**
 将诗词数据，作者数据，朝代数据,分类整合一起
 */
@@ -77,7 +101,7 @@ func (c *contentLogic) ProcContentAuthorTagData(contentList []models.Content, au
 		poetryText.Content = tools.AddHtmlLabel(poetryText.Content)
 		text.OriContent = oriContent
 		text.PoetryInfo = poetryText
-		text.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10) + ".html"
+		text.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10)
 		author, _ = authorData[int(poetryText.AuthorId)]
 		author.Id = poetryText.AuthorId
 		defineAuthor.AuthorInfo = author

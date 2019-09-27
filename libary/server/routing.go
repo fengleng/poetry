@@ -25,14 +25,13 @@ var (
 //路由配置， 初始路由
 func InitRouting(mux *http.ServeMux) {
 	InitMiddleWare()
+	mux.HandleFunc("/", CallMiddleWare(controllers.Index)) //首页
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	mux.HandleFunc("/", CallMiddleWare(controllers.Index))
-	mux.HandleFunc("/shiwen/ajaxshiwencont", CallMiddleWare(controllers.AjaxShiWenCont))
-	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha))
-	//mux.HandleFunc("/search", CallMiddleWare(controllers.Search))
-	//mux.HandleFunc("/perfect", CallMiddleWare(controllers.Perfect))
-	//mux.HandleFunc("/author", CallMiddleWare(controllers.Author))
-	//mux.HandleFunc("/shiwen", CallMiddleWare(controllers.Shiwen))
+	mux.HandleFunc("/shiwen/ajaxshiwencont", CallMiddleWare(controllers.AjaxShiWenCont)) //ajax获取注释，赏析信息
+	mux.HandleFunc("/shiwen/", CallMiddleWare(controllers.ShiWenIndex))                  //诗词详情页,上线后在nginx上做的转发
+
+	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha)) //词典接口
+
 }
 
 //初始化中间件

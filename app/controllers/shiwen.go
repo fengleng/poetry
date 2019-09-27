@@ -10,12 +10,46 @@ import (
 	"net/http"
 	"poetry/app/logic"
 	"poetry/app/models"
+	"poetry/config/define"
+	"poetry/libary/template"
 	"poetry/tools"
 	"strconv"
 	"strings"
 )
 
-//注释和译文控制器
+//诗文 控制器
+
+//诗词详情页
+func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
+	var (
+		crcId        uint64
+		poetryIdList []int64
+		html         *template.Html
+		content      models.Content    //诗词信息
+		contentAll   define.ContentAll //诗词所有关联的信息
+		err          error
+		assign       map[string]interface{}
+	)
+	html = template.NewHtml(w)
+	contentLogic := logic.NewContentLogic()
+	if crcId, err = logic.NewShiWenLogic().GetCrcIdByUrlPath(r.URL.Path); err != nil {
+		goto ShowErrorPage
+	}
+	if content, err = contentLogic.GetContentByCrc32Id(uint32(crcId)); err != nil {
+		goto ShowErrorPage
+	}
+	poetryIdList = []int64{int64(content.Id)}
+	if contentAll, err = contentLogic.GetPoetryContentAll(poetryIdList); err != nil {
+		goto ShowErrorPage
+	}
+	assign = make(map[string]interface{})
+	assign["contentData"] = contentAll
+	html.Display("sw_detail.html", assign)
+	return
+ShowErrorPage:
+	html.DisplayErrorPage(err)
+	return
+}
 
 //ajax获取注释和译文详情html
 func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {

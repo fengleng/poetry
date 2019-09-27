@@ -7,7 +7,9 @@
 package logic
 
 import (
+	"errors"
 	"poetry/app/models"
+	"strconv"
 	"strings"
 )
 
@@ -99,6 +101,18 @@ func (n *ShiWenLogic) extractNotesId(transData []models.Trans, appRecData []mode
 	}
 	for _, appRec := range appRecData {
 		notesIds = append(notesIds, int(appRec.NotesId))
+	}
+	return
+}
+
+//根据url path 获取CrcId
+func (n *ShiWenLogic) GetCrcIdByUrlPath(path string) (crcId uint64, err error) {
+	var lastI int
+	if lastI = strings.LastIndex(path, "/"); lastI == 0 {
+		return 0, errors.New("url params error")
+	}
+	if crcId, _ = strconv.ParseUint(path[lastI+1:], 10, 64); crcId == 0 {
+		return 0, errors.New("url query params error")
 	}
 	return
 }

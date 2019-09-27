@@ -33,13 +33,7 @@ func (r *RecommendLogic) GetRecommendByOffset(offset, limit int) (recommendData 
 
 //获取当前推荐的诗词数据,按日期倒序排列
 func (r *RecommendLogic) GetSameDayRecommendPoetryData(offset, limit int) (contentData define.ContentAll, err error) {
-	var (
-		contentList  []models.Content      //根据诗词ID查询出来的诗词数据
-		poetryIdList []int64               //诗词ID集合
-		authorIds    []int64               //作者ID集合
-		authorData   map[int]models.Author //作者信息集合
-		tags         TagMp                 //诗词的分类标签信息
-	)
+	var poetryIdList []int64 //诗词ID集合
 	defer func() {
 		r.contentLogic = nil
 		r.authorLogic = nil
@@ -49,20 +43,8 @@ func (r *RecommendLogic) GetSameDayRecommendPoetryData(offset, limit int) (conte
 		return
 	}
 	poetryIdList = r.extractPoetryId()
-	//根据诗词ID查询诗词表数据
-	if contentList, err = r.contentLogic.GetContentByIdList(poetryIdList); err != nil || len(contentList) == 0 {
-		return
-	}
-	authorIds = r.contentLogic.extractAuthorId(contentList)
-	//根据作者ID查询作者表数据
-	if authorData, err = r.authorLogic.GetAuthorInfoByIds(authorIds); err != nil {
-		return
-	}
-	//根据诗词ID查询分类标签表数据
-	tags, _ = NewContentTagLogic().GetDataByPoetryId(poetryIdList)
-	//将诗词数据，作者数据，朝代数据,分类整合一起
-	contentData = r.contentLogic.ProcContentAuthorTagData(contentList, authorData, tags)
-	return contentData, nil
+	contentData, err = r.contentLogic.GetPoetryContentAll(poetryIdList)
+	return
 }
 
 //获取推荐总数

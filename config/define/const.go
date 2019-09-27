@@ -9,9 +9,11 @@ package define
 import "poetry/app/models"
 
 const (
-	ProductEnvStr   = "product"
-	DevEnvStr       = "test"
-	CdnStaticDomain = "http://127.0.0.1:81"
+	ProductEnvStr      = "product"             //生产环境，环境变量值
+	DevEnvStr          = "test"                //测试环境,环境变量值
+	CdnStaticDomain    = "http://127.0.0.1:81" //当前域名
+	PoetryShowPosition = 1                     //1:诗文分类展示位置
+	FamousShowPosition = 2                     //2:名句分类展示位置
 )
 
 //诗词列表

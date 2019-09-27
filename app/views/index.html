@@ -5,6 +5,7 @@
 <div class="main3" >
     <div class="left">
         {{$cdnDomain := .cdnDomain}}
+        {{$webDomain := .webDomain}}
         {{range $i,$content := .contentData.ContentArr}}
             {{$poetryInfo := $content.PoetryText.PoetryInfo}}
             {{$authorInfo := $content.PoetryAuthor}}
@@ -34,14 +35,14 @@
             </div>
             <div class="tool">
                 <div class="toolpinglun"><a title="复制" href="javascript:copy({{$poetryInfo.SourceUrlCrc32}})"><img src="{{$cdnDomain}}/static/images/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/perfect?u={{$poetryInfo.SourceUrlCrc32}}" target="_blank">完善</a></div>
+                <div class="jiucuo"><a href="{{$webDomain}}/perfect?u={{$poetryInfo.SourceUrlCrc32}}" target="_blank">完善</a></div>
             </div>
             <div class="tag">
                 {{range $j,$tag := $content.Tags}}
                   {{if ge $j 1}}
                       <span>，</span>
                   {{end}}
-                <a href="/search/?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
+                <a href="{{$webDomain}}/search/shiwen?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
                 {{end}}
             </div>
         </div>
@@ -50,7 +51,7 @@
         <form id="FromPage" method="get" action="/" onsubmit="return PageSubmit()">
             <div class="pagesright">
                 {{if le .nextPage .countPage}}
-                    <a id="amore" class="amore" href="/?page={{.nextPage}}">下一页</a>
+                    <a id="amore" class="amore" href="{{$webDomain}}/?page={{.nextPage}}">下一页</a>
                 {{else}}
                     <a style=" color:#808080;background-color:#e7e6d8;">下一页</a>
                 {{end}}
@@ -77,104 +78,23 @@
                 诗文
             </div>
             <div class="cont">
-                <a href="https://so.gushiwen.org/gushi/tangshi.aspx" target="_blank">唐诗三百</a>
-                <a href="https://so.gushiwen.org/gushi/sanbai.aspx" target="_blank">古诗三百</a>
-                <a href="https://so.gushiwen.org/gushi/songsan.aspx" target="_blank">宋词三百</a>
-                <a href="https://so.gushiwen.org/gushi/songci.aspx" target="_blank">宋词精选</a>
-                <a href="https://so.gushiwen.org/gushi/shijiu.aspx" target="_blank">古诗十九</a>
-                <a href="https://so.gushiwen.org/gushi/shijing.aspx" target="_blank">诗经</a>
-                <a href="https://so.gushiwen.org/gushi/chuci.aspx" target="_blank">楚辞</a>
-                <a href="https://so.gushiwen.org/gushi/yuefu.aspx" target="_blank">乐府</a>
-                <a href="https://so.gushiwen.org/gushi/xiaoxue.aspx" target="_blank">小学古诗</a>
-                <a href="https://so.gushiwen.org/wenyan/xiaowen.aspx" target="_blank">小学文言</a>
-                <a href="https://so.gushiwen.org/gushi/chuzhong.aspx" target="_blank">初中古诗</a>
-                <a href="https://so.gushiwen.org/wenyan/chuwen.aspx" target="_blank">初中文言</a>
-                <a href="https://so.gushiwen.org/gushi/gaozhong.aspx" target="_blank">高中古诗</a>
-                <a href="https://so.gushiwen.org/wenyan/gaowen.aspx" target="_blank">高中文言</a>
-                <a href="https://so.gushiwen.org/gushi/xiejing.aspx" target="_blank">写景</a>
-                <a href="https://so.gushiwen.org/gushi/yongwu.aspx" target="_blank">咏物</a>
-                <a href="https://so.gushiwen.org/gushi/chuntian.aspx" target="_blank">春天</a>
-                <a href="https://so.gushiwen.org/gushi/xiatian.aspx" target="_blank">夏天</a>
-                <a href="https://so.gushiwen.org/gushi/qiutian.aspx" target="_blank">秋天</a>
-                <a href="https://so.gushiwen.org/gushi/dongtian.aspx" target="_blank">冬天</a>
-                <a href="https://so.gushiwen.org/gushi/yu.aspx" target="_blank">写雨</a>
-                <a href="https://so.gushiwen.org/gushi/xue.aspx" target="_blank">写雪</a>
-                <a href="https://so.gushiwen.org/gushi/feng.aspx" target="_blank">写风</a>
-                <a href="https://so.gushiwen.org/gushi/hua.aspx" target="_blank">写花</a>
-                <a href="https://so.gushiwen.org/gushi/meihua.aspx" target="_blank">梅花</a>
-                <a href="https://so.gushiwen.org/gushi/hehua.aspx" target="_blank">荷花</a>
-                <a href="https://so.gushiwen.org/gushi/juhua.aspx" target="_blank">菊花</a>
-                <a href="https://so.gushiwen.org/gushi/liushu.aspx" target="_blank">柳树</a>
-                <a href="https://so.gushiwen.org/gushi/yueliang.aspx" target="_blank">月亮</a>
-                <a href="https://so.gushiwen.org/gushi/shanshui.aspx" target="_blank">山水</a>
-                <a href="https://so.gushiwen.org/gushi/shan.aspx" target="_blank">写山</a>
-                <a href="https://so.gushiwen.org/gushi/shui.aspx" target="_blank">写水</a>
-                <a href="https://so.gushiwen.org/gushi/changjiang.aspx" target="_blank">长江</a>
-                <a href="https://so.gushiwen.org/gushi/huanghe.aspx" target="_blank">黄河</a>
-                <a href="https://so.gushiwen.org/gushi/ertong.aspx" target="_blank">儿童</a>
-                <a href="https://so.gushiwen.org/gushi/niao.aspx" target="_blank">写鸟</a>
-                <a href="https://so.gushiwen.org/gushi/ma.aspx" target="_blank">写马</a>
-                <a href="https://so.gushiwen.org/gushi/tianyuan.aspx" target="_blank">田园</a>
-                <a href="https://so.gushiwen.org/gushi/biansai.aspx" target="_blank">边塞</a>
-                <a href="https://so.gushiwen.org/gushi/diming.aspx" target="_blank">地名</a>
-                <a href="https://so.gushiwen.org/gushi/jieri.aspx" target="_blank">节日</a>
-                <a href="https://so.gushiwen.org/gushi/chunjie.aspx" target="_blank">春节</a>
-                <a href="https://so.gushiwen.org/gushi/yuanxiao.aspx" target="_blank">元宵</a>
-                <a href="https://so.gushiwen.org/gushi/hanshi.aspx" target="_blank">寒食</a>
-                <a href="https://so.gushiwen.org/gushi/qingming.aspx" target="_blank">清明</a>
-                <a href="https://so.gushiwen.org/gushi/duanwu.aspx" target="_blank">端午</a>
-                <a href="https://so.gushiwen.org/gushi/qixi.aspx" target="_blank">七夕</a>
-                <a href="https://so.gushiwen.org/gushi/zhongqiu.aspx" target="_blank">中秋</a>
-                <a href="https://so.gushiwen.org/gushi/chongyang.aspx" target="_blank">重阳</a>
-                <a href="https://so.gushiwen.org/gushi/huaigu.aspx" target="_blank">怀古</a>
-                <a href="https://so.gushiwen.org/gushi/shuqing.aspx" target="_blank">抒情</a>
-                <a href="https://so.gushiwen.org/gushi/aiguo.aspx" target="_blank">爱国</a>
-                <a href="https://so.gushiwen.org/gushi/libie.aspx" target="_blank">离别</a>
-                <a href="https://so.gushiwen.org/gushi/songbie.aspx" target="_blank">送别</a>
-                <a href="https://so.gushiwen.org/gushi/sixiang.aspx" target="_blank">思乡</a>
-                <a href="https://so.gushiwen.org/gushi/sinian.aspx" target="_blank">思念</a>
-                <a href="https://so.gushiwen.org/gushi/aiqing.aspx" target="_blank">爱情</a>
-                <a href="https://so.gushiwen.org/gushi/lizhi.aspx" target="_blank">励志</a>
-                <a href="https://so.gushiwen.org/gushi/zheli.aspx" target="_blank">哲理</a>
-                <a href="https://so.gushiwen.org/gushi/guiyuan.aspx" target="_blank">闺怨</a>
-                <a href="https://so.gushiwen.org/gushi/daowang.aspx" target="_blank">悼亡</a>
-                <a href="https://so.gushiwen.org/gushi/xieren.aspx" target="_blank">写人</a>
-                <a href="https://so.gushiwen.org/gushi/laoshi.aspx" target="_blank">老师</a>
-                <a href="https://so.gushiwen.org/gushi/muqin.aspx" target="_blank">母亲</a>
-                <a href="https://so.gushiwen.org/gushi/youqing.aspx" target="_blank">友情</a>
-                <a href="https://so.gushiwen.org/gushi/zhanzheng.aspx" target="_blank">战争</a>
-                <a href="https://so.gushiwen.org/gushi/dushu.aspx" target="_blank">读书</a>
-                <a href="https://so.gushiwen.org/gushi/xishi.aspx" target="_blank">惜时</a>
-                <a href="https://so.gushiwen.org/gushi/youguo.aspx" target="_blank">忧民</a>
-                <a href="https://so.gushiwen.org/gushi/wanyue.aspx" target="_blank">婉约</a>
-                <a href="https://so.gushiwen.org/gushi/haofang.aspx" target="_blank">豪放</a>
-                <a href="https://so.gushiwen.org/gushi/minyao.aspx" target="_blank">民谣</a>
-                <a href="https://so.gushiwen.org/wenyan/guanzhi.aspx" target="_blank">古文观止</a>
-                <a href="https://so.gushiwen.org/shiwen/">更多>></a>
+                {{range $i,$category := .categoryData}}
+                     <a href="{{$webDomain}}/category/poetry?name={{$category.CatName}}" target="_blank">{{$category.CatName}}</a>
+                {{end}}
+                <a href="{{$webDomain}}/search/shiwen">更多>></a>
             </div>
         </div>
-        <div class="juzioncont">
-            <img style=" float:left; margin:10px; margin-right:0px;" src="/app/appdown2.png" width="80" height="80" /><p><center style="font-size:18px; margin-top:14px;">扫描下载</center></p><p><center style="font-size:18px; margin-top:5px;">古诗文网客户端</center></p>
-        </div>
+
         <div class="sons">
             <div class="title">
                 <div class="titleleft"></div>
                 名句
             </div>
             <div class="cont">
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85" target="_blank">抒情</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3" target="_blank">四季</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4" target="_blank">山水</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94" target="_blank">天气</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9" target="_blank">人物</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f" target="_blank">人生</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb" target="_blank">生活</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5" target="_blank">节日</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e5%8a%a8%e7%89%a9" target="_blank">动物</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9" target="_blank">植物</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e9%a3%9f%e7%89%a9" target="_blank">食物</a>
-                <a href="https://so.gushiwen.org/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d" target="_blank">古籍</a>
-                <a href="https://so.gushiwen.org/mingju/">更多>></a>
+                {{range $i,$famou := .famousData}}
+                <a href="{{$webDomain}}/famou/?p=1&c={{$famou.CatName}}" target="_blank">{{$famou.CatName}}</a>
+                {{end}}
+                <a href="{{$webDomain}}/famou/">更多>></a>
             </div>
         </div>
         <div class="sons">
@@ -183,86 +103,23 @@
                 作者
             </div>
             <div class="cont">
-                <a href="https://so.gushiwen.org/authorv_b90660e3e492.aspx" target="_blank">李白</a>
-                <a href="https://so.gushiwen.org/authorv_85097dd0c645.aspx" target="_blank">白居易</a>
-                <a href="https://so.gushiwen.org/authorv_515ea88d1858.aspx" target="_blank">杜甫</a>
-                <a href="https://so.gushiwen.org/authorv_3b99a16ff2dd.aspx" target="_blank">苏轼</a>
-                <a href="https://so.gushiwen.org/authorv_a7900666497f.aspx" target="_blank">辛弃疾</a>
-                <a href="https://so.gushiwen.org/authorv_9cb3b7c0e4a0.aspx" target="_blank">李清照</a>
-                <a href="https://so.gushiwen.org/authorv_e3c4e8cf2646.aspx" target="_blank">刘禹锡</a>
-                <a href="https://so.gushiwen.org/authorv_52fceee85532.aspx" target="_blank">王维</a>
-                <a href="https://so.gushiwen.org/authorv_bc94c92721b8.aspx" target="_blank">李商隐</a>
-                <a href="https://so.gushiwen.org/authorv_01611cc80faf.aspx" target="_blank">纳兰性德</a>
-                <a href="https://so.gushiwen.org/authorv_727e9dff8850.aspx" target="_blank">杜牧</a>
-                <a href="https://so.gushiwen.org/authorv_efd5da0ed1a1.aspx" target="_blank">陆游</a>
-                <a href="https://so.gushiwen.org/authorv_07d17f8539d7.aspx" target="_blank">陶渊明</a>
-                <a href="https://so.gushiwen.org/authorv_3811e4e1f460.aspx" target="_blank">孟浩然</a>
-                <a href="https://so.gushiwen.org/authorv_201a0677dee4.aspx" target="_blank">元稹</a>
-                <a href="https://so.gushiwen.org/authorv_05635286bf64.aspx" target="_blank">李煜</a>
-                <a href="https://so.gushiwen.org/authorv_0ba13a22799e.aspx" target="_blank">柳宗元</a>
-                <a href="https://so.gushiwen.org/authorv_0969d1da1ac1.aspx" target="_blank">岑参</a>
-                <a href="https://so.gushiwen.org/authorv_1abe13750637.aspx" target="_blank">韩愈</a>
-                <a href="https://so.gushiwen.org/authorv_6485481407d1.aspx" target="_blank">王安石</a>
-                <a href="https://so.gushiwen.org/authorv_7ab3b8200774.aspx" target="_blank">欧阳修</a>
-                <a href="https://so.gushiwen.org/authorv_236f882d5f10.aspx" target="_blank">齐己</a>
-                <a href="https://so.gushiwen.org/authorv_568070f3fde8.aspx" target="_blank">贾岛</a>
-                <a href="https://so.gushiwen.org/authorv_00ea9cc9fdbf.aspx" target="_blank">韦应物</a>
-                <a href="https://so.gushiwen.org/authorv_f4d9b1ed94dc.aspx" target="_blank">曹操</a>
-                <a href="https://so.gushiwen.org/authorv_c367ccd8cd08.aspx" target="_blank">温庭筠</a>
-                <a href="https://so.gushiwen.org/authorv_682bdf0fd34e.aspx" target="_blank">柳永</a>
-                <a href="https://so.gushiwen.org/authorv_b3e23d54ee99.aspx" target="_blank">刘长卿</a>
-                <a href="https://so.gushiwen.org/authorv_74d46d599f15.aspx" target="_blank">李贺</a>
-                <a href="https://so.gushiwen.org/authorv_6c695909f577.aspx" target="_blank">曹植</a>
-                <a href="https://so.gushiwen.org/authorv_d9343fa5dac7.aspx" target="_blank">王昌龄</a>
-                <a href="https://so.gushiwen.org/authorv_9c69482f885f.aspx" target="_blank">屈原</a>
-                <a href="https://so.gushiwen.org/authorv_677ad0bb97e7.aspx" target="_blank">杨万里</a>
-                <a href="https://so.gushiwen.org/authorv_e6b970da08cd.aspx" target="_blank">王勃</a>
-                <a href="https://so.gushiwen.org/authorv_05460f6423b0.aspx" target="_blank">张籍</a>
-                <a href="https://so.gushiwen.org/authorv_2f7f3273612a.aspx" target="_blank">孟郊</a>
-                <a href="https://so.gushiwen.org/authorv_c2c3edb9c1b1.aspx" target="_blank">范仲淹</a>
-                <a href="https://so.gushiwen.org/authorv_e82a672a1ca9.aspx" target="_blank">诸葛亮</a>
-                <a href="https://so.gushiwen.org/authors/">更多>></a>
+               {{range $i,$author := .authorData}}
+                <a href="{{$webDomain}}/author/detail?value={{$author.Author}}" target="_blank">{{$author.Author}}</a>
+                {{end}}
+                <a href="{{$webDomain}}/author/list">更多>></a>
             </div>
         </div>
-        <div class="juzioncont">
-            <img style=" float:left; margin:10px; margin-right:0px;" src="/app/weixin.png" width="80" height="80" /><p><center style="font-size:18px; margin-top:14px;">扫描关注</center></p><p><center style="font-size:18px;margin-top:5px;">诗词秀公众号</center></p>
-        </div>
+
         <div class="sons">
             <div class="title">
                 <div class="titleleft"></div>
                 古籍
             </div>
             <div class="cont">
-                <a href="https://so.gushiwen.org/guwen/book_2.aspx" target="_blank">论语</a>
-                <a href="https://so.gushiwen.org/guwen/book_5.aspx" target="_blank">史记</a>
-                <a href="https://so.gushiwen.org/guwen/book_6.aspx" target="_blank">周易</a>
-                <a href="https://so.gushiwen.org/guwen/book_7.aspx" target="_blank">易传</a>
-                <a href="https://so.gushiwen.org/guwen/book_11.aspx" target="_blank">孟子</a>
-                <a href="https://so.gushiwen.org/guwen/book_19.aspx" target="_blank">左传</a>
-                <a href="https://so.gushiwen.org/guwen/book_20.aspx" target="_blank">大学</a>
-                <a href="https://so.gushiwen.org/guwen/book_21.aspx" target="_blank">中庸</a>
-                <a href="https://so.gushiwen.org/guwen/book_22.aspx" target="_blank">尚书</a>
-                <a href="https://so.gushiwen.org/guwen/book_23.aspx" target="_blank">礼记</a>
-                <a href="https://so.gushiwen.org/guwen/book_24.aspx" target="_blank">周礼</a>
-                <a href="https://so.gushiwen.org/guwen/book_25.aspx" target="_blank">仪礼</a>
-                <a href="https://so.gushiwen.org/guwen/book_26.aspx" target="_blank">庄子</a>
-                <a href="https://so.gushiwen.org/guwen/book_28.aspx" target="_blank">老子</a>
-                <a href="https://so.gushiwen.org/guwen/book_11.aspx" target="_blank">孟子</a>
-                <a href="https://so.gushiwen.org/guwen/book_29.aspx" target="_blank">墨子</a>
-                <a href="https://so.gushiwen.org/guwen/book_30.aspx" target="_blank">荀子</a>
-                <a href="https://so.gushiwen.org/guwen/book_32.aspx" target="_blank">列子</a>
-                <a href="https://so.gushiwen.org/guwen/book_34.aspx" target="_blank">管子</a>
-                <a href="https://so.gushiwen.org/guwen/book_36.aspx" target="_blank">吴子</a>
-                <a href="https://so.gushiwen.org/guwen/book_39.aspx" target="_blank">素书</a>
-                <a href="https://so.gushiwen.org/guwen/book_45.aspx" target="_blank">孝经</a>
-                <a href="https://so.gushiwen.org/guwen/book_55.aspx" target="_blank">将苑</a>
-                <a href="https://so.gushiwen.org/guwen/book_56.aspx" target="_blank">六韬</a>
-                <a href="https://so.gushiwen.org/guwen/book_57.aspx" target="_blank">反经</a>
-                <a href="https://so.gushiwen.org/guwen/book_71.aspx" target="_blank">冰鉴</a>
-                <a href="https://so.gushiwen.org/guwen/book_74.aspx" target="_blank">论衡</a>
-                <a href="https://so.gushiwen.org/guwen/book_78.aspx" target="_blank">智囊</a>
-                <a href="https://so.gushiwen.org/guwen/book_40.aspx" target="_blank">汉书</a>
-                <a href="https://so.gushiwen.org/guwen/">更多>></a>
+                {{range $i,$book :=.ancientBookData}}
+                <a href="{{$webDomain}}/guwen/detail/?id={{$book.LinkUrlCrc32}}" target="_blank">{{$book.BookTitle}}</a>
+               {{end}}
+                <a href="{{$webDomain}}/guwen/">更多>></a>
             </div>
         </div>
     </div>

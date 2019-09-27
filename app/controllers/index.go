@@ -35,8 +35,8 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		assign          map[string]interface{}
 		currPage        int    //当前页数
 		offset          int    //偏移量
-		limit           = 10   //推荐诗词每页显示多少条
-		countPage       = 50   //总页数，先写死
+		limit           = 8    //推荐诗词每页显示多少条
+		countPage       = 60   //总页数，先写死
 		pageStr         string //URL传过来的当前页数
 	)
 	if pageStr = request.FormValue("page"); len(pageStr) == 0 {
@@ -55,7 +55,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	//获取诗文分类
-	if categoryData, err = logic.NewCategoryLogic().GetCateByPositionLimit(define.PoetryShowPosition, 0, 72); err != nil {
+	if categoryData, err = logic.NewCategoryLogic().GetCateByPositionLimit(define.PoetryShowPosition, 0, 76); err != nil {
 		html.DisplayErrorPage(err)
 		return
 	}
@@ -65,18 +65,19 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	//获取作者列表
-	if authorData, err = logic.NewAuthorLogic().GetListByOrderCountDesc(0, 14); err != nil {
+	if authorData, err = logic.NewAuthorLogic().GetListByOrderCountDesc(0, 53); err != nil {
 		html.DisplayErrorPage(err)
 		return
 	}
 	//获取古籍目录列表
-	if ancientBookData, err = logic.NewAncientBook().GetBookListByLimit(0, 29); err != nil {
+	if ancientBookData, err = logic.NewAncientBook().GetBookListByLimit(0, 32); err != nil {
 		html.DisplayErrorPage(err)
 		return
 	}
 	assign = make(map[string]interface{})
 	assign["contentData"] = contentData
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
+	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["currPage"] = currPage
 	assign["nextPage"] = currPage + 1
 	assign["prevPage"] = currPage - 1

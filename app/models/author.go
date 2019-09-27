@@ -47,3 +47,10 @@ func (a *Author) GetAuthorInfoByIds(idList []int64) (data []Author, err error) {
 	_, err = orm.NewOrm().QueryTable(AuthorTable).Filter("id__in", idList).All(&data, fields...)
 	return
 }
+
+//根据诗词总数倒序查询作者列表
+func (a *Author) GetListByOrderCountDesc(offset, limit int) (data []Author, err error) {
+	fields := []string{"id", "author"}
+	_, err = orm.NewOrm().QueryTable(AuthorTable).OrderBy("-poetry_count").Limit(limit, offset).All(&data, fields...)
+	return
+}

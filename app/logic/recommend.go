@@ -25,14 +25,14 @@ func NewRecommendLogic() *RecommendLogic {
 	}
 }
 
-//根据偏移量查询推荐数据
+//根据offset,limit 偏移量查询推荐数据
 func (r *RecommendLogic) GetRecommendByOffset(offset, limit int) (recommendData []models.Recommend, err error) {
 	recommendData, err = models.NewRecommendModel().GetRecommendByOffset(offset, limit)
 	return
 }
 
 //获取当前推荐的诗词数据,按日期倒序排列
-func (r *RecommendLogic) GetRecommendData(offset, limit int) (contentData define.ContentAll, err error) {
+func (r *RecommendLogic) GetSameDayRecommendPoetryData(offset, limit int) (contentData define.ContentAll, err error) {
 	var (
 		contentList  []models.Content      //根据诗词ID查询出来的诗词数据
 		poetryIdList []int64               //诗词ID集合
@@ -63,6 +63,22 @@ func (r *RecommendLogic) GetRecommendData(offset, limit int) (contentData define
 	//将诗词数据，作者数据，朝代数据,分类整合一起
 	contentData = r.contentLogic.ProcContentAuthorTagData(contentList, authorData, tags)
 	return contentData, nil
+}
+
+//获取推荐总数
+func (r *RecommendLogic) GetRecommendCount() int {
+	var (
+		count int64
+		err   error
+	)
+	defer func() {
+		r.contentLogic = nil
+		r.authorLogic = nil
+	}()
+	if count, err = models.NewRecommendModel().GetCount(); err != nil {
+		return 0
+	}
+	return int(count)
 }
 
 //从推荐数据中提取诗词ID

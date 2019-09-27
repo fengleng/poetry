@@ -30,3 +30,8 @@ func (a *AuthorLogic) GetAuthorInfoByIds(ids []int64) (authorList map[int]models
 	}
 	return authorList, err
 }
+
+//根据诗词总数倒序查询作者列表
+func (a *AuthorLogic) GetListByOrderCountDesc(offset, limit int) (data []models.Author, err error) {
+	return models.NewAuthor().GetListByOrderCountDesc(offset, limit)
+}

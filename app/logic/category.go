@@ -37,3 +37,8 @@ func (c *categoryLogic) GetDataByIds(ids []int) (data MpCategory, err error) {
 	}
 	return
 }
+
+//根据show_position查询所有分类
+func (c *categoryLogic) GetCateByPositionLimit(showPosition, offset, limit int) (data []models.Category, err error) {
+	return models.NewCategory().GetCateByPositionLimit(showPosition, offset, limit)
+}

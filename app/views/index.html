@@ -42,7 +42,7 @@
                   {{if ge $j 1}}
                       <span>，</span>
                   {{end}}
-                <a href="{{$webDomain}}/search/shiwen?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
+                <a href="{{$webDomain}}/shiwen/search/?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
                 {{end}}
             </div>
         </div>
@@ -81,7 +81,7 @@
                 {{range $i,$category := .categoryData}}
                      <a href="{{$webDomain}}/category/poetry?name={{$category.CatName}}" target="_blank">{{$category.CatName}}</a>
                 {{end}}
-                <a href="{{$webDomain}}/search/shiwen">更多>></a>
+                <a href="{{$webDomain}}/shiwen/search">更多>></a>
             </div>
         </div>
 
@@ -106,7 +106,7 @@
                {{range $i,$author := .authorData}}
                 <a href="{{$webDomain}}/author/detail?value={{$author.Author}}" target="_blank">{{$author.Author}}</a>
                 {{end}}
-                <a href="{{$webDomain}}/author/list">更多>></a>
+                <a href="{{$webDomain}}/author/search">更多>></a>
             </div>
         </div>
 
@@ -119,7 +119,7 @@
                 {{range $i,$book :=.ancientBookData}}
                 <a href="{{$webDomain}}/guwen/detail/?id={{$book.LinkUrlCrc32}}" target="_blank">{{$book.BookTitle}}</a>
                {{end}}
-                <a href="{{$webDomain}}/guwen/">更多>></a>
+                <a href="{{$webDomain}}/guwen/search">更多>></a>
             </div>
         </div>
     </div>

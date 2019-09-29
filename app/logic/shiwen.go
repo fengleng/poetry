@@ -72,12 +72,12 @@ func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notes
 		appRecData = nil
 	}()
 	if typeStr == NotesYiWenType {
-		if transData, err = models.NewTrans().FindNotesIdByPoetryId(poetryId); err != nil {
+		if transData, err = models.NewTrans().FindNotesIdByPoetryId(poetryId); err != nil || len(transData) == 0 {
 			return
 		}
 	}
 	if typeStr == NotesShangXiType {
-		if appRecData, err = models.NewAppRec().FindNotesIdByPoetryId(poetryId); err != nil {
+		if appRecData, err = models.NewAppRec().FindNotesIdByPoetryId(poetryId); err != nil || len(appRecData) == 0 {
 			return
 		}
 	}

@@ -6,7 +6,11 @@
 */
 package tools
 
-import "reflect"
+import (
+	"math/rand"
+	"reflect"
+	"time"
+)
 
 //检查变量是否在slice中
 func IsExistItem(value interface{}, array interface{}) bool {
@@ -20,4 +24,14 @@ func IsExistItem(value interface{}, array interface{}) bool {
 		}
 	}
 	return false
+}
+
+//生成随机整数slice
+func RandInt64Slice(len, maxNumber int) []int64 {
+	var intSlice = make([]int64, len)
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < len; i++ {
+		intSlice[i] = rand.Int63n(int64(maxNumber))
+	}
+	return intSlice
 }

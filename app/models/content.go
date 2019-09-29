@@ -45,7 +45,7 @@ func (c *Content) GetContentByIdList(poetryId []int64) (data []Content, err erro
 
 //根据sourceurl_crc32 查询正文数据
 func (c *Content) GetContentByCrc32Id(crc32Id uint32) (data Content, err error) {
-	fields := []string{"id", "title", "content"}
+	fields := []string{"id"}
 	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("sourceurl_crc32", crc32Id).All(&data, fields...)
 	return
 }

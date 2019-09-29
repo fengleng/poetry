@@ -129,168 +129,53 @@
             猜您喜欢
         </div>
 
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare307">塞外悲风切，交河冰已结。瀚海百重波，阴山千里雪。 迥戍危烽火，层峦引高节。悠悠卷旆旌，饮马出长城。 寒沙连骑迹，朔吹断边声。胡尘清玉塞，羌笛韵金钲。 绝漠干戈戢，车徒振原隰。都尉反龙堆，将军旋马邑。 扬麾氛雾静，纪石功名立。荒裔一戎衣，灵台凯歌入。——唐代·李世民《饮马长城窟行》https://so.gushiwen.org/shiwenv_fd6555f7e9fa.aspx</textarea>
-        </div>
-        <div class="sons">
-            <div class="cont">
-                <div class="yizhu">
-                    <img src="https://song.gushiwen.org/siteimg/beipic.png"  width="25" height="25" alt="背诵" onclick="OnBeisong('fd6555f7e9fa','http://so.gushiwen.org/shiwenv.aspx?id=09c4b7fc27c0')" id="btnBeisongfd6555f7e9fa"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/shangpic.png"  width="25" height="25" alt="赏析" onclick="OnShangxi('fd6555f7e9fa')" id="btnShangxifd6555f7e9fa"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('fd6555f7e9fa')" id="btnZhushifd6555f7e9fa"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('fd6555f7e9fa')" id="btnYiwenfd6555f7e9fa" />
+        {{range $i,$content := .guessYouLike }}
+            {{$poetryInfo = $content.PoetryText.PoetryInfo}}
+            {{$authorInfo = $content.PoetryAuthor}}
 
-                    <script type="text/javascript">
-                        document.getElementById("btnShangxifd6555f7e9fa").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnZhushifd6555f7e9fa").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnYiwenfd6555f7e9fa").style.display = "block";
-                    </script>
-
-                </div>
-                <p><a style="font-size:18px; line-height:22px; height:22px;" href="/shiwenv_fd6555f7e9fa.aspx"><b>饮马长城窟行</b></a></p>
-                <p class="source"><a href="https://so.gushiwen.org/shiwen/default.aspx?cstr=%e5%94%90%e4%bb%a3">唐代</a><span>：</span><a href="/search.aspx?value=%e6%9d%8e%e4%b8%96%e6%b0%91">李世民</a></p>
-                <div class="contson" id="contsonfd6555f7e9fa">
-                    塞外悲风切，交河冰已结。瀚海百重波，阴山千里雪。 <br />迥戍危烽火，层峦引高节。悠悠卷旆旌，饮马出长城。 <br />寒沙连骑迹，朔吹断边声。胡尘清玉塞，羌笛韵金钲。 <br />绝漠干戈戢，车徒振原隰。都尉反龙堆，将军旋马邑。 <br />扬麾氛雾静，纪石功名立。荒裔一戎衣，灵台凯歌入。
-                </div>
+            <div style=" width:1px; height:1px; overflow:hidden;">
+                <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare{{$poetryInfo.SourceUrlCrc32}}">{{$content.PoetryText.OriContent}} {{$content.PoetryText.LinkUrl}}</textarea>
             </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg307" name="0" onload="selectLike(307)" onclick="changeLike(307,'http://so.gushiwen.org/shiwenv.aspx?id=09c4b7fc27c0')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e8%af%97%e6%96%87fd6555f7e9fa%e3%80%8a%e9%a5%ae%e9%a9%ac%e9%95%bf%e5%9f%8e%e7%aa%9f%e8%a1%8c%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-            <div id="toolPlay307" style=" display:none;clear:both;"></div>
-
-            <div class="tag">
-
-                <a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e5%86%ac%e5%a4%a9">冬天</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e8%be%b9%e5%a1%9e">边塞</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e7%88%b1%e5%9b%bd">爱国</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e6%88%98%e4%ba%89">战争</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e7%94%9f%e6%b4%bb">生活</a>
-
-            </div>
-
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare71318">蕃州部落能结束，朝暮驰猎黄河曲。燕歌未断塞鸿飞，牧马群嘶边草绿。——唐代·李益《塞下曲·其一》https://so.gushiwen.org/shiwenv_1d86600eb9cf.aspx</textarea>
-        </div>
-        <div class="sons">
-            <div class="cont">
-                <div class="yizhu">
-                    <img src="https://song.gushiwen.org/siteimg/beipic.png"  width="25" height="25" alt="背诵" onclick="OnBeisong('1d86600eb9cf','http://so.gushiwen.org/shiwenv.aspx?id=09c4b7fc27c0')" id="btnBeisong1d86600eb9cf"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/shangpic.png"  width="25" height="25" alt="赏析" onclick="OnShangxi('1d86600eb9cf')" id="btnShangxi1d86600eb9cf"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('1d86600eb9cf')" id="btnZhushi1d86600eb9cf"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('1d86600eb9cf')" id="btnYiwen1d86600eb9cf" />
-
-                    <script type="text/javascript">
-                        document.getElementById("btnShangxi1d86600eb9cf").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnZhushi1d86600eb9cf").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnYiwen1d86600eb9cf").style.display = "block";
-                    </script>
-
+            <div class="sons">
+                <div class="cont">
+                    <div class="yizhu">
+                        <img src="{{$cdnDomain}}/static/images/Shangxi.png"  width="25" height="25" alt="赏析" data-type="0" onclick="OnNewShangxi('{{$poetryInfo.SourceUrlCrc32}}','Shangxi')" id="btnShangxi{{$poetryInfo.SourceUrlCrc32}}"/>
+                        <img  src="{{$cdnDomain}}/static/images/Yiwen.png" width="25" height="25" alt="译文" data-type="0" onclick="OnNewShangxi('{{$poetryInfo.SourceUrlCrc32}}','Yiwen')" id="btnYiwen{{$poetryInfo.SourceUrlCrc32}}" />
+                    </div>
+                    <p>
+                        <a style="font-size:18px; line-height:22px; height:22px;" href="{{$content.PoetryText.LinkUrl}}" target="_blank">
+                            <b>{{$poetryInfo.Title}}</b>
+                        </a>
+                    </p>
+                    <p class="source">
+                        <a href="{{$authorInfo.DynastyLinkUrl}}" target="_blank">{{$authorInfo.DynastyName}}</a>
+                        <span>：</span><a href="{{$authorInfo.AuthorLinkUrl}}" target="_blank">{{$authorInfo.AuthorInfo.Author}}</a>
+                    </p>
+                    <div class="contson" id="contson{{$poetryInfo.SourceUrlCrc32}}">
+                        {{$poetryInfo.Content|unescaped}}
+                        <span id="notes{{$poetryInfo.SourceUrlCrc32}}"></span>
+                    </div>
                 </div>
-                <p><a style="font-size:18px; line-height:22px; height:22px;" href="/shiwenv_1d86600eb9cf.aspx"><b>塞下曲·其一</b></a></p>
-                <p class="source"><a href="https://so.gushiwen.org/shiwen/default.aspx?cstr=%e5%94%90%e4%bb%a3">唐代</a><span>：</span><a href="/search.aspx?value=%e6%9d%8e%e7%9b%8a">李益</a></p>
-                <div class="contson" id="contson1d86600eb9cf">
-                    蕃州部落能结束，朝暮驰猎黄河曲。<br />燕歌未断塞鸿飞，牧马群嘶边草绿。
+                <div class="tool">
+                    <div class="toolpinglun"><a title="复制" href="javascript:copy({{$poetryInfo.SourceUrlCrc32}})"><img src="{{$cdnDomain}}/static/images/copy.png" alt="复制" width="18" height="18" /></a></div>
+                    <div class="jiucuo"><a href="{{$webDomain}}/perfect?type=poetryContent&u={{$poetryInfo.SourceUrlCrc32}}" target="_blank">完善</a></div>
+                </div>
+                <div class="tag">
+                    {{range $j,$tag := $content.Tags}}
+                        {{if ge $j 1}}
+                            <span>，</span>
+                        {{end}}
+                        <a href="{{$webDomain}}/shiwen/search/?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
+                    {{end}}
                 </div>
             </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg71318" name="0" onload="selectLike(71318)" onclick="changeLike(71318,'http://so.gushiwen.org/shiwenv.aspx?id=09c4b7fc27c0')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
 
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e8%af%97%e6%96%871d86600eb9cf%e3%80%8a%e5%a1%9e%e4%b8%8b%e6%9b%b2%c2%b7%e5%85%b6%e4%b8%80%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-            <div id="toolPlay71318" style=" display:none;clear:both;"></div>
+        {{end}}
 
-            <div class="tag">
 
-                <a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e8%be%b9%e5%a1%9e">边塞</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e5%b0%86%e5%a3%ab">将士</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e7%94%9f%e6%b4%bb">生活</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e5%86%99%e6%99%af">写景</a>
-
-            </div>
-
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare14934">回乐峰前沙似雪，受降城外月如霜。(回乐峰 一作：回乐烽）不知何处吹芦管，一夜征人尽望乡。——唐代·李益《夜上受降城闻笛》https://so.gushiwen.org/shiwenv_d89eb1125b6d.aspx</textarea>
-        </div>
-        <div class="sons">
-            <div class="cont">
-                <div class="yizhu">
-                    <img src="https://song.gushiwen.org/siteimg/beipic.png"  width="25" height="25" alt="背诵" onclick="OnBeisong('d89eb1125b6d','http://so.gushiwen.org/shiwenv.aspx?id=09c4b7fc27c0')" id="btnBeisongd89eb1125b6d"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/shangpic.png"  width="25" height="25" alt="赏析" onclick="OnShangxi('d89eb1125b6d')" id="btnShangxid89eb1125b6d"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/zhupic.png"  width="25" height="25" alt="注释" onclick="OnZhushi('d89eb1125b6d')" id="btnZhushid89eb1125b6d"/>
-                    <img style=" display:none;" src="https://song.gushiwen.org/siteimg/yipic.png" width="25" height="25" alt="译文" onclick="OnYiwen('d89eb1125b6d')" id="btnYiwend89eb1125b6d" />
-
-                    <script type="text/javascript">
-                        document.getElementById("btnShangxid89eb1125b6d").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnZhushid89eb1125b6d").style.display = "block";
-                    </script>
-
-                    <script type="text/javascript">
-                        document.getElementById("btnYiwend89eb1125b6d").style.display = "block";
-                    </script>
-
-                </div>
-                <p><a style="font-size:18px; line-height:22px; height:22px;" href="/shiwenv_d89eb1125b6d.aspx"><b>夜上受降城闻笛</b></a></p>
-                <p class="source"><a href="https://so.gushiwen.org/shiwen/default.aspx?cstr=%e5%94%90%e4%bb%a3">唐代</a><span>：</span><a href="/search.aspx?value=%e6%9d%8e%e7%9b%8a">李益</a></p>
-                <div class="contson" id="contsond89eb1125b6d">
-                    回乐峰前沙似雪，受降城外月如霜。(回乐峰 一作：回乐烽）<br />不知何处吹芦管，一夜征人尽望乡。
-                </div>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg14934" name="0" onload="selectLike(14934)" onclick="changeLike(14934,'http://so.gushiwen.org/shiwenv.aspx?id=09c4b7fc27c0')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e8%af%97%e6%96%87d89eb1125b6d%e3%80%8a%e5%a4%9c%e4%b8%8a%e5%8f%97%e9%99%8d%e5%9f%8e%e9%97%bb%e7%ac%9b%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-            <div id="toolPlay14934" style=" display:none;clear:both;"></div>
-
-            <div class="tag">
-
-                <a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e5%94%90%e8%af%97%e4%b8%89%e7%99%be%e9%a6%96">唐诗三百首</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e5%86%ac%e5%a4%a9">冬天</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e8%be%b9%e5%a1%9e">边塞</a>
-
-                <span>，</span><a href="https://so.gushiwen.org/shiwen/default.aspx?tstr=%e6%80%9d%e5%bf%b5">思念</a>
-
-            </div>
-
-        </div>
-
-        <div style="height:auto; width:670px; clear:both; margin-top:20px;overflow:hidden; float:left; ">
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/site/tpw9.js?avnueb=bdn"></script>
-        </div>
     </div>
+
+
     <div class="right">
         <div class="abcd">
 

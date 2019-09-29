@@ -79,9 +79,7 @@ func (c *contentLogic) GetPoetryContentAll(poetryIdList []int64) (contentData de
 	return
 }
 
-/**
-将诗词数据，作者数据，朝代数据,分类整合一起
-*/
+//将诗词数据，作者数据，朝代数据,分类整合一起
 func (c *contentLogic) ProcContentAuthorTagData(contentList []models.Content, authorData map[int]models.Author, tags TagMp) (contentData define.ContentAll) {
 	dynastyList := NewDynastyLogic().GetDynastyIds(authorData)
 	contentData.ContentArr = make([]*define.Content, len(contentList))

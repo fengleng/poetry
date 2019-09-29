@@ -26,34 +26,48 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 		crcId          uint64
 		poetryIdList   []int64
 		html           *template.Html
-		content        models.Content    //诗词信息
-		contentData    *define.Content   //发送给页面的数据
+		poetryRow      models.Content    //根据crcId查询的诗词ID信息
+		poetryData     *define.Content   //发送给页面的诗词数据
+		guessYouLike   []*define.Content //猜你喜欢
+		guessYouLen    = 3               //猜你喜欢显示条数
 		contentAll     define.ContentAll //诗词所有关联的信息
 		err            error
 		profileAddress string //作者头像
 		assign         map[string]interface{}
+		randomIdArr    []int64
 	)
 	html = template.NewHtml(w)
 	contentLogic := logic.NewContentLogic()
 	if crcId, err = logic.NewShiWenLogic().GetCrcIdByUrlPath(r.URL.Path); err != nil {
 		goto ShowErrorPage
 	}
-	if content, err = contentLogic.GetContentByCrc32Id(uint32(crcId)); err != nil {
+	//获取诗词ID
+	if poetryRow, err = contentLogic.GetContentByCrc32Id(uint32(crcId)); err != nil {
 		goto ShowErrorPage
 	}
-	poetryIdList = []int64{int64(content.Id)}
+	//随机生成3个随机ID，用于获取猜你喜欢诗词
+	randomIdArr = tools.RandInt64Slice(guessYouLen, define.MaxIdNumber)
+	//获取诗词详情信息和猜你喜欢
+	poetryIdList = append([]int64{int64(poetryRow.Id)}, randomIdArr...)
 	if contentAll, err = contentLogic.GetPoetryContentAll(poetryIdList); err != nil || len(contentAll.ContentArr) == 0 {
 		goto ShowErrorPage
 	}
-	contentData = contentAll.ContentArr[0]
-	profileAddress = logic.NewAuthorLogic().GetProfileAddress(contentData.AuthorInfo)
+	for _, content := range contentAll.ContentArr {
+		if content.PoetryInfo.Id == poetryRow.Id {
+			poetryData = content
+		} else {
+			guessYouLike = append(guessYouLike, content)
+		}
+	}
+	profileAddress = logic.NewAuthorLogic().GetProfileAddress(poetryData.AuthorInfo)
 	assign = make(map[string]interface{})
-	assign["contentData"] = contentData
+	assign["contentData"] = poetryData
+	assign["guessYouLike"] = guessYouLike
 	assign["authorProfileAddress"] = profileAddress
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
-	assign["title"] = content.Title
-	assign["description"] = content.Content
+	assign["title"] = poetryData.PoetryInfo.Title
+	assign["description"] = poetryData.PoetryInfo.Content
 	html.Display("sw_detail.html", assign)
 	return
 ShowErrorPage:
@@ -83,7 +97,7 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	}
 	swLogic = logic.NewShiWenLogic()
 	value = strings.ToLower(value)
-	if notesData, err = swLogic.GetOneNotesDetailByCrcId(uint32(crcId), value); err != nil || len(notesData.Content) == 0 {
+	if notesData, err = swLogic.GetOneNotesDetailByCrcId(uint32(crcId), value); err != nil || notesData == nil || len(notesData.Content) == 0 {
 		goto OutPutEmptyStr
 	}
 	htmlStr = swLogic.GetNotesContentHtml(notesData, value)

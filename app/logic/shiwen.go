@@ -27,6 +27,7 @@ func NewShiWenLogic() *ShiWenLogic {
 const (
 	NotesShangXiType = "shangxi"
 	NotesYiWenType   = "yiwen"
+	NotesAll         = "all"
 )
 
 //根据诗词URL CRC32 查询具体的翻译或详情内容,只返回一条数据
@@ -80,6 +81,10 @@ func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notes
 		if appRecData, err = models.NewAppRec().FindNotesIdByPoetryId(poetryId); err != nil || len(appRecData) == 0 {
 			return
 		}
+	}
+	if typeStr == NotesAll {
+		transData, _ = models.NewTrans().FindNotesIdByPoetryId(poetryId)
+		appRecData, _ = models.NewAppRec().FindNotesIdByPoetryId(poetryId)
 	}
 	notesIds := n.extractNotesId(transData, appRecData)
 	notesList, err = NewNotesLogic().GetNotesBytId(notesIds)

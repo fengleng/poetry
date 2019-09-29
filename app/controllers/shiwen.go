@@ -31,6 +31,8 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 		guessYouLike   []*define.Content //猜你喜欢
 		guessYouLen    = 3               //猜你喜欢显示条数
 		contentAll     define.ContentAll //诗词所有关联的信息
+		notesList      []*models.Notes   //赏析和翻译信息
+		creatBackData  []*models.Notes   //创作背景
 		err            error
 		profileAddress string //作者头像
 		assign         map[string]interface{}
@@ -59,10 +61,23 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 			guessYouLike = append(guessYouLike, content)
 		}
 	}
+	//获取翻译和赏析，创作背景数据
+	if notesList, err = logic.NewShiWenLogic().GetAllNotesByPoetryId(poetryRow.Id, logic.NotesAll); err != nil {
+		goto ShowErrorPage
+	}
+	if poetryData.PoetryInfo.CreatBackId > 0 {
+		creatBackId := int(poetryData.PoetryInfo.CreatBackId)
+		createBids := []int{creatBackId}
+		if creatBackData, err = logic.NewNotesLogic().GetNotesBytId(createBids); err == nil {
+			notesList = append(notesList, creatBackData...)
+		}
+	}
+	//头像地址
 	profileAddress = logic.NewAuthorLogic().GetProfileAddress(poetryData.AuthorInfo)
 	assign = make(map[string]interface{})
 	assign["contentData"] = poetryData
 	assign["guessYouLike"] = guessYouLike
+	assign["notesList"] = notesList
 	assign["authorProfileAddress"] = profileAddress
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain

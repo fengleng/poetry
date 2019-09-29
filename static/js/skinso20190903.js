@@ -770,7 +770,7 @@ function fanyiShow(id) {
             }
         }
     }
-    xmlhttp.open("GET", "/nocdn/ajaxfanyi.aspx?id=" + id, false);
+    xmlhttp.open("GET", "/shiwen/ajaxshiwennotes?id=" + id, false);
     xmlhttp.send();
 }
 function fanyiClose(id) {
@@ -802,8 +802,8 @@ function shangxiShow(id) {
     xmlhttp.send();
 }
 function shangxiClose(id) {
-    document.getElementById('shangxiquan' + id).style.display = 'none';
-    document.getElementById('shangxi' + id).style.display = 'block';
+    document.getElementById('fanyiquan' + id).style.display = 'none';
+    document.getElementById('fanyi' + id).style.display = 'block';
 }
 
 //翻译

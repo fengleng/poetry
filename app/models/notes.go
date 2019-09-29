@@ -28,7 +28,7 @@ func (n *Notes) TableName() string {
 	return NotesTable
 }
 
-var NotesFields = []string{"title", "introd", "content", "file_name", "html_src_url", "play_src_url", "play_url"}
+var NotesFields = []string{"id", "title", "introd", "content", "file_name", "html_src_url", "play_src_url", "play_url"}
 
 //根据id查询notes内容
 func (n *Notes) GetNotesById(id int) (data Notes, err error) {
@@ -38,6 +38,10 @@ func (n *Notes) GetNotesById(id int) (data Notes, err error) {
 
 //根据id数组批量查询notes内容
 func (n *Notes) GetNotesByIds(ids []int) (data []Notes, err error) {
-	_, err = orm.NewOrm().QueryTable(NotesTable).Filter("id__in", ids).OrderBy("id").All(&data, NotesFields...)
+	if len(ids) == 1 {
+		_, err = orm.NewOrm().QueryTable(NotesTable).Filter("id", ids).All(&data, NotesFields...)
+	} else {
+		_, err = orm.NewOrm().QueryTable(NotesTable).Filter("id__in", ids).OrderBy("id").All(&data, NotesFields...)
+	}
 	return
 }

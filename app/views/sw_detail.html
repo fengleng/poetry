@@ -47,59 +47,38 @@
             </div>
         </div>
 
-        <div id="fanyi55047" class="sons" style="position:relative; z-index:0px;">
+        {{range $j,$notes :=.notesList}}
+        <div id="fanyi{{$notes.Id}}" class="sons" style="position:relative; z-index:0px;">
             <div class="contyishang" style="padding-bottom:10px;">
-                <div style=" z-index:100px; height:60px; width:100%; position:absolute; bottom:38px; background-image:url(https://song.gushiwen.org/siteimg/morebg.png); background-repeat:repeat-x; cursor:pointer; -webkit-tap-highlight-color: transparent;" onclick="fanyiShow(55047)"></div>
+                <div style=" z-index:100px; height:60px; width:100%; position:absolute; bottom:38px; background-image:url({{$cdnDomain}}/static/images/morebg.png); background-repeat:repeat-x; cursor:pointer; -webkit-tap-highlight-color: transparent;" onclick="fanyiShow({{$notes.Id}})"></div>
                 <div style="height:30px; font-weight:bold; font-size:16px; margin-bottom:10px; clear:both;">
-                    <h2><span style="float:left;">译文及注释</span></h2>
-                    <a style="float:left; margin-top:7px; margin-left:5px;" href="javascript:PlayFanyi(55047)"><img id="speakerimgFanyi55047" src="https://song.gushiwen.org/siteimg/speaker.png"  alt="" width="16" height="16"/></a>
-                    <span id="fanyiPlay55047" style=" display:none;width:1px; height:1px; float:left;"></span>
+                    <h2><span style="float:left;">{{$notes.Title}}</span></h2>
+                   {{if $notes.FileName}}
+                    <a style="float:left; margin-top:7px; margin-left:5px;" href="javascript:PlayFanyi({{$notes.Id}})">
+                        <img id="speakerimgFanyi{{$notes.Id}}" src="{{$cdnDomain}}/static/images/speaker.png"  alt="" width="16" height="16"/>
+                    </a>
+                    {{end}}
+                    <span id="fanyiPlay{{$notes.Id}}" style=" display:none;width:1px; height:1px; float:left;"></span>
                 </div>
-                <p>译文<br />别后的相思之情绵绵不绝，如丝般纷乱，让他辗转反侧，不能入睡。更何况好不容易入睡后，竟然还梦到了家乡，使人越发感伤。起来倾听那边塞半夜的雨声，却回忆起在家中小楼上我们挑灯夜话的情景。<br />认真地书写，对你的思念格外分明，天生的多愁善感使自己变得多情。起身用嘴中的热气暖手，将家书封好，偏偏看到“鸳鸯”二字时，心痛又被触动，手又僵了起来。</p>
-                <p>注释<br />于中好：即《鹧鸪天》，词牌名。双调五十五字，前后阕各三平韵，一韵到底。上阕第三四句、下阕第一二句一般要求对仗。也是曲牌名。<br />如丝：形容绵绵不绝。<br />孤枕：独眠。边城：临近边界的城市。
-                <div style="text-align:center; margin-top:-5px;"><a style="text-decoration:none;" href="javascript:fanyiShow(55047)">展开阅读全文 ∨</a></div>
+                {{$notes.Introd|unescaped}}
+                <div style="text-align:center; margin-top:-5px;">
+                    <a style="text-decoration:none;" href="javascript:fanyiShow({{$notes.Id}})">展开阅读全文 ∨</a>
+                </div>
             </div>
         </div>
-        <div id="fanyiquan55047" class="sons" style="display:none;"></div>
+        <div id="fanyiquan{{$notes.Id}}" class="sons" style="display:none;"></div>
+        {{end}}
 
+        {{if .creatBackData}}
         <div class="sons">
             <div class="contyishang">
                 <div style="height:30px; font-weight:bold; font-size:16px; margin-bottom:10px; clear:both;">
                     <h2><span style="float:left;">创作背景</span></h2>
-                    <a style="float:left; margin-top:7px; margin-left:5px;" href="javascript:PlayShangxi(40615)"><img id="speakerimgShangxi40615" src="https://song.gushiwen.org/siteimg/speaker.png"  alt="" width="16" height="16"/></a>
-                    <span id="shangxiPlay40615" style=" display:none;width:1px; height:1px; float:left;"></span>
-                </div>
-                <p>　　词或作于康熙二十一年（1682年）秋月，纳兰去梭龙勘察，塞上怀远，心念闺中妻子而作。</p>
-            </div>
-
-            <div class="cankao">
-
-                <p style=" color:#999999;margin:0px; font-size:12px;line-height:160%;">参考资料：</p>
-
-                <div style="clear:both; float:left;color:#999999; font-size:12px; width:630px; margin-top:4px;">
-                    <span style="width:20px; float:left;">1、</span>
-                    <span style="width:610px; float:left;">闵泽平编著．纳兰词全集 汇编汇评汇校：崇文书局，2012.03：第141页</span>
-                </div>
-
+                  </div>
+                <p>{{.creatBackData.Content|unescaped}}</p>
             </div>
         </div>
-
-
-
-        <div id="shangxi40616" class="sons" style="position:relative; z-index:0px;">
-            <div class="contyishang" style="padding-bottom:10px;">
-                <div style="z-index:100px; height:60px; width:100%; position:absolute; bottom:38px; background-image:url(https://song.gushiwen.org/siteimg/morebg.png); background-repeat:repeat-x; cursor:pointer; -webkit-tap-highlight-color: transparent;" onclick="shangxiShow(40616)"></div>
-                <div style="height:30px; font-weight:bold; font-size:16px; margin-bottom:10px; clear:both;">
-                    <h2><span style="float:left;">赏析</span></h2>
-                    <a style="float:left; margin-top:7px; margin-left:5px;" href="javascript:PlayShangxi(40616)"><img id="speakerimgShangxi40616" src="https://song.gushiwen.org/siteimg/speaker.png"  alt="" width="16" height="16"/></a>
-                    <span id="shangxiPlay40616" style=" display:none;width:1px; height:1px; float:left;"></span>
-                </div>
-                <p>　　上片写词人对家人的怀念。首句“别绪如丝睡不成”，情意坦诚，多情公子这时正在塞上，分离后的思念令他辗转反侧，无法入眠，而“那堪孤枕梦边城”一句就更进一步地表明了纳兰的愁思之深。一般说来，“梦边城”应当解释为“梦见边城”，可是联系上下文，应该解释成“梦于边城”。孤枕难眠，所以纳兰索性披衣起床，去倾听那夜半塞外的冷雨声。但邢夜雨声就像伤心人拨弄琴瑟的弦声，悲凄彻骨，每一声都敲打着纳兰那颗满是悲愁的心，也更加引发了他的思念，令他不由想起了家里的妻子，心想这时的她会不会也正在想念着自己。</p>
-                <p>　　下片从书信落笔，进一步抒发了自己的相思情怀。这时的思念之情好像春天的杂草似的，疯狂生长
-                <div style="text-align:center; margin-top:-5px;"><a style="text-decoration:none;" href="javascript:shangxiShow(40616)">展开阅读全文 ∨</a></div>
-            </div>
-        </div>
-        <div id="shangxiquan40616" class="sons" style="display:none;"></div>
+        {{end}}
 
         <div style=" width:1px; height:1px; overflow:hidden;">
             <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor{{$authorInfo.AuthorInfo.Id}}"> {{$authorInfo.AuthorInfo.AuthorIntro}}  {{$webDomain}}/author/detail?value={{$authorInfo.AuthorInfo.Author}}</textarea>
@@ -132,7 +111,6 @@
         {{range $i,$content := .guessYouLike }}
             {{$poetryInfo = $content.PoetryText.PoetryInfo}}
             {{$authorInfo = $content.PoetryAuthor}}
-
             <div style=" width:1px; height:1px; overflow:hidden;">
                 <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtare{{$poetryInfo.SourceUrlCrc32}}">{{$content.PoetryText.OriContent}} {{$content.PoetryText.LinkUrl}}</textarea>
             </div>
@@ -169,33 +147,10 @@
                     {{end}}
                 </div>
             </div>
-
         {{end}}
-
-
     </div>
 
-
-    <div class="right">
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/site/production/p0c0e.js?qlatnki=nr"></script>
-        </div>
-        <div class="juzioncont">
-            <img style=" float:left; margin:10px; margin-right:0px;" src="/app/appdown2.png" width="80" height="80" /><p><center style="font-size:18px; margin-top:14px;">扫描下载</center></p><p><center style="font-size:18px; margin-top:5px;">古诗文网客户端</center></p>
-        </div>
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/site/res/js/wmah8m.js?cxptt=dytm"></script>
-        </div>
-        <div class="juzioncont">
-            <img style=" float:left; margin:10px; margin-right:0px;" src="/app/weixin.png" width="80" height="80" /><p><center style="font-size:18px; margin-top:14px;">扫描关注</center></p><p><center style="font-size:18px;margin-top:5px;">诗词秀公众号</center></p>
-        </div>
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/common/site/izgy4.js?n=ixqkhkrr"></script>
-        </div>
-    </div>
+    <div class="right"></div>
 </div>
 
 {{template "footer" .}}

@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"poetry/config/define"
 	"regexp"
-
 	"strings"
 )
 
@@ -46,4 +45,33 @@ func ReplaceDictHtml(str string) string {
 	compile := regexp.MustCompile("<img id=\"imgMp3\".*/>")
 	str = compile.ReplaceAllString(str, "")
 	return str
+}
+
+//诗词详情页赏析和翻译数据和诗文详情替换所有的超链接，和字符中的ID
+func DealWithNotes(content, idStr string) string {
+	compile := regexp.MustCompile(`javascript:shangxiClose\(\d+\)`)
+	content = compile.ReplaceAllString(content, "javascript:shangxiClose("+idStr+")")
+
+	compile = regexp.MustCompile(`javascript:fanyiClose\(\d+\)`)
+	content = compile.ReplaceAllString(content, "javascript:fanyiClose("+idStr+")")
+
+	compile = regexp.MustCompile(`<a href="https://so.gushiwen.org/\w+\.\w+"\s*target="_blank">`)
+	findAllString := compile.FindAllString(content, -1)
+	content = compile.ReplaceAllString(content, "")
+
+	compile = regexp.MustCompile(`<a href="https://so.gushiwen.org/\w+\.\w+">`)
+	allString := compile.FindAllString(content, -1)
+	content = compile.ReplaceAllString(content, "")
+	content = strings.Replace(content, "</a>", "", len(findAllString)+len(allString))
+
+	return content
+}
+
+//替换https://so.gushiwen.org超链接
+func RemoveLinkHtml(content string) string {
+	compile := regexp.MustCompile(`<a href="https://so.gushiwen.org/\w+\.\w+"\s*target="_blank">`)
+	content = compile.ReplaceAllString(content, "")
+	compile = regexp.MustCompile(`</a>`)
+	content = compile.ReplaceAllString(content, "")
+	return content
 }

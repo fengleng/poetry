@@ -7,6 +7,7 @@
 package controllers
 
 import (
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"poetry/app/bootstrap"
 	"poetry/app/logic"
@@ -32,7 +33,7 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 		guessYouLen    = 3               //猜你喜欢显示条数
 		contentAll     define.ContentAll //诗词所有关联的信息
 		notesList      []*models.Notes   //赏析和翻译信息
-		creatBackData  []*models.Notes   //创作背景
+		creatBackData  *models.Notes     //创作背景
 		err            error
 		profileAddress string //作者头像
 		assign         map[string]interface{}
@@ -68,8 +69,9 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 	if poetryData.PoetryInfo.CreatBackId > 0 {
 		creatBackId := int(poetryData.PoetryInfo.CreatBackId)
 		createBids := []int{creatBackId}
-		if creatBackData, err = logic.NewNotesLogic().GetNotesBytId(createBids); err == nil {
-			notesList = append(notesList, creatBackData...)
+		if data, _ := logic.NewNotesLogic().GetNotesBytId(createBids); err == nil && len(data) > 0 {
+			creatBackData = data[0]
+			creatBackData.Content = tools.RemoveLinkHtml(creatBackData.Content)
 		}
 	}
 	//头像地址
@@ -78,6 +80,7 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 	assign["contentData"] = poetryData
 	assign["guessYouLike"] = guessYouLike
 	assign["notesList"] = notesList
+	assign["creatBackData"] = creatBackData
 	assign["authorProfileAddress"] = profileAddress
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
@@ -90,7 +93,7 @@ ShowErrorPage:
 	return
 }
 
-//ajax获取注释和译文详情html
+// ajax 根据诗词URL crc32值获取注释和译文详情html
 func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	var (
 		err       error
@@ -117,6 +120,35 @@ func AjaxShiWenCont(w http.ResponseWriter, r *http.Request) {
 	}
 	htmlStr = swLogic.GetNotesContentHtml(notesData, value)
 	tools.OutputString(w, htmlStr)
+	return
+OutPutEmptyStr:
+	tools.OutputString(w, "<div class='hr'></div><p>暂无内容</p>")
+	return
+}
+
+// ajax 根据赏析或译文id获取注释和译文详情html
+func AjaxShiWenNotes(w http.ResponseWriter, r *http.Request) {
+	var (
+		idStr     string
+		err       error
+		id        int
+		notesData []*models.Notes
+		htmlStr   string
+	)
+	idStr = r.FormValue("id")
+	if len(idStr) == 0 {
+		goto OutPutEmptyStr
+	}
+	if id, err = strconv.Atoi(idStr); err != nil {
+		goto OutPutEmptyStr
+	}
+	if notesData, err = logic.NewNotesLogic().GetNotesBytId([]int{id}); err != nil || len(notesData) == 0 {
+		goto OutPutEmptyStr
+	}
+	htmlStr = logic.NewShiWenLogic().GetNotesDetailHtml(notesData[0])
+	tools.OutputString(w, htmlStr)
+	logrus.Infof("%+v\n", notesData[0])
+
 	return
 OutPutEmptyStr:
 	tools.OutputString(w, "<div class='hr'></div><p>暂无内容</p>")

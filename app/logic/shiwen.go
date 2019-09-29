@@ -8,7 +8,10 @@ package logic
 
 import (
 	"errors"
+	"fmt"
 	"poetry/app/models"
+	"poetry/config/define"
+	"poetry/tools"
 	"strconv"
 	"strings"
 )
@@ -91,12 +94,37 @@ func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notes
 	return
 }
 
-//将翻译数据和诗文详情整合成HTML格式字符串，用于页面点击AJAX获取具体内容时用到
+//用于首页-诗文-》译或赏的操作时，将翻译数据和诗文详情整合成HTML格式字符串，用于页面点击AJAX获取具体内容时用到
 func (n *ShiWenLogic) GetNotesContentHtml(notesData *models.Notes, typeStr string) string {
+	content := notesData.Content
+	idStr := strconv.Itoa(notesData.Id)
+	content = tools.DealWithNotes(content, idStr)
 	if typeStr == NotesShangXiType {
-		return "<div class='hr'></div><strong>赏析<br></strong>" + notesData.Content
+		return "<div class='hr'></div><strong>赏析<br></strong>" + content
 	}
-	return "<div class='hr'></div>" + notesData.Content
+	return "<div class='hr'></div>" + content
+}
+
+//将翻译数据和诗文详情整合成HTML格式字符串，用于诗文详情页AJAX获取赏析或翻译信息时
+func (n *ShiWenLogic) GetNotesDetailHtml(notes *models.Notes) (html string) {
+	content := notes.Content
+	idStr := strconv.Itoa(notes.Id)
+	if len(content) == 0 {
+		return
+	}
+	content = tools.DealWithNotes(content, idStr)
+	html = fmt.Sprintf(`
+            <div class="contyishang">
+            <div style="height:30px; font-weight:bold; font-size:16px; margin-bottom:10px; clear:both;">
+            <h2><span style="float:left;">%s</span></h2>
+            <a style="float:left; margin-top:7px; margin-left:5px;" href="javascript:PlayShangxiquan(%d)">
+<img id="speakerimgShangxiquan%d" src="%s/static/images/speaker.png"   alt="" width="16" height="16"/>
+</a>
+            </div>
+              %s
+            </div>
+           `, notes.Title, notes.Id, notes.Id, define.CdnStaticDomain, content)
+	return html
 }
 
 //获取notesId

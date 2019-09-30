@@ -7,7 +7,7 @@
 package controllers
 
 import (
-	"github.com/sirupsen/logrus"
+	"fmt"
 	"net/http"
 	"poetry/app/bootstrap"
 	"poetry/app/logic"
@@ -139,7 +139,7 @@ func AjaxShiWenNotes(w http.ResponseWriter, r *http.Request) {
 	if len(idStr) == 0 {
 		goto OutPutEmptyStr
 	}
-	if id, err = strconv.Atoi(idStr); err != nil {
+	if id, err = strconv.Atoi(idStr); err != nil || id == 0 {
 		goto OutPutEmptyStr
 	}
 	if notesData, err = logic.NewNotesLogic().GetNotesBytId([]int{id}); err != nil || len(notesData) == 0 {
@@ -147,10 +147,42 @@ func AjaxShiWenNotes(w http.ResponseWriter, r *http.Request) {
 	}
 	htmlStr = logic.NewShiWenLogic().GetNotesDetailHtml(notesData[0])
 	tools.OutputString(w, htmlStr)
-	logrus.Infof("%+v\n", notesData[0])
-
 	return
 OutPutEmptyStr:
 	tools.OutputString(w, "<div class='hr'></div><p>暂无内容</p>")
+	return
+}
+
+//ajax根据赏析或译文id获取声音文件
+func AjaxShiWenPlay(w http.ResponseWriter, r *http.Request) {
+	var (
+		idStr     string
+		err       error
+		id        int
+		notesData []*models.Notes
+		notes     *models.Notes
+		songUrl   string
+		htmlStr   string
+	)
+	idStr = r.FormValue("id")
+	if len(idStr) == 0 {
+		goto OutPutEmptyStr
+	}
+	if id, err = strconv.Atoi(idStr); err != nil || id == 0 {
+		goto OutPutEmptyStr
+	}
+	if notesData, err = logic.NewNotesLogic().GetNotesBytId([]int{id}); err != nil || len(notesData) == 0 {
+		goto OutPutEmptyStr
+	}
+	notes = notesData[0]
+	songUrl = notes.PlayUrl
+	if len(notes.FileName) > 0 {
+		songUrl = define.CdnStoreDomain + "/" + notes.FileName
+	}
+	htmlStr = fmt.Sprintf(`<audio src="%s" autoplay></audio>`, songUrl)
+	tools.OutputString(w, htmlStr)
+	return
+OutPutEmptyStr:
+	tools.OutputString(w, `<audio src="ok.mp3" autoplay></audio>`)
 	return
 }

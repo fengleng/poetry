@@ -60,7 +60,11 @@
                     {{end}}
                     <span id="fanyiPlay{{$notes.Id}}" style=" display:none;width:1px; height:1px; float:left;"></span>
                 </div>
+                {{if $notes.Introd}}
                 {{$notes.Introd|unescaped}}
+                    {{else}}
+                    {{$notes.Content|unescaped}}
+                {{end}}
                 <div style="text-align:center; margin-top:-5px;">
                     <a style="text-decoration:none;" href="javascript:fanyiShow({{$notes.Id}})">展开阅读全文 ∨</a>
                 </div>

@@ -1,4 +1,5 @@
-﻿//删除背诵
+﻿var cdnDomain = "{{.cdnDomain}}"
+//删除背诵
 function delBeisong(idbei) {
     var xmlhttp;
     if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -1132,7 +1133,7 @@ function PlayFanyi(id) {
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/fanyiplay.aspx?id=" + id, false);
+        xmlhttp.open("GET", "/shiwen/ajaxshiwenplay?id=" + id, false);
         xmlhttp.send();
     }
     else {
@@ -1154,7 +1155,7 @@ function PlayFanyi(id) {
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/fanyiplay.aspx?id=0", false);
+        xmlhttp.open("GET", "/shiwen/ajaxshiwenplay?id=0", false);
         xmlhttp.send();
     }
 }

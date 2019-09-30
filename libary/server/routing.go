@@ -29,6 +29,7 @@ func InitRouting(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/shiwen/ajaxshiwencont", CallMiddleWare(controllers.AjaxShiWenCont))   //ajax 根据诗词URL crc32值获取注释和译文详情html
 	mux.HandleFunc("/shiwen/ajaxshiwennotes", CallMiddleWare(controllers.AjaxShiWenNotes)) // ajax 根据赏析或译文id获取注释和译文详情html
+	mux.HandleFunc("/shiwen/ajaxshiwenplay", CallMiddleWare(controllers.AjaxShiWenPlay))   //ajax 根据赏析或译文id获取注释和译文的MP3文件
 	mux.HandleFunc("/shiwen/", CallMiddleWare(controllers.ShiWenIndex))                    //诗词详情页,上线后在nginx上做的转发
 
 	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha)) //词典接口

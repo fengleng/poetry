@@ -90,7 +90,9 @@ func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notes
 		appRecData, _ = models.NewAppRec().FindNotesIdByPoetryId(poetryId)
 	}
 	notesIds := n.extractNotesId(transData, appRecData)
-	notesList, err = NewNotesLogic().GetNotesBytId(notesIds)
+	if len(notesIds) > 0 {
+		notesList, err = NewNotesLogic().GetNotesBytId(notesIds)
+	}
 	return
 }
 
@@ -129,6 +131,9 @@ func (n *ShiWenLogic) GetNotesDetailHtml(notes *models.Notes) (html string) {
 
 //获取notesId
 func (n *ShiWenLogic) extractNotesId(transData []models.Trans, appRecData []models.AppRec) (notesIds []int) {
+	if len(transData) == 0 && len(appRecData) == 0 {
+		return
+	}
 	for _, trans := range transData {
 		notesIds = append(notesIds, int(trans.NotesId))
 	}

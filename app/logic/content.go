@@ -106,6 +106,7 @@ func (c *contentLogic) ProcContentAuthorTagData(contentList []models.Content, au
 		defineAuthor.AuthorInfo = author
 		defineAuthor.DynastyName = dynastyList[author.DynastyId]
 		defineAuthor.AuthorLinkUrl = bootstrap.G_Conf.WebDomain + "/author/search?value=" + author.Author
+		defineAuthor.AuthorDetailUrl = bootstrap.G_Conf.WebDomain + "/author/detail?value=" + author.Author
 		defineAuthor.DynastyLinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/search/?type=dynasty&cstr=" + defineAuthor.DynastyName
 		content.PoetryText = text
 		content.PoetryAuthor = defineAuthor

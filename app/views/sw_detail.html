@@ -25,7 +25,7 @@
                 </p>
                 <p class="source">
                     <a href="{{$authorInfo.DynastyLinkUrl}}" target="_blank">{{$authorInfo.DynastyName}}</a>
-                    <span>：</span><a href="{{$authorInfo.AuthorLinkUrl}}" target="_blank">{{$authorInfo.AuthorInfo.Author}}</a>
+                    <span>：</span><a href="{{$authorInfo.AuthorDetailUrl}}" target="_blank">{{$authorInfo.AuthorInfo.Author}}</a>
                 </p>
                 <div class="contson" id="contson{{$poetryInfo.SourceUrlCrc32}}">
                     {{$poetryInfo.Content|unescaped}}
@@ -90,13 +90,13 @@
             <div class="cont" style="margin-top:13px;">
 
                 <div class="divimg" style="margin-top:2px;">
-                    <a href="{{$webDomain}}/author/detail?value={{$authorInfo.AuthorInfo.Author}}">
+                    <a href="{{$authorInfo.AuthorDetailUrl}}">
                         <img src="{{.authorProfileAddress}}" width="105" height="150" alt="{{$authorInfo.AuthorInfo.Author}}"/>
                     </a>
                 </div>
 
                 <p style="height:22px;">
-                    <a style="font-size:18px; line-height:22px; height:22px;" href="{{$webDomain}}/author/detail?value={{$authorInfo.AuthorInfo.Author}}"><b>{{$authorInfo.AuthorInfo.Author}}</b></a>
+                    <a style="font-size:18px; line-height:22px; height:22px;" href="{{$authorInfo.AuthorDetailUrl}}"><b>{{$authorInfo.AuthorInfo.Author}}</b></a>
                 </p>
                 <p style=" margin:0px;">{{$authorInfo.AuthorInfo.AuthorIntro}} {{if gt $authorInfo.AuthorInfo.PoetryCount 0}}<a href="{{$webDomain}}/author/poetryList?value={{$authorInfo.AuthorInfo.Author}}">► {{$authorInfo.AuthorInfo.PoetryCount}}篇诗文</a>{{end}} </p>
             </div>

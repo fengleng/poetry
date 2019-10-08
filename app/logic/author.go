@@ -45,20 +45,29 @@ func (a *AuthorLogic) GetAuthorInfoByName(name string) (data models.Author, err 
 }
 
 //根据作者ID查询作者资料信息表
-func (a *AuthorLogic) GetAuthorDetailDataListById(id int) (notesData []models.Notes, err error) {
+func (a *AuthorLogic) GetAuthorDetailDataListById(id int) (authorNotes []define.AuthorNotes, err error) {
 	var (
-		authorData []models.AuthorData
-		notesIds   []int
+		authorData   []models.AuthorData
+		notesData    []models.Notes
+		notesIds     []int
+		notesDataIds map[int]int
 	)
 	if authorData, err = models.NewAuthorData().GetAuthorDetailDataById(id); err != nil || len(authorData) == 0 {
 		return
 	}
 	notesIds = make([]int, len(authorData))
+	notesDataIds = make(map[int]int)
 	for k, data := range authorData {
 		notesIds[k] = data.NotesId
+		notesDataIds[data.NotesId] = data.DataId
 	}
 	if notesData, err = models.NewNotes().GetNotesByIds(notesIds); err != nil || len(notesData) == 0 {
 		return
+	}
+	authorNotes = make([]define.AuthorNotes, len(notesData))
+	for k, notes := range notesData {
+		authorNotes[k].DataId = notesDataIds[notes.Id]
+		authorNotes[k].Notes = notes
 	}
 	return
 }

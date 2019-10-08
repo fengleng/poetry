@@ -12,6 +12,7 @@ import (
 	"poetry/app/bootstrap"
 	"poetry/app/logic"
 	"poetry/app/models"
+	"poetry/config/define"
 	templateHtml "poetry/libary/template"
 	"poetry/tools"
 	"strings"
@@ -23,7 +24,7 @@ func AuthorDetail(w http.ResponseWriter, req *http.Request) {
 		authorLogic *logic.AuthorLogic
 		authorName  string
 		authorInfo  models.Author
-		notesData   []models.Notes
+		notesData   []define.AuthorNotes
 		assign      map[string]interface{}
 		html        *templateHtml.Html
 		err         error
@@ -40,6 +41,8 @@ func AuthorDetail(w http.ResponseWriter, req *http.Request) {
 	if notesData, err = authorLogic.GetAuthorDetailDataListById(int(authorInfo.Id)); err != nil {
 		goto ErrorPage
 	}
+	//作者诗文取3条记录
+
 	html = templateHtml.NewHtml(w)
 	assign = make(map[string]interface{})
 	assign["profileAddr"] = authorLogic.GetProfileAddress(authorInfo)

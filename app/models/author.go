@@ -48,6 +48,13 @@ func (a *Author) GetAuthorInfoByIds(idList []int64) (data []Author, err error) {
 	return
 }
 
+//根据作者名字获取作者资料
+func (a *Author) GetAuthorInfoByName(name string) (data Author, err error) {
+	fields := []string{"id", "author", "dynasty_id", "pinyin", "acronym", "poetry_count", "author_intro", "photo_file_name", "photo_url"}
+	_, err = orm.NewOrm().QueryTable(AuthorTable).Filter("author", name).All(&data, fields...)
+	return
+}
+
 //根据诗词总数倒序查询作者列表
 func (a *Author) GetListByOrderCountDesc(offset, limit int) (data []Author, err error) {
 	fields := []string{"id", "author"}

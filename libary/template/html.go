@@ -10,6 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"html/template"
 	"io"
+	"strings"
 )
 
 type Html struct {
@@ -55,18 +56,23 @@ func (h *Html) Display(page string, data interface{}) {
 		h.ViewPath + "/views/public/footer.html",
 		h.ViewPath + "/views/" + page,
 	}
+	pageName := page
+	if strings.Contains(page, "/") {
+		index := strings.LastIndex(page, "/")
+		pageName = page[index+1:]
+	}
 	if len(h.templateFiles) > 0 {
 		h.templateFiles = append(h.templateFiles, htmlPath...)
 	} else {
 		h.templateFiles = htmlPath
 	}
-	tpl := template.New(page)
+	tpl := template.New(pageName)
 	//切记：加的自定义函数在Parse之前
 	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped})
 	tpl = template.Must(tpl.ParseFiles(
 		h.templateFiles...,
 	))
-	if err := tpl.ExecuteTemplate(h.Writer, page, data); err != nil {
+	if err := tpl.ExecuteTemplate(h.Writer, pageName, data); err != nil {
 		logrus.Infoln("ExecuteTemplate error:", err)
 	}
 	return

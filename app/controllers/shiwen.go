@@ -95,7 +95,7 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["title"] = poetryData.PoetryInfo.Title
 	assign["description"] = poetryData.PoetryInfo.Content
-	html.Display("sw_detail.html", assign)
+	html.Display("shiwen/detail.html", assign)
 	return
 ShowErrorPage:
 	html.DisplayErrorPage(err)

@@ -17,4 +17,5 @@ const (
 	RecTable         = "poetry_content_apprec"  //诗词详情赏析信息关联表
 	NotesTable       = "poetry_detail_notes"    //诗词详情内容表
 	AncientBookTable = "poetry_ancient_book"    //古籍-书名表
+	AuthorDataTable  = "poetry_author_data"     //作者资料信息表
 )

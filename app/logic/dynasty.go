@@ -43,3 +43,10 @@ func (d *dynastyLogic) GetDynastyIds(authorData map[int]models.Author) (dynastyL
 	}
 	return dynastyList
 }
+
+//根据朝代名字搜索诗词列表
+func (d *dynastyLogic) GetPoetryListByFilter(cstr string) []models.Content {
+	//1.先查出朝代ID
+	//2.根据朝代ID写SQL关联诗词列表
+	return nil
+}

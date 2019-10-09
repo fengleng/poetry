@@ -8,6 +8,7 @@ package controllers
 
 import (
 	"errors"
+	"math"
 	"net/http"
 	"poetry/app/bootstrap"
 	"poetry/app/logic"
@@ -15,6 +16,7 @@ import (
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
 	"poetry/tools"
+	"strconv"
 )
 
 //作者详情页
@@ -58,7 +60,62 @@ func AuthorDetail(w http.ResponseWriter, req *http.Request) {
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["title"] = authorInfo.Author + "简介"
 	assign["description"] = authorInfo.AuthorIntro
+	assign["version"] = define.StaticVersion
 	html.Display("author/detail.html", assign)
+	return
+ErrorPage:
+	if err == nil {
+		err = errors.New("非法请求...请稍后重试")
+	}
+	templateHtml.NewHtml(w).DisplayErrorPage(err)
+	return
+}
+
+//作者诗词列表页
+func PoetryList(w http.ResponseWriter, req *http.Request) {
+	var (
+		authorName     string                 //作者名字
+		authorInfo     models.Author          //作者基础信息
+		poetryListData define.ContentAll      //诗词列表
+		assign         map[string]interface{} //发给模板的变量
+		err            error                  //错误信息
+		page           int                    //当前页
+		countNum       int                    //作者的诗词总数
+		countPage      int                    //总页数
+		offset         int                    //当前偏移量
+		limit          = 10                   //每页显示的诗词条数
+	)
+	contentLogic := logic.NewContentLogic()
+	if authorName = req.FormValue("value"); len(authorName) == 0 {
+		goto ErrorPage
+	}
+	if pageStr := req.FormValue("page"); len(pageStr) > 0 {
+		page, _ = strconv.Atoi(pageStr)
+	}
+	if authorInfo, err = logic.NewAuthorLogic().GetAuthorInfoByName(authorName); err != nil || authorInfo.Id == 0 {
+		goto ErrorPage
+	}
+	if countNum, err = contentLogic.GetContentCountByAuthorId(authorInfo.Id); err != nil {
+		goto ErrorPage
+	}
+	countPage = int(math.Ceil(float64(countNum / limit)))
+	if page == 0 || page > countPage {
+		page = 1
+	}
+	offset = (page - 1) * limit
+	if poetryListData, err = contentLogic.GetPoetryListByAuthorId(authorInfo, offset, limit, "id"); err != nil {
+		goto ErrorPage
+	}
+	assign = make(map[string]interface{})
+	assign["poetryList"] = poetryListData
+	assign["authorInfo"] = authorInfo
+	assign["page"] = page
+	assign["countNum"] = countNum
+	assign["countPage"] = countPage
+	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
+	assign["webDomain"] = bootstrap.G_Conf.WebDomain
+	assign["version"] = define.StaticVersion
+	templateHtml.NewHtml(w).Display("author/poetryList.html", assign)
 	return
 ErrorPage:
 	if err == nil {

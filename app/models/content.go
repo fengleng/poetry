@@ -55,3 +55,9 @@ func (c *Content) GetContentListByAuthorId(authorId int64, offset, limit int, or
 	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("author_id", authorId).Limit(limit, offset).OrderBy(orderFiled).All(&data, Fields...)
 	return
 }
+
+//根据作者ID查询作者诗词总数
+func (c *Content) GetContentCountByAuthorId(authorId int64) (count int64, err error) {
+	count, err = orm.NewOrm().QueryTable(ContentTable).Filter("author_id", authorId).Count()
+	return
+}

@@ -88,8 +88,8 @@ func PreContentHtml(content string) string {
 	compile := regexp.MustCompile("<a.*</a>")
 	content = compile.ReplaceAllString(content, "")
 	content = ReplaceCanKaoHtml(content)
-	content = strings.Trim(content, "<div>")
-	content = strings.TrimRight(content, "</div>")
+	content = strings.TrimPrefix(content, "<div>")
+	content = strings.TrimSuffix(content, "</div>")
 	if content[0:3] != "<p>" {
 		content = "<p>" + content + "</p>"
 	}

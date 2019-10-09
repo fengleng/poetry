@@ -140,3 +140,13 @@ func (c *contentLogic) GetPoetryListByAuthorId(authorInfo models.Author, offset,
 	poetryListData = c.ProcContentAuthorTagData(contentList, authorData, tags)
 	return
 }
+
+//根据作者ID查询作者诗词总数
+func (c *contentLogic) GetContentCountByAuthorId(authorId int64) (count int, err error) {
+	var cNum int64
+	if cNum, err = c.contentModel.GetContentCountByAuthorId(authorId); err != nil {
+		return
+	}
+	count = int(cNum)
+	return
+}

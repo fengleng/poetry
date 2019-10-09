@@ -22,7 +22,7 @@ import (
 //诗文 控制器
 
 //诗词详情页
-func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
+func ShiWenDetail(w http.ResponseWriter, r *http.Request) {
 	var (
 		crcId          uint64
 		poetryIdList   []int64
@@ -89,6 +89,7 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["title"] = poetryData.PoetryInfo.Title
 	assign["description"] = poetryData.PoetryInfo.Content
+	assign["version"] = define.StaticVersion
 	html.Display("shiwen/detail.html", assign)
 	return
 ShowErrorPage:

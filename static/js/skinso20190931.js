@@ -318,6 +318,55 @@ function OnShangxi(id) {
     xmlhttp.send();
 }
 
+
+var isShangxiSend = false;
+var isSendStr = ""
+function OnNewShangxi(id,value) {
+    if(value.length == 0){
+        value = "Shangxi"
+    }
+    var xmlhttp;
+    typeStr =  document.getElementById("btn"+value + id).getAttribute("data-type")
+    if(typeStr == "1"){
+        document.getElementById("btn"+value + id).setAttribute("data-type","0")
+        document.getElementById("btn"+value + id).src = "/static/images/"+value+".png";
+        document.getElementById("notes" + id).style.display="none";
+        return
+    }
+    if(isShangxiSend==true && isSendStr == value ){
+        tmpVal = (value =="Shangxi") ? "Yiwen" :"Shangxi";
+        document.getElementById("btn"+tmpVal + id).src = "/static/images/"+tmpVal+".png";
+        document.getElementById("btn"+value + id).src = "/static/images/"+value+"2.png";
+        document.getElementById("notes" + id).style.display="block";
+        document.getElementById("btn"+value + id).setAttribute("data-type","1")
+        return
+    }
+
+    tmpVal = (value =="Shangxi") ? "Yiwen" :"Shangxi";
+    document.getElementById("btn"+tmpVal + id).src = "/static/images/"+tmpVal+".png";
+    document.getElementById("btn"+value + id).src = "/static/images/"+value+"2.png";
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            isShangxiSend = true
+            isSendStr = value
+            document.getElementById("notes" + id).style.display="block";
+            document.getElementById("notes" + id).innerHTML = xmlhttp.responseText;
+            document.getElementById("btn"+value + id).setAttribute("data-type","1")
+            document.getElementById("btn"+tmpVal + id).setAttribute("data-type","0")
+        }
+    }
+    xmlhttp.open("GET", "/shiwen/ajaxshiwencont?id=" + id + "&value=" + value, false);
+    xmlhttp.send();
+}
+
+
+
 function OnBeisong(id, from) {
     if (getCookie('gsw2017user') == null) {
         window.parent.window.location.href = "/user/login.aspx?from=" + from;
@@ -2740,7 +2789,7 @@ function eajaxkeyUp(num) {
     f.setAttribute("target", "aihuaciiframe");
     f.setAttribute("method", "post");
     if (R) f = e('<form target="aihuaciiframe" accept-charset="utf-8" method="post">');
-    f.setAttribute("action", "/dict/fancha.aspx");
+    f.setAttribute("action", "/dict/fancha");
     f.acceptCharset = "utf-8";
     i.appendChild(f);
     f.className = "aihuacitollbar";

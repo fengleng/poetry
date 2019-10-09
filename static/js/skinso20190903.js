@@ -2801,7 +2801,7 @@ function eajaxkeyUp(num) {
     f.setAttribute("target", "aihuaciiframe");
     f.setAttribute("method", "post");
     if (R) f = e('<form target="aihuaciiframe" accept-charset="utf-8" method="post">');
-    f.setAttribute("action", "/dict/fancha.aspx");
+    f.setAttribute("action", "/dict/fancha");
     f.acceptCharset = "utf-8";
     i.appendChild(f);
     f.className = "aihuacitollbar";

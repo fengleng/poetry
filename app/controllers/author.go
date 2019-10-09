@@ -99,7 +99,7 @@ func PoetryList(w http.ResponseWriter, req *http.Request) {
 		goto ErrorPage
 	}
 	countPage = int(math.Ceil(float64(countNum / limit)))
-	if page == 0 || page > countPage {
+	if page <= 0 || page > countPage {
 		page = 1
 	}
 	offset = (page - 1) * limit
@@ -107,13 +107,18 @@ func PoetryList(w http.ResponseWriter, req *http.Request) {
 		goto ErrorPage
 	}
 	assign = make(map[string]interface{})
-	assign["poetryList"] = poetryListData
+	assign["profileAddr"] = logic.NewAuthorLogic().GetProfileAddress(authorInfo)
+	assign["poetryList"] = poetryListData.ContentArr
 	assign["authorInfo"] = authorInfo
 	assign["page"] = page
-	assign["countNum"] = countNum
 	assign["countPage"] = countPage
+	assign["nextPage"] = page + 1
+	assign["prevPage"] = page - 1
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
+	assign["title"] = authorInfo.Author + "的诗词全集_诗集、词集"
+	assign["description"] = authorInfo.AuthorIntro
+	assign["pageUrl"] = bootstrap.G_Conf.WebDomain + "/author/poetryList?value=" + authorName
 	assign["version"] = define.StaticVersion
 	templateHtml.NewHtml(w).Display("author/poetryList.html", assign)
 	return

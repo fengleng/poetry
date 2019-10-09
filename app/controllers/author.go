@@ -35,7 +35,7 @@ func AuthorDetail(w http.ResponseWriter, req *http.Request) {
 		goto ErrorPage
 	}
 	authorLogic = logic.NewAuthorLogic()
-	if authorInfo, err = authorLogic.GetAuthorInfoByName(authorName); err != nil {
+	if authorInfo, err = authorLogic.GetAuthorInfoByName(authorName); err != nil || authorInfo.Id == 0 {
 		goto ErrorPage
 	}
 	if notesData, err = authorLogic.GetAuthorDetailDataListById(int(authorInfo.Id)); err != nil {

@@ -32,9 +32,8 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 		guessYouLike   []*define.Content //猜你喜欢
 		guessYouLen    = 3               //猜你喜欢显示条数
 		contentAll     define.ContentAll //诗词所有关联的信息
-		notesList      []*models.Notes   //赏析和翻译信息
-		notesData      []*models.Notes
-		creatBackData  *models.Notes //创作背景
+		notesData      []*models.Notes   //赏析和翻译信息
+		creatBackData  *models.Notes     //创作背景
 		err            error
 		profileAddress string //作者头像
 		assign         map[string]interface{}
@@ -67,13 +66,8 @@ func ShiWenIndex(w http.ResponseWriter, r *http.Request) {
 		goto ShowErrorPage
 	}
 	//获取翻译和赏析，创作背景数据
-	if notesList, err = logic.NewShiWenLogic().GetAllNotesByPoetryId(poetryRow.Id, logic.NotesAll); err != nil {
+	if notesData, err = logic.NewShiWenLogic().GetAllNotesByPoetryId(poetryRow.Id, logic.NotesAll); err != nil {
 		goto ShowErrorPage
-	}
-	for _, notes := range notesList {
-		if notes.Title != "创作背景" {
-			notesData = append(notesData, notes)
-		}
 	}
 	if poetryData.PoetryInfo.CreatBackId > 0 {
 		creatBackId := int(poetryData.PoetryInfo.CreatBackId)

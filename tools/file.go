@@ -38,11 +38,14 @@ func FilePointer(fileName string) (file *os.File, err error) {
 func WriteRecover(err interface{}) {
 	if file, e := FilePointer("logs/error.log"); e == nil {
 		errStr := fmt.Errorf("%v", err).Error()
-		_, runFile, line, ok := runtime.Caller(4)
-		if ok {
-			errStr += fmt.Sprintf("  File:%s,  Line:%d\n", runFile, line)
-		} else {
-			errStr += "\n"
+		for i := 0; i <= 5; i++ {
+			_, runFile, line, ok := runtime.Caller(i)
+			if ok {
+				errStr += fmt.Sprintf("  File:%s,  Line:%d\n", runFile, line)
+			} else {
+				errStr += "\n"
+				break
+			}
 		}
 		_, _ = file.WriteString(errStr)
 		_ = file.Close()

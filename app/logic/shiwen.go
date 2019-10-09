@@ -91,9 +91,27 @@ func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notes
 	}
 	notesIds := n.extractNotesId(transData, appRecData)
 	if len(notesIds) > 0 {
-		notesList, err = NewNotesLogic().GetNotesBytId(notesIds)
+		if notesList, err = NewNotesLogic().GetNotesBytId(notesIds); err != nil {
+			return
+		}
 	}
-	return
+	var notesData []*models.Notes
+	//详情内容HTML格式替换处理
+	for _, note := range notesList {
+		contentReplace := true
+		if note.Title == "创作背景" {
+			continue
+		}
+		if len(note.Introd) > 0 {
+			note.Introd = tools.PreContentHtml(note.Introd)
+			contentReplace = false
+		}
+		if contentReplace && len(note.Content) > 0 {
+			note.Content = tools.PreContentHtml(note.Content)
+		}
+		notesData = append(notesData, note)
+	}
+	return notesData, err
 }
 
 //用于首页-诗文-》译或赏的操作时，将翻译数据和诗文详情整合成HTML格式字符串，用于页面点击AJAX获取具体内容时用到

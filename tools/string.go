@@ -47,7 +47,7 @@ func ReplaceDictHtml(str string) string {
 	return str
 }
 
-//诗词详情页赏析和翻译数据和诗文详情替换所有的超链接，和字符中的ID
+//诗词详情页赏析和翻译数据和诗文详情替换所有的超链接，和字符中的ID，（AJAX获取赏析和翻译详情时用到了）
 func DealWithNotes(content, idStr string) string {
 	compile := regexp.MustCompile(`javascript:shangxiClose\(\d+\)`)
 	content = compile.ReplaceAllString(content, "javascript:shangxiClose("+idStr+")")
@@ -73,5 +73,25 @@ func RemoveLinkHtml(content string) string {
 	content = compile.ReplaceAllString(content, "")
 	compile = regexp.MustCompile(`</a>`)
 	content = compile.ReplaceAllString(content, "")
+	return content
+}
+
+//替换 <div class="cankao">HTML内容
+func ReplaceCanKaoHtml(content string) string {
+	compile := regexp.MustCompile(`(?msU)<div class="cankao">.*</div>`)
+	str := compile.ReplaceAllString(content, "")
+	return str
+}
+
+//替换诗词注释，翻译简介信息，诗词详情页展示用到 了
+func PreContentHtml(content string) string {
+	compile := regexp.MustCompile("<a.*</a>")
+	content = compile.ReplaceAllString(content, "")
+	content = ReplaceCanKaoHtml(content)
+	content = strings.Trim(content, "<div>")
+	content = strings.TrimRight(content, "</div>")
+	if content[0:3] != "<p>" {
+		content = "<p>" + content + "</p>"
+	}
 	return content
 }

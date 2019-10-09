@@ -42,7 +42,7 @@
                   {{if ge $j 1}}
                       <span>，</span>
                   {{end}}
-                <a href="{{$webDomain}}/shiwen/search/?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
+                <a href="{{$webDomain}}/search/shiwen/?type=tag&cstr={{$tag.CatName}}" target="_blank">{{$tag.CatName}}</a>
                 {{end}}
             </div>
         </div>
@@ -81,7 +81,7 @@
                 {{range $i,$category := .categoryData}}
                      <a href="{{$webDomain}}/category/poetry?name={{$category.CatName}}" target="_blank">{{$category.CatName}}</a>
                 {{end}}
-                <a href="{{$webDomain}}/shiwen/search">更多>></a>
+                <a href="{{$webDomain}}/search/shiwen/">更多>></a>
             </div>
         </div>
 

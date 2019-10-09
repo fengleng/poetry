@@ -28,6 +28,9 @@ func InitRouting(mux *http.ServeMux) {
 	mux.HandleFunc("/", CallMiddleWare(controllers.Index)) //首页
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
+	//搜索相关
+	mux.HandleFunc("/search/shiwen/", CallMiddleWare(controllers.ShiWenSearch)) //诗词搜索页
+
 	//诗文内容相关
 	mux.HandleFunc("/shiwen/ajaxshiwencont", CallMiddleWare(controllers.AjaxShiWenCont))   //ajax 根据诗词URL crc32值获取注释和译文详情html
 	mux.HandleFunc("/shiwen/ajaxshiwennotes", CallMiddleWare(controllers.AjaxShiWenNotes)) // ajax 根据赏析或译文id获取注释和译文详情html
@@ -38,8 +41,8 @@ func InitRouting(mux *http.ServeMux) {
 	mux.HandleFunc("/author/detail", CallMiddleWare(controllers.AuthorDetail))   //作者详情页
 	mux.HandleFunc("/author/poetryList", CallMiddleWare(controllers.PoetryList)) //作者诗词列表页
 
+	//词典查询
 	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha)) //词典接口
-
 }
 
 //初始化中间件

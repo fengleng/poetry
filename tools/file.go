@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"runtime"
 )
 
 func FileExists(file string) (ret bool, err error) {
@@ -36,9 +37,15 @@ func FilePointer(fileName string) (file *os.File, err error) {
 //写入recover到日志文件
 func WriteRecover(err interface{}) {
 	if file, e := FilePointer("logs/error.log"); e == nil {
-		errStr := fmt.Errorf("%v\n", err).Error()
-		file.WriteString(errStr)
-		file.Close()
+		errStr := fmt.Errorf("%v", err).Error()
+		_, runFile, line, ok := runtime.Caller(4)
+		if ok {
+			errStr += fmt.Sprintf("  File:%s,  Line:%d\n", runFile, line)
+		} else {
+			errStr += "\n"
+		}
+		_, _ = file.WriteString(errStr)
+		_ = file.Close()
 	}
 	return
 }

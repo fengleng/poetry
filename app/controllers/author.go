@@ -15,39 +15,45 @@ import (
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
 	"poetry/tools"
-	"strings"
 )
 
 //作者详情页
 func AuthorDetail(w http.ResponseWriter, req *http.Request) {
 	var (
-		authorLogic *logic.AuthorLogic
-		authorName  string
-		authorInfo  models.Author
-		notesData   []define.AuthorNotes
-		assign      map[string]interface{}
-		html        *templateHtml.Html
-		err         error
+		authorLogic    *logic.AuthorLogic
+		authorName     string
+		authorInfo     models.Author
+		notesData      []define.AuthorNotes
+		assign         map[string]interface{}
+		html           *templateHtml.Html
+		poetryListData define.ContentAll
+		err            error
+		randN          int
+		orderFiled     = "id"
 	)
 	if authorName = req.FormValue("value"); len(authorName) == 0 {
 		goto ErrorPage
 	}
-	authorName = strings.TrimSpace(authorName)
 	authorLogic = logic.NewAuthorLogic()
 	if authorInfo, err = authorLogic.GetAuthorInfoByName(authorName); err != nil {
 		goto ErrorPage
 	}
-	authorInfo.AuthorIntro = tools.TrimRightHtml(authorInfo.AuthorIntro)
 	if notesData, err = authorLogic.GetAuthorDetailDataListById(int(authorInfo.Id)); err != nil {
 		goto ErrorPage
 	}
-	//作者诗文取3条记录
-
+	//根据作者ID获取3条诗词列表,这里生成随机数，0为id升序，大于0为id降序
+	if randN = tools.RandInt(2); randN > 0 {
+		orderFiled = "-id"
+	}
+	if poetryListData, err = logic.NewContentLogic().GetPoetryListByAuthorId(authorInfo, 0, 3, orderFiled); err != nil {
+		goto ErrorPage
+	}
 	html = templateHtml.NewHtml(w)
 	assign = make(map[string]interface{})
 	assign["profileAddr"] = authorLogic.GetProfileAddress(authorInfo)
 	assign["authorInfo"] = authorInfo
 	assign["notesData"] = notesData
+	assign["poetryListData"] = poetryListData.ContentArr
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["title"] = authorInfo.Author + "简介"

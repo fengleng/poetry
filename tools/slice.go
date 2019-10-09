@@ -35,3 +35,9 @@ func RandInt64Slice(len, maxNumber int) []int64 {
 	}
 	return intSlice
 }
+
+//生成一个随机数
+func RandInt(maxNum int) int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(maxNum)
+}

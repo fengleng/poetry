@@ -115,3 +115,28 @@ func (c *contentLogic) ProcContentAuthorTagData(contentList []models.Content, au
 	}
 	return
 }
+
+//根据作者信息查询作者诗词列表
+func (c *contentLogic) GetPoetryListByAuthorId(authorInfo models.Author, offset, limit int, orderFiled string) (poetryListData define.ContentAll, err error) {
+	var (
+		tags         TagMp //诗词的分类标签信息
+		poetryIdList []int64
+		authorData   map[int]models.Author
+		contentList  []models.Content
+	)
+	//诗词列表信息
+	if contentList, err = c.contentModel.GetContentListByAuthorId(authorInfo.Id, offset, limit, orderFiled); err != nil {
+		return
+	}
+	poetryIdList = make([]int64, len(contentList))
+	for i, content := range contentList {
+		poetryIdList[i] = int64(content.Id)
+	}
+	//根据诗词ID查询分类标签表数据
+	tags, _ = NewContentTagLogic().GetDataByPoetryId(poetryIdList)
+	//将诗词数据，朝代数据,分类整合一起
+	authorData = make(map[int]models.Author, 1)
+	authorData[int(authorInfo.Id)] = authorInfo
+	poetryListData = c.ProcContentAuthorTagData(contentList, authorData, tags)
+	return
+}

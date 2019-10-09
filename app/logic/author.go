@@ -9,6 +9,8 @@ package logic
 import (
 	"poetry/app/models"
 	"poetry/config/define"
+	"poetry/tools"
+	"strings"
 )
 
 type AuthorLogic struct {
@@ -21,7 +23,7 @@ func NewAuthorLogic() *AuthorLogic {
 	}
 }
 
-//根据id查询作者信息
+//根据id查询作者信息基础信息
 func (a *AuthorLogic) GetAuthorInfoByIds(ids []int64) (authorList map[int]models.Author, err error) {
 	var authorData []models.Author
 	authorList = make(map[int]models.Author)
@@ -39,12 +41,17 @@ func (a *AuthorLogic) GetListByOrderCountDesc(offset, limit int) (data []models.
 	return models.NewAuthor().GetListByOrderCountDesc(offset, limit)
 }
 
-//根据作者名字获取作者资料
+//根据作者名字获取作者基础信息
 func (a *AuthorLogic) GetAuthorInfoByName(name string) (data models.Author, err error) {
-	return a.authorModel.GetAuthorInfoByName(name)
+	name = strings.TrimSpace(name)
+	if data, err = a.authorModel.GetAuthorInfoByName(name); err != nil {
+		return
+	}
+	data.AuthorIntro = tools.TrimRightHtml(data.AuthorIntro)
+	return
 }
 
-//根据作者ID查询作者资料信息表
+//根据作者ID查询作者详情资料信息
 func (a *AuthorLogic) GetAuthorDetailDataListById(id int) (authorNotes []define.AuthorNotes, err error) {
 	var (
 		authorData   []models.AuthorData

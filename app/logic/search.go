@@ -7,12 +7,13 @@
 package logic
 
 import (
-	"fmt"
+	"github.com/sirupsen/logrus"
 	"poetry/app/models"
+	"strings"
 )
 
 type Searcher interface {
-	GetPoetryListByFilter(cstr string) []models.Content
+	GetPoetryListByFilter(cstr string, offset, limit int) ([]models.Content, error)
 }
 
 type SearchLogic struct {
@@ -30,16 +31,23 @@ const (
 
 //诗文搜索
 func (s *SearchLogic) GetSearchShiWenPoetryList(typeStr, cstr string) {
-	var searchMod Searcher
+	var (
+		searchMod  Searcher
+		poetryList []models.Content
+		err        error
+	)
 	switch typeStr {
 	case searchAuthor:
-		searchMod = NewDynastyLogic() //todo
+		searchMod = NewAuthorLogic()
 	case searchTag:
-		searchMod = NewDynastyLogic() //todo
+		searchMod = NewCategoryLogic()
 	case searchDynasty:
 		searchMod = NewDynastyLogic()
 	}
-	val := searchMod.GetPoetryListByFilter(cstr)
+	cstr = strings.TrimSpace(cstr)
+	if poetryList, err = searchMod.GetPoetryListByFilter(cstr, 0, 10); err != nil {
+		return
+	}
 	//统一处理返回的诗词列表格式，
-	fmt.Println(val)
+	logrus.Infof("%+v\n", poetryList)
 }

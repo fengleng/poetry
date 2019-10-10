@@ -90,3 +90,13 @@ func (a *AuthorLogic) GetProfileAddress(author models.Author) (profileAddress st
 	}
 	return profileAddress
 }
+
+//根据作者名字搜索诗词列表
+func (a *AuthorLogic) GetPoetryListByFilter(authorName string, offset, limit int) (data []models.Content, err error) {
+	var authorInfo models.Author
+	if authorInfo, err = a.authorModel.GetAuthorInfoByName(authorName); err != nil || authorInfo.Id == 0 {
+		return
+	}
+	data, err = models.NewContent().GetContentListByAuthorId(authorInfo.Id, offset, limit, "id")
+	return
+}

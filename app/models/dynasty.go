@@ -34,6 +34,12 @@ func (d *Dynasty) GetDataByIdArr(ids []int) (data []Dynasty, err error) {
 	return
 }
 
+//根据朝代名字查询朝代信息
+func (d *Dynasty) GetDynastyDataByName(name string) (data Dynasty, err error) {
+	_, err = orm.NewOrm().QueryTable(DynastyTable).Filter("dynasty_name", name).All(&data, "id")
+	return
+}
+
 //查询所有朝代列表
 func (d *Dynasty) GetAll(offset, limit int) (data []Dynasty, err error) {
 	_, err = orm.NewOrm().QueryTable(DynastyTable).Limit(limit, offset).All(&data, "id", "dynasty_name")

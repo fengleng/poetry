@@ -39,3 +39,10 @@ func (c *Category) GetCateByPositionLimit(showPosition, offset, limit int) (data
 	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("show_position", showPosition).Filter("pid", 0).Limit(limit, offset).All(&data, fields...)
 	return
 }
+
+//根据分类名字查询分类信息
+func (c *Category) GetCategoryInfoByCateName(catName string) (data Category, err error) {
+	fields := []string{"id", "cat_name", "source_url", "source_url_crc32"}
+	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("cat_name", catName).All(&data, fields...)
+	return
+}

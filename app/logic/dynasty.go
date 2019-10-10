@@ -6,7 +6,9 @@
 */
 package logic
 
-import "poetry/app/models"
+import (
+	"poetry/app/models"
+)
 
 type dynastyLogic struct {
 	model *models.Dynasty
@@ -50,8 +52,17 @@ func (d *dynastyLogic) GetDynastyIds(authorData map[int]models.Author) (dynastyL
 }
 
 //根据朝代名字搜索诗词列表
-func (d *dynastyLogic) GetPoetryListByFilter(cstr string) []models.Content {
+func (d *dynastyLogic) GetPoetryListByFilter(dynastyName string, offset, limit int) (data []models.Content, err error) {
+	var (
+		dynastyRow models.Dynasty
+	)
 	//1.先查出朝代ID
+	if dynastyRow, err = d.model.GetDynastyDataByName(dynastyName); err != nil || dynastyRow.Id == 0 {
+		return
+	}
 	//2.根据朝代ID写SQL关联诗词列表
-	return nil
+	if data, err = models.NewContent().GetContentListByDynastyId(dynastyRow.Id, offset, limit); err != nil {
+		return
+	}
+	return
 }

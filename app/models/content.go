@@ -6,7 +6,10 @@
 */
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"fmt"
+	"github.com/astaxie/beego/orm"
+)
 
 //poetry_content 诗词表
 type Content struct {
@@ -59,5 +62,19 @@ func (c *Content) GetContentListByAuthorId(authorId int64, offset, limit int, or
 //根据作者ID查询作者诗词总数
 func (c *Content) GetContentCountByAuthorId(authorId int64) (count int64, err error) {
 	count, err = orm.NewOrm().QueryTable(ContentTable).Filter("author_id", authorId).Count()
+	return
+}
+
+//根据朝代ID查询诗词列表
+func (c *Content) GetContentListByDynastyId(dynastyId int, offset, limit int) (data []Content, err error) {
+	sql := fmt.Sprintf(`SELECT a.id,a.title,a.content,a.source_url,a.sourceurl_crc32,a.author_id,b.author,b.dynasty_id FROM %s AS a left join %s AS b on a.author_id=b.id WHERE b.dynasty_id=%d Limit %d,%d`, ContentTable, AuthorTable, dynastyId, offset, limit)
+	_, err = orm.NewOrm().Raw(sql).QueryRows(&data)
+	return
+}
+
+//根据分类ID查询诗词列表
+func (c *Content) GetContentListByCategoryId(categoryId int, offset, limit int) (data []Content, err error) {
+	sql := fmt.Sprintf("SELECT a.id,a.title,a.content,a.source_url,a.sourceurl_crc32,a.author_id FROM %s AS a  WHERE a.id IN (SELECT poetry_id FROM %s WHERE category_id=%d) Limit %d,%d", ContentTable, ContentTagTable, categoryId, offset, limit)
+	_, err = orm.NewOrm().Raw(sql).QueryRows(&data)
 	return
 }

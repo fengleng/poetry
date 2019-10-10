@@ -42,3 +42,15 @@ func (c *categoryLogic) GetDataByIds(ids []int) (data MpCategory, err error) {
 func (c *categoryLogic) GetCateByPositionLimit(showPosition, offset, limit int) (data []models.Category, err error) {
 	return models.NewCategory().GetCateByPositionLimit(showPosition, offset, limit)
 }
+
+//根据分类名字搜索诗词列表
+func (c *categoryLogic) GetPoetryListByFilter(categoryName string, offset, limit int) (data []models.Content, err error) {
+	var categoryInfo models.Category
+	//查询分类信息
+	if categoryInfo, err = c.categoryModel.GetCategoryInfoByCateName(categoryName); err != nil || categoryInfo.Id == 0 {
+		return
+	}
+	//写SQL 根据分类ID查询诗词列表
+	data, err = models.NewContent().GetContentListByCategoryId(categoryInfo.Id, offset, limit)
+	return
+}

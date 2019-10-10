@@ -14,7 +14,6 @@ import (
 	"poetry/app/models"
 	"poetry/config/define"
 	"poetry/libary/template"
-	"poetry/tools"
 	"sort"
 	"strconv"
 	"strings"
@@ -58,7 +57,6 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 	//查询100个诗词分类 offset随机
-	offset = tools.RandInt(830)
 	if categoryData, err = logic.NewCategoryLogic().GetCateByPositionLimit(define.PoetryShowPosition, offset, limit); err != nil {
 		goto ErrorPage
 	}
@@ -66,7 +64,6 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 		return len(categoryData[i].CatName) < len(categoryData[j].CatName)
 	})
 	//查询100个作者 offset随机
-	offset = tools.RandInt(900)
 	if authorData, err = logic.NewAuthorLogic().GetListByOrderCountDesc(offset, limit); err != nil {
 		goto ErrorPage
 	}
@@ -88,6 +85,8 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["title"] = define.WebTitle
 	assign["version"] = define.StaticVersion
+	assign["typeStr"] = typeStr
+	assign["cstr"] = cstr
 	template.NewHtml(w).Display("search/shiwen.html", assign)
 	return
 ErrorPage:

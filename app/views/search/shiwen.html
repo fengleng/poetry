@@ -1,10 +1,13 @@
 {{template "header" .}}
-<link href="{{.cdnDomain}}/static/css/skinSo20190816.css" rel="stylesheet" type="text/css" />
+<link href="{{.cdnDomain}}/static/css/skinSo20190816.css?version={{.version}}" rel="stylesheet" type="text/css" />
 
 <body onclick="closeshowBos()">
 {{template "nav" .}}
 {{$cdnDomain := .cdnDomain}}
 {{$webDomain := .webDomain}}
+
+{{$typeStr := .typeStr}}
+{{$cstr := .cstr}}
 
 <div class="main3">
     <div class="left">
@@ -17,8 +20,16 @@
                     <span>类型：</span>
                 </div>
                 <div class="sright">
+                    {{if eq $typeStr "tag"}}
+                        <span>{{$cstr}}</span>
+                    {{end}}
                      {{range $i,$category :=.categoryData}}
-                       <a href="{{$webDomain}}/search/shiwen/?type=tag&cstr={{$category.CatName}}">{{$category.CatName}}</a>
+                         {{$condition1 := eq $typeStr "tag"}}
+                         {{$condition2 := eq  $cstr $category.CatName}}
+                         {{if and  $condition1  $condition2}}
+                             {{else}}
+                             <a href="{{$webDomain}}/search/shiwen/?type=tag&cstr={{$category.CatName}}">{{$category.CatName}}</a>
+                         {{end}}
                     {{end}}
                 </div>
                 <div class="sright2">
@@ -31,8 +42,16 @@
                     <span>作者：</span>
                 </div>
                 <div class="sright">
+                    {{if eq $typeStr "author"}}
+                        <span>{{$cstr}}</span>
+                    {{end}}
                     {{range $i,$author :=.authorData}}
-                    <a  href="{{$webDomain}}/search/shiwen/?type=author&cstr={{$author.Author}}">{{$author.Author}}</a>
+                    {{$condition1 := eq $typeStr "author"}}
+                    {{$condition2 := eq  $cstr $author.Author}}
+                    {{if and  $condition1  $condition2}}
+                        {{else}}
+                        <a  href="{{$webDomain}}/search/shiwen/?type=author&cstr={{$author.Author}}">{{$author.Author}}</a>
+                       {{end}}
                     {{end}}
                 </div>
                 <div class="sright2">
@@ -44,11 +63,19 @@
                     <span>朝代：</span>
                 </div>
                 <div class="sright">
+                    {{if eq $typeStr "dynasty"}}
+                        <span>{{$cstr}}</span>
+                    {{end}}
                     {{range $i,$dynasty :=.dynastyData}}
-                    <a href="{{$webDomain}}/search/shiwen/?type=dynasty&cstr={{$dynasty.DynastyName}}">{{$dynasty.DynastyName}}</a>
+                        {{$condition1 := eq $typeStr "dynasty"}}
+                        {{$condition2 := eq  $cstr $dynasty.DynastyName}}
+                    {{if and  $condition1  $condition2}}
+                        {{else}}
+                          <a href="{{$webDomain}}/search/shiwen/?type=dynasty&cstr={{$dynasty.DynastyName}}">{{$dynasty.DynastyName}}</a>
+                       {{end}}
                     {{end}}
                 </div>
-                <div class="sright2"><img id="imgType3" src="https://song.gushiwen.org/siteimg/jianTop.png" alt="展开" width="12" height="12" onclick="clickType3()" /></div>
+                <div class="sright2"><img id="imgType3" src="{{$cdnDomain}}/static/images/jianTop.png" alt="展开" width="12" height="12" onclick="clickType3()" /></div>
             </div>
         </div>
    {{range $i,$content := .poetryList}}
@@ -156,6 +183,6 @@
         setIframeHeight(document.getElementById('external-frame'));
     };
 </script>
-<script defer="defer" src="{{.cdnDomain}}/static/js/skinso20190931.js" type="text/javascript"></script>
+<script defer="defer" src="{{.cdnDomain}}/static/js/skinso20190931.js?version={{.version}}" type="text/javascript"></script>
 </body>
 </html>

@@ -23,16 +23,19 @@ func NewSearchLogic() *SearchLogic {
 }
 
 const (
-	searchTag     = "tag"     //按tag搜索
+	searchTag     = "tag"     //按tag标签搜索
 	searchDynasty = "dynasty" //按朝代搜索
+	searchAuthor  = "author"  //按作者搜索
 )
 
 //诗文搜索
 func (s *SearchLogic) GetSearchShiWenPoetryList(typeStr, cstr string) {
 	var searchMod Searcher
 	switch typeStr {
+	case searchAuthor:
+		searchMod = NewDynastyLogic() //todo
 	case searchTag:
-
+		searchMod = NewDynastyLogic() //todo
 	case searchDynasty:
 		searchMod = NewDynastyLogic()
 	}

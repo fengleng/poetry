@@ -89,7 +89,7 @@ func (n *ShiWenLogic) GetAllNotesByPoetryId(poetryId int, typeStr string) (notes
 		transData, _ = models.NewTrans().FindNotesIdByPoetryId(poetryId)
 		appRecData, _ = models.NewAppRec().FindNotesIdByPoetryId(poetryId)
 	}
-	notesIds := n.extractNotesId(transData, appRecData)
+	notesIds := ExtractNotesId(transData, appRecData)
 	if len(notesIds) > 0 {
 		if notesList, err = NewNotesLogic().GetNotesBytId(notesIds); err != nil {
 			return
@@ -148,18 +148,18 @@ func (n *ShiWenLogic) GetNotesDetailHtml(notes *models.Notes) (html string) {
 }
 
 //获取notesId
-func (n *ShiWenLogic) extractNotesId(transData []models.Trans, appRecData []models.AppRec) (notesIds []int) {
-	if len(transData) == 0 && len(appRecData) == 0 {
-		return
-	}
-	for _, trans := range transData {
-		notesIds = append(notesIds, int(trans.NotesId))
-	}
-	for _, appRec := range appRecData {
-		notesIds = append(notesIds, int(appRec.NotesId))
-	}
-	return
-}
+//func (n *ShiWenLogic) extractNotesId(transData []models.Trans, appRecData []models.AppRec) (notesIds []int) {
+//	if len(transData) == 0 && len(appRecData) == 0 {
+//		return
+//	}
+//	for _, trans := range transData {
+//		notesIds = append(notesIds, int(trans.NotesId))
+//	}
+//	for _, appRec := range appRecData {
+//		notesIds = append(notesIds, int(appRec.NotesId))
+//	}
+//	return
+//}
 
 //根据url path 获取CrcId
 func (n *ShiWenLogic) GetCrcIdByUrlPath(path string) (crcId uint64, err error) {

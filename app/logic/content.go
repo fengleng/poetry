@@ -30,22 +30,22 @@ func (c *contentLogic) GetContentByIdList(ids []int64) (data []models.Content, e
 }
 
 //根据诗词数据获取作者ID
-func (c *contentLogic) extractAuthorId(contentList []models.Content) (authorIds []int64) {
-	authorIds = make([]int64, len(contentList))
-	for k, content := range contentList {
-		authorIds[k] = content.AuthorId
-	}
-	return
-}
+//func (c *contentLogic) extractAuthorId(contentList []models.Content) (authorIds []int64) {
+//	authorIds = make([]int64, len(contentList))
+//	for k, content := range contentList {
+//		authorIds[k] = content.AuthorId
+//	}
+//	return
+//}
 
 //根据诗词数据获取诗词ID
-func (c *contentLogic) extractPoetryId(contentList []models.Content) (poetryIds []int) {
-	poetryIds = make([]int, len(contentList))
-	for k, content := range contentList {
-		poetryIds[k] = content.Id
-	}
-	return
-}
+//func (c *contentLogic) extractPoetryId(contentList []models.Content) (poetryIds []int) {
+//	poetryIds = make([]int, len(contentList))
+//	for k, content := range contentList {
+//		poetryIds[k] = content.Id
+//	}
+//	return
+//}
 
 //根据sourceurl_crc32 查询正文数据
 func (c *contentLogic) GetContentByCrc32Id(crc32Id uint32) (data models.Content, err error) {
@@ -67,7 +67,7 @@ func (c *contentLogic) GetPoetryContentAll(poetryIdList []int64) (contentData de
 	if contentList, err = c.GetContentByIdList(poetryIdList); err != nil || len(contentList) == 0 {
 		return
 	}
-	authorIds = c.extractAuthorId(contentList)
+	authorIds = ExtractAuthorId(contentList)
 	//根据作者ID查询作者表数据
 	if authorData, err = NewAuthorLogic().GetAuthorInfoByIds(authorIds); err != nil {
 		return

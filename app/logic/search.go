@@ -7,9 +7,8 @@
 package logic
 
 import (
-	"github.com/sirupsen/logrus"
 	"poetry/app/models"
-	"strings"
+	"poetry/config/define"
 )
 
 type Searcher interface {
@@ -30,11 +29,14 @@ const (
 )
 
 //诗文搜索
-func (s *SearchLogic) GetSearchShiWenPoetryList(typeStr, cstr string) {
+func (s *SearchLogic) GetSearchShiWenPoetryList(typeStr, cstr string, offset, limit int) (contentData define.ContentAll, err error) {
 	var (
 		searchMod  Searcher
 		poetryList []models.Content
-		err        error
+		authorIds  []int64               //作者ID集合
+		poetryIds  []int64               //诗词ID集合
+		authorData map[int]models.Author //作者信息集合
+		tags       TagMp                 //诗词的分类标签信息
 	)
 	switch typeStr {
 	case searchAuthor:
@@ -43,11 +45,21 @@ func (s *SearchLogic) GetSearchShiWenPoetryList(typeStr, cstr string) {
 		searchMod = NewCategoryLogic()
 	case searchDynasty:
 		searchMod = NewDynastyLogic()
-	}
-	cstr = strings.TrimSpace(cstr)
-	if poetryList, err = searchMod.GetPoetryListByFilter(cstr, 0, 10); err != nil {
+	default:
 		return
 	}
-	//统一处理返回的诗词列表格式，
-	logrus.Infof("%+v\n", poetryList)
+	if poetryList, err = searchMod.GetPoetryListByFilter(cstr, offset, limit); err != nil || len(poetryList) == 0 {
+		return
+	}
+	poetryIds = ExtractPoetryIdTo64(poetryList)
+	authorIds = ExtractAuthorId(poetryList)
+	//根据作者ID查询作者表数据
+	if authorData, err = NewAuthorLogic().GetAuthorInfoByIds(authorIds); err != nil {
+		return
+	}
+	//根据诗词ID查询分类标签表数据
+	tags, _ = NewContentTagLogic().GetDataByPoetryId(poetryIds)
+	//将诗词数据，作者数据，朝代数据,分类整合一起
+	contentData = NewContentLogic().ProcContentAuthorTagData(poetryList, authorData, tags)
+	return
 }

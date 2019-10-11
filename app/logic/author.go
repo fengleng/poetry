@@ -100,3 +100,14 @@ func (a *AuthorLogic) GetPoetryListByFilter(authorName string, offset, limit int
 	data, err = models.NewContent().GetContentListByAuthorId(authorInfo.Id, offset, limit, "id")
 	return
 }
+
+//根据作者名字查询诗词总数
+func (a *AuthorLogic) GetPoetryCountByFilter(authorName string) (count int, err error) {
+	var authorInfo models.Author
+	if authorInfo, err = a.authorModel.GetAuthorInfoByName(authorName); err != nil || authorInfo.Id == 0 {
+		return
+	}
+	num, err := models.NewContent().GetContentCountByAuthorId(authorInfo.Id)
+	count = int(num)
+	return
+}

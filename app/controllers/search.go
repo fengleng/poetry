@@ -8,12 +8,14 @@ package controllers
 
 import (
 	"github.com/pkg/errors"
+	"math"
 	"net/http"
 	"poetry/app/bootstrap"
 	"poetry/app/logic"
 	"poetry/app/models"
 	"poetry/config/define"
 	"poetry/libary/template"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -28,11 +30,14 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 		poetryList   define.ContentAll //诗词列表信息
 		assign       map[string]interface{}
 		page         int //当前页数
+		pageCount    int //总页数
+		countNum     int //诗词总数
 		offset       = 0
-		pOffset      = 0   //诗词列表偏移量
-		pLimit       = 10  //诗词列表每页显示的条数
-		limit        = 165 //作者，分类，查询的总条数
-		limitOffset  = 100 //分割条数，右边显示 60条数据
+		pOffset      = 0    //诗词列表偏移量
+		pLimit       = 10   //诗词列表每页显示的条数
+		limit        = 165  //作者，分类，查询的总条数
+		limitOffset  = 100  //分割条数，右边显示 60条数据
+		pageUrl      string //当前URl
 		err          error
 	)
 	typeStr := req.FormValue("type") //搜索类型
@@ -40,21 +45,27 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 	if pageStr := req.FormValue("page"); len(pageStr) > 0 {
 		page, _ = strconv.Atoi(pageStr)
 	}
-	if page == 0 {
-		page = 1
-	}
+	//走搜索获取取诗词列表
 	if len(cstr) > 1 {
-		//走搜索获取取诗词列表
 		cstr = strings.TrimSpace(cstr)
+		countNum, _ = logic.NewSearchLogic().GetSearchShiWenPoetryCount(typeStr, cstr)
+		pageCount = int(math.Ceil(float64(countNum) / float64(pLimit)))
+		if page > pageCount || page == 0 {
+			page = 1
+		}
 		pOffset = (page - 1) * pLimit
 		poetryList, _ = logic.NewSearchLogic().GetSearchShiWenPoetryList(typeStr, cstr, pOffset, pLimit)
 	}
+	//默认取推荐表 获取诗词列表，从第20页取，避免与首页数据相同
 	if len(cstr) == 0 {
-		//默认取推荐表 获取诗词列表，从第30页取，避免与首页数据相同
-		pOffset = (page + 30 - 1) * pLimit
-		if poetryList, err = logic.NewRecommendLogic().GetSameDayRecommendPoetryData(pOffset, pLimit); err != nil {
-			goto ErrorPage
+		countNum = logic.NewRecommendLogic().GetRecommendCount()
+		countNum = countNum - 200
+		pageCount = int(math.Ceil(float64(countNum) / float64(pLimit)))
+		if page > pageCount || page == 0 {
+			page = 1
 		}
+		pOffset = (page + 20 - 1) * pLimit
+		poetryList, _ = logic.NewRecommendLogic().GetSameDayRecommendPoetryData(pOffset, pLimit)
 	}
 	//查询100个诗词分类 offset随机
 	if categoryData, err = logic.NewCategoryLogic().GetCateByPositionLimit(define.PoetryShowPosition, offset, limit); err != nil {
@@ -74,6 +85,7 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 	if dynastyData, err = logic.NewDynastyLogic().GetAll(0, limit); err != nil {
 		goto ErrorPage
 	}
+	pageUrl = regexp.MustCompile("[&|?]page=\\d").ReplaceAllString(req.URL.String(), "")
 	assign = make(map[string]interface{})
 	assign["categoryData"] = categoryData[:limitOffset]
 	assign["rightCategoryData"] = categoryData[limitOffset:]
@@ -87,6 +99,13 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 	assign["version"] = define.StaticVersion
 	assign["typeStr"] = typeStr
 	assign["cstr"] = cstr
+	assign["pageCount"] = pageCount
+	assign["page"] = page
+	assign["nextPage"] = page + 1
+	assign["prevPage"] = page - 1
+	assign["countNum"] = countNum
+	assign["pageUrl"] = pageUrl
+	assign["urlPath"] = req.URL.Path
 	template.NewHtml(w).Display("search/shiwen.html", assign)
 	return
 ErrorPage:

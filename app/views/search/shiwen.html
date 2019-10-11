@@ -13,7 +13,7 @@
     <div class="left">
 
         <div class="titletype">
-            <div class="son1"><h1>不限<span>1 / 100页</span></h1></div>
+            <div class="son1"><h1>不限<span>{{.page}} / {{.pageCount}}页</span></h1></div>
 
             <div id="type1" class="son2" style=" height:26px;">
                 <div class="sleft">
@@ -119,22 +119,27 @@
         </div>
    {{end}}
 
-
-        <form id="FromPage" method="get" action="/shiwen/default.aspx" onsubmit="return PageSubmit()">
+        <form id="FromPage" method="get" action="{{.pageUrl}}" onsubmit="return PageSubmit()">
             <div class="pagesright">
+                {{if le .nextPage .pageCount}}
+                    <a id="amore" class="amore" href="{{.pageUrl}}&page={{.nextPage}}">下一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">下一页</a>
+                {{end}}
 
-                <a class="amore" href="/shiwen/default_0AA2.aspx">下一页</a>
+                {{if gt .page 1}}
+                    <a href="{{.pageUrl}}&page={{.prevPage}}">上一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
+                {{end}}
 
-                <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
-
-                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ 100页</span>
-                <span class="curent"><input id="putpage" name="page" value="1" autocomplete="off" onblur="SubPage()" /></span>
-                <label id="temppage" style="display:none;">1</label>
-                <label id="sumPage" style="display:none;">100</label>
-                <input type="hidden" name="type" value="0" />
-                <input type="hidden" name="id" value="0" />
+                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ {{.pageCount}}页</span>
+                <span class="curent"><input id="putpage" name="page" value="{{.page}}" autocomplete="off" onblur="SubPage()" /></span>
+                <label id="temppage" style="display:none;">{{.page}}</label>
+                <label id="sumPage" style="display:none;">{{.pageCount}}</label>
             </div>
         </form>
+
     </div>
 
     <div class="right">

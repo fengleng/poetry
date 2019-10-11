@@ -66,3 +66,13 @@ func (d *dynastyLogic) GetPoetryListByFilter(dynastyName string, offset, limit i
 	}
 	return
 }
+
+//根据朝代名字查询诗词总数
+func (d *dynastyLogic) GetPoetryCountByFilter(dynastyName string) (count int, err error) {
+	var dynastyRow models.Dynasty
+	if dynastyRow, err = d.model.GetDynastyDataByName(dynastyName); err != nil || dynastyRow.Id == 0 {
+		return
+	}
+	count, err = models.NewContent().GetContentCountByDynastyId(dynastyRow.Id)
+	return
+}

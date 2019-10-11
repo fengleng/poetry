@@ -9,6 +9,8 @@ package models
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
+	"reflect"
+	"strconv"
 )
 
 //poetry_content 诗词表
@@ -72,9 +74,30 @@ func (c *Content) GetContentListByDynastyId(dynastyId int, offset, limit int) (d
 	return
 }
 
+//根据朝代ID查询诗词总数
+func (c *Content) GetContentCountByDynastyId(dynastyId int) (count int, err error) {
+	var (
+		maps  []orm.Params
+		mpVal interface{}
+		ok    bool
+	)
+	sql := fmt.Sprintf(`SELECT  COUNT(*) AS C FROM %s AS a left join %s AS b on a.author_id=b.id WHERE b.dynasty_id=%d`, ContentTable, AuthorTable, dynastyId)
+	_, err = orm.NewOrm().Raw(sql).Values(&maps)
+	if len(maps) > 0 {
+		if mpVal, ok = maps[0]["C"]; !ok {
+			return
+		}
+		if reflect.TypeOf(mpVal).String() == reflect.String.String() {
+			c := reflect.ValueOf(mpVal).String()
+			count, err = strconv.Atoi(c)
+		}
+	}
+	return
+}
+
 //根据分类ID查询诗词列表
 func (c *Content) GetContentListByCategoryId(categoryId int, offset, limit int) (data []Content, err error) {
-	sql := fmt.Sprintf("SELECT a.id,a.title,a.content,a.source_url,a.sourceurl_crc32,a.author_id FROM %s AS a  WHERE a.id IN (SELECT poetry_id FROM %s WHERE category_id=%d) Limit %d,%d", ContentTable, ContentTagTable, categoryId, offset, limit)
+	sql := fmt.Sprintf("SELECT a.id,a.title,a.content,a.source_url,a.sourceurl_crc32,a.author_id FROM %s AS a  WHERE a.id IN (SELECT DISTINCT(poetry_id)  FROM %s WHERE category_id=%d) Limit %d,%d", ContentTable, ContentTagTable, categoryId, offset, limit)
 	_, err = orm.NewOrm().Raw(sql).QueryRows(&data)
 	return
 }

@@ -54,3 +54,14 @@ func (c *categoryLogic) GetPoetryListByFilter(categoryName string, offset, limit
 	data, err = models.NewContent().GetContentListByCategoryId(categoryInfo.Id, offset, limit)
 	return
 }
+
+//根据分类名字查询诗词总数
+func (c *categoryLogic) GetPoetryCountByFilter(categoryName string) (count int, err error) {
+	var categoryInfo models.Category
+	//查询分类信息
+	if categoryInfo, err = c.categoryModel.GetCategoryInfoByCateName(categoryName); err != nil || categoryInfo.Id == 0 {
+		return
+	}
+	count, err = models.NewContentTag().GetCountByCategoryId(categoryInfo.Id)
+	return
+}

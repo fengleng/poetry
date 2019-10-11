@@ -6,8 +6,8 @@
          </div>
          <div class="right">
              <div class="son1">
-                 <a style="margin-left:1px;background-color:#757863;border-bottom:3px solid #F0EFE2;line-height:43px; height:43px;" href="/">推荐</a>
-                 <a href="https://so.gushiwen.org/shiwen/">诗文</a>
+                 <a {{if eq .urlPath "/"}} style="margin-left:1px;background-color:#757863;border-bottom:3px solid #F0EFE2;line-height:43px; height:43px;"{{end}} href="/">推荐</a>
+                 <a  {{if eq .urlPath "/search/shiwen/"}} style="margin-left:1px;background-color:#757863;border-bottom:3px solid #F0EFE2;line-height:43px; height:43px;"{{end}} href="/search/shiwen/">诗文</a>
                  <a href="https://so.gushiwen.org/mingju/">名句</a>
                  <a href="https://so.gushiwen.org/authors/">作者</a>
                  <a href="https://so.gushiwen.org/guwen/">古籍</a>

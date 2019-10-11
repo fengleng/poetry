@@ -49,7 +49,7 @@ func unescaped(x string) template.HTML {
 }
 
 //显示模板页
-func (h *Html) Display(page string, data interface{}) {
+func (h *Html) Display(page string, data map[string]interface{}) {
 	htmlPath := []string{
 		h.ViewPath + "/views/public/header.html",
 		h.ViewPath + "/views/public/naver.html",

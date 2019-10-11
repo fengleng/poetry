@@ -7,7 +7,9 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"poetry/app/bootstrap"
 	"poetry/app/logic"
@@ -15,13 +17,65 @@ import (
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
 	"poetry/tools"
+	"sort"
 	"strconv"
 	"strings"
 )
 
 //诗文 控制器
 
-//诗词详情页
+//诗词分类列表页,根据分类名显示诗词列表页
+func ShiWenList(w http.ResponseWriter, req *http.Request) {
+	var (
+		poetryList   []models.Content      //诗词列表
+		authorIds    []int64               //作者ID集合
+		authorData   map[int]models.Author //作者信息集合
+		categoryData []models.Category     //分类列表
+		contentData  define.ContentAll
+		assign       map[string]interface{}
+		cateName     string
+		err          error
+	)
+	if cateName = req.FormValue("value"); len(cateName) < 2 {
+		goto ErrorPage
+	}
+	if poetryList, err = logic.NewCategoryLogic().GetPoetryListByFilter(cateName, 0, 600); err != nil {
+		goto ErrorPage
+	}
+	//获取诗文分类
+	if categoryData, err = logic.NewCategoryLogic().GetCateByPositionLimit(define.PoetryShowPosition, 0, 95); err != nil {
+		goto ErrorPage
+	}
+	sort.Slice(categoryData, func(i, j int) bool {
+		return len(categoryData[i].CatName) > len(categoryData[j].CatName)
+	})
+	authorIds = logic.ExtractAuthorId(poetryList)
+	//根据作者ID查询作者表数据
+	if authorData, err = logic.NewAuthorLogic().GetAuthorInfoByIds(authorIds); err != nil {
+		return
+	}
+	contentData = logic.NewContentLogic().ProcContentAuthorTagData(poetryList, authorData, nil)
+	assign = make(map[string]interface{})
+	assign["contentData"] = contentData.ContentArr
+	assign["categoryData"] = categoryData
+	assign["cateName"] = cateName
+	assign["urlPath"] = define.PageShiWen
+	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
+	assign["webDomain"] = bootstrap.G_Conf.WebDomain
+	assign["title"] = cateName
+	assign["version"] = define.StaticVersion
+	templateHtml.NewHtml(w).Display("shiwen/list.html", assign)
+	logrus.Infof("%+v\n", poetryList)
+	return
+ErrorPage:
+	if err == nil {
+		err = errors.New("非法请求...请稍后重试")
+	}
+	templateHtml.NewHtml(w).DisplayErrorPage(err)
+	return
+}
+
+//诗词详情页,根据诗词URL CRC值显示诗词详情页
 func ShiWenDetail(w http.ResponseWriter, r *http.Request) {
 	var (
 		crcId          uint64

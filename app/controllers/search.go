@@ -105,7 +105,7 @@ func ShiWenSearch(w http.ResponseWriter, req *http.Request) {
 	assign["prevPage"] = page - 1
 	assign["countNum"] = countNum
 	assign["pageUrl"] = pageUrl
-	assign["urlPath"] = req.URL.Path
+	assign["urlPath"] = define.PageShiWen
 	template.NewHtml(w).Display("search/shiwen.html", assign)
 	return
 ErrorPage:

@@ -14,6 +14,7 @@ import (
 	"poetry/app/models"
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
+	"sort"
 	"strconv"
 )
 
@@ -56,6 +57,9 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		html.DisplayErrorPage(err)
 		return
 	}
+	sort.Slice(categoryData, func(i, j int) bool {
+		return len(categoryData[i].CatName) > len(categoryData[j].CatName)
+	})
 	//获取诗文名句分类
 	if famousData, err = logic.NewCategoryLogic().GetCateByPositionLimit(define.FamousShowPosition, 0, 12); err != nil {
 		html.DisplayErrorPage(err)

@@ -32,6 +32,7 @@ func InitRouting(mux *http.ServeMux) {
 	mux.HandleFunc("/search/shiwen/", CallMiddleWare(controllers.ShiWenSearch)) //诗词搜索页
 
 	//诗文内容相关
+	mux.HandleFunc("/shiwen/list/", CallMiddleWare(controllers.ShiWenList))                //诗词列表页-》根据分类名显示诗词列表
 	mux.HandleFunc("/shiwen/ajaxshiwencont", CallMiddleWare(controllers.AjaxShiWenCont))   //ajax 根据诗词URL crc32值获取注释和译文详情html
 	mux.HandleFunc("/shiwen/ajaxshiwennotes", CallMiddleWare(controllers.AjaxShiWenNotes)) // ajax 根据赏析或译文id获取注释和译文详情html
 	mux.HandleFunc("/shiwen/ajaxshiwenplay", CallMiddleWare(controllers.AjaxShiWenPlay))   //ajax 根据赏析或译文id获取注释和译文的MP3文件

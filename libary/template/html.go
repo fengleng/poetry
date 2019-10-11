@@ -11,6 +11,7 @@ import (
 	"html/template"
 	"io"
 	"strings"
+	"unicode/utf8"
 )
 
 type Html struct {
@@ -48,6 +49,15 @@ func unescaped(x string) template.HTML {
 	return template.HTML(x)
 }
 
+//截取字符串
+func subLen(str string, subLen int) string {
+	if subLen > utf8.RuneCountInString(str) {
+		subLen = utf8.RuneCountInString(str)
+	}
+	content := []rune(str)[0:subLen]
+	return string(content)
+}
+
 //显示模板页
 func (h *Html) Display(page string, data map[string]interface{}) {
 	htmlPath := []string{
@@ -68,7 +78,7 @@ func (h *Html) Display(page string, data map[string]interface{}) {
 	}
 	tpl := template.New(pageName)
 	//切记：加的自定义函数在Parse之前
-	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped})
+	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped, "subLen": subLen})
 	tpl = template.Must(tpl.ParseFiles(
 		h.templateFiles...,
 	))

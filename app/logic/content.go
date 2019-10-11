@@ -110,7 +110,11 @@ func (c *contentLogic) ProcContentAuthorTagData(contentList []models.Content, au
 		defineAuthor.DynastyLinkUrl = bootstrap.G_Conf.WebDomain + "/search/shiwen/?type=dynasty&cstr=" + defineAuthor.DynastyName
 		content.PoetryText = text
 		content.PoetryAuthor = defineAuthor
-		content.Tags = tags[poetryText.Id]
+		if tags == nil || len(tags) == 0 {
+			content.Tags = nil
+		} else {
+			content.Tags = tags[poetryText.Id]
+		}
 		contentData.ContentArr[k] = &content
 	}
 	return

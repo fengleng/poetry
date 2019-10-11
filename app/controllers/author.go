@@ -61,7 +61,7 @@ func AuthorDetail(w http.ResponseWriter, req *http.Request) {
 	assign["title"] = authorInfo.Author + "简介"
 	assign["description"] = authorInfo.AuthorIntro
 	assign["version"] = define.StaticVersion
-	assign["urlPath"] = req.URL.Path
+	assign["urlPath"] = define.PageShiWen
 	html.Display("author/detail.html", assign)
 	return
 ErrorPage:
@@ -121,7 +121,7 @@ func PoetryList(w http.ResponseWriter, req *http.Request) {
 	assign["description"] = authorInfo.AuthorIntro
 	assign["pageUrl"] = bootstrap.G_Conf.WebDomain + "/author/poetryList?value=" + authorName
 	assign["version"] = define.StaticVersion
-	assign["urlPath"] = req.URL.Path
+	assign["urlPath"] = define.PageShiWen
 	templateHtml.NewHtml(w).Display("author/poetryList.html", assign)
 	return
 ErrorPage:

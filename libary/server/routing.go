@@ -42,6 +42,9 @@ func InitRouting(mux *http.ServeMux) {
 	mux.HandleFunc("/author/detail", CallMiddleWare(controllers.AuthorDetail))   //作者详情页
 	mux.HandleFunc("/author/poetryList", CallMiddleWare(controllers.PoetryList)) //作者诗词列表页
 
+	//名句相关
+	mux.HandleFunc("/famous/", CallMiddleWare(controllers.FamousIndex)) //名句首页
+
 	//词典查询
 	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha)) //词典接口
 }

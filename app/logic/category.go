@@ -8,6 +8,7 @@ package logic
 
 import (
 	"poetry/app/models"
+	"poetry/config/define"
 )
 
 type MpCategory map[int]*models.Category
@@ -47,7 +48,7 @@ func (c *categoryLogic) GetCateByPositionLimit(showPosition, offset, limit int) 
 func (c *categoryLogic) GetPoetryListByFilter(categoryName string, offset, limit int) (data []models.Content, err error) {
 	var categoryInfo models.Category
 	//查询分类信息
-	if categoryInfo, err = c.categoryModel.GetCategoryInfoByCateName(categoryName); err != nil || categoryInfo.Id == 0 {
+	if categoryInfo, err = c.categoryModel.GetCategoryInfoByCateName(categoryName, define.PoetryShowPosition); err != nil || categoryInfo.Id == 0 {
 		return
 	}
 	//写SQL 根据分类ID查询诗词列表
@@ -59,9 +60,20 @@ func (c *categoryLogic) GetPoetryListByFilter(categoryName string, offset, limit
 func (c *categoryLogic) GetPoetryCountByFilter(categoryName string) (count int, err error) {
 	var categoryInfo models.Category
 	//查询分类信息
-	if categoryInfo, err = c.categoryModel.GetCategoryInfoByCateName(categoryName); err != nil || categoryInfo.Id == 0 {
+	if categoryInfo, err = c.categoryModel.GetCategoryInfoByCateName(categoryName, define.PoetryShowPosition); err != nil || categoryInfo.Id == 0 {
 		return
 	}
 	count, err = models.NewContentTag().GetCountByCategoryId(categoryInfo.Id)
 	return
+}
+
+//根据分类名字查询分类信息
+func (c *categoryLogic) GetCateInfoByName(categoryName string, showPosition int) (data models.Category, err error) {
+	data, err = models.NewCategory().GetCategoryInfoByCateName(categoryName, showPosition)
+	return
+}
+
+//根据Pid查询子分类
+func (c *categoryLogic) GetSubCategoryData(pid, showPosition, offset, limit int) (data []models.Category, err error) {
+	return models.NewCategory().GetSubCategoryData(pid, showPosition, offset, limit)
 }

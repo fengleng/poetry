@@ -43,8 +43,15 @@ func (c *Category) GetCateByPositionLimit(showPosition, offset, limit int) (data
 }
 
 //根据分类名字查询分类信息
-func (c *Category) GetCategoryInfoByCateName(catName string) (data Category, err error) {
+func (c *Category) GetCategoryInfoByCateName(catName string, showPosition int) (data Category, err error) {
 	fields := []string{"id", "cat_name", "source_url", "source_url_crc32"}
-	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("cat_name", catName).All(&data, fields...)
+	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("cat_name", catName).Filter("show_position", showPosition).All(&data, fields...)
+	return
+}
+
+//查询子分类
+func (c *Category) GetSubCategoryData(pid int, showPosition int, offset, limit int) (data []Category, err error) {
+	fields := []string{"id", "cat_name", "source_url", "source_url_crc32"}
+	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("pid", pid).Filter("show_position", showPosition).Limit(limit, offset).All(&data, fields...)
 	return
 }

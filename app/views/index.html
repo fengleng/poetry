@@ -92,9 +92,9 @@
             </div>
             <div class="cont">
                 {{range $i,$famou := .famousData}}
-                <a href="{{$webDomain}}/famou/?p=1&c={{$famou.CatName}}" target="_blank">{{$famou.CatName}}</a>
+                <a href="{{$webDomain}}/famous/?c={{$famou.CatName}}" target="_blank">{{$famou.CatName}}</a>
                 {{end}}
-                <a href="{{$webDomain}}/famou/">更多>></a>
+                <a href="{{$webDomain}}/famous/">更多>></a>
             </div>
         </div>
         <div class="sons">

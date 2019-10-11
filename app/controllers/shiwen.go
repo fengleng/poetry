@@ -90,6 +90,7 @@ func ShiWenDetail(w http.ResponseWriter, r *http.Request) {
 	assign["title"] = poetryData.PoetryInfo.Title
 	assign["description"] = poetryData.PoetryInfo.Content
 	assign["version"] = define.StaticVersion
+	assign["urlPath"] = r.URL.Path
 	html.Display("shiwen/detail.html", assign)
 	return
 ShowErrorPage:

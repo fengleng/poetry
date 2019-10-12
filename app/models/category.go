@@ -55,3 +55,10 @@ func (c *Category) GetSubCategoryData(pid int, showPosition int, offset, limit i
 	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("pid", pid).Filter("show_position", showPosition).Limit(limit, offset).All(&data, fields...)
 	return
 }
+
+//根据分类名字和PID查询分类信息
+func (c *Category) GetCateInfoByNameAndPid(pid int, cateName string) (data Category, err error) {
+	fields := []string{"id", "cat_name", "source_url_crc32"}
+	_, err = orm.NewOrm().QueryTable(CategoryTable).Filter("pid", pid).Filter("cat_name", cateName).All(&data, fields...)
+	return
+}

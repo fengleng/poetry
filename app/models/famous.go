@@ -37,3 +37,24 @@ func (f *Famous) TableName() string {
 func NewFamous() *Famous {
 	return new(Famous)
 }
+
+//根据分类ID查询名句列表
+func (f *Famous) GetListByCatId(catIds []int, offset, limit int) (data []Famous, err error) {
+	fields := []string{"id", "cat_id", "content", "source_url", "source_crc32"}
+	if len(catIds) > 0 {
+		_, err = orm.NewOrm().QueryTable(FamousSentenceTable).Filter("cat_id__in", catIds).OrderBy("-sort").Limit(limit, offset).All(&data, fields...)
+	} else {
+		_, err = orm.NewOrm().QueryTable(FamousSentenceTable).OrderBy("-sort").Limit(limit, offset).All(&data, fields...)
+	}
+	return
+}
+
+//根据分类ID查询名句总数
+func (f *Famous) GetCountByCatIds(catIds []int) (count int64, err error) {
+	if len(catIds) > 0 {
+		count, err = orm.NewOrm().QueryTable(FamousSentenceTable).Filter("cat_id__in", catIds).Count()
+	} else {
+		count, err = orm.NewOrm().QueryTable(FamousSentenceTable).Count()
+	}
+	return
+}

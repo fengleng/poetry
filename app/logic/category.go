@@ -77,3 +77,8 @@ func (c *categoryLogic) GetCateInfoByName(categoryName string, showPosition int)
 func (c *categoryLogic) GetSubCategoryData(pid, showPosition, offset, limit int) (data []models.Category, err error) {
 	return models.NewCategory().GetSubCategoryData(pid, showPosition, offset, limit)
 }
+
+//根据分类名字和PID查询分类信息
+func (c *categoryLogic) GetCateInfoByNameAndPid(pid int, cateName string) (data models.Category, err error) {
+	return models.NewCategory().GetCateInfoByNameAndPid(pid, cateName)
+}

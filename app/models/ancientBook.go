@@ -56,3 +56,10 @@ func (a *AncientBook) GetBookListByLimit(offset, limit int) (data []AncientBook,
 	_, err = orm.NewOrm().QueryTable(AncientBookTable).Limit(limit, offset).All(&data, fields...)
 	return
 }
+
+//根据ID查询书名列表
+func (a *AncientBook) GetBookListByIds(bookIds []int) (data []AncientBook, err error) {
+	fields := []string{"id", "book_title", "link_url_crc32"}
+	_, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("id__in", bookIds).All(&data, fields...)
+	return
+}

@@ -48,3 +48,12 @@ func ExtractNotesId(transData []models.Trans, appRecData []models.AppRec) (notes
 	}
 	return
 }
+
+//导出bookId
+func ExtractBookId(data []models.AncientCatalogue) (bookIds []int) {
+	bookIds = make([]int, len(data))
+	for k, catLog := range data {
+		bookIds[k] = int(catLog.BookId)
+	}
+	return
+}

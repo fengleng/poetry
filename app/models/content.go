@@ -55,6 +55,13 @@ func (c *Content) GetContentByCrc32Id(crc32Id uint32) (data Content, err error) 
 	return
 }
 
+//根据sourceurl_crc32数组 批量查询正文数据
+func (c *Content) GetContentByCrc32IdArr(crc32Ids []uint32) (data []Content, err error) {
+	fields := []string{"id", "title", "sourceurl_crc32", "author_id"}
+	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("sourceurl_crc32__in", crc32Ids).All(&data, fields...)
+	return
+}
+
 //根据作者ID查询作者诗词列表
 func (c *Content) GetContentListByAuthorId(authorId int64, offset, limit int, orderFiled string) (data []Content, err error) {
 	_, err = orm.NewOrm().QueryTable(ContentTable).Filter("author_id", authorId).Limit(limit, offset).OrderBy(orderFiled).All(&data, Fields...)

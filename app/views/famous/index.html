@@ -2,289 +2,95 @@
 <link href="{{.cdnDomain}}/static/css/skinSo20190816.css" rel="stylesheet" type="text/css" />
 <body onclick="closeshowBos()">
 {{template "nav" .}}
+{{$cdnDomain := .cdnDomain}}
+{{$webDomain := .webDomain}}
+
+{{$cateName := .cateName}}
+{{$tName :=.tName}}
 
 <div class="main3">
     <div class="left">
-
         <div class="titletype">
-            <div class="son1"><h1>青春名句<span>1 / 2页</span></h1></div>
+            <div class="son1"><h1>{{if .tName}}{{.tName}}名句 {{else}}   {{if .cateName}}{{.cateName}}名句{{else}}不限{{end}} {{end}} <span>{{.page}} / {{.countPage}}页</span></h1></div>
+            {{if .subCategory}}
             <div class="son2" style="border-bottom:0px;padding-bottom:0px;">
+            {{else}}
+            <div class="son2" style="border-bottom:0px;padding-bottom:15px;">
+            {{end}}
                 <div class="sleft">
                     <span style="width:48px;">主题：</span>
                 </div>
                 <div class="sright" style=" width:580px;">
-
-                    <a style="width:44px;" href="/mingju/">不限</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85">抒情</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3">四季</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4">山水</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94">天气</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9">人物</a>
-                    <span style="width:44px;">人生</span>
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb">生活</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5">节日</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e5%8a%a8%e7%89%a9">动物</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9">植物</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e9%a3%9f%e7%89%a9">食物</a>
-
-                    <a style=" width:44px;" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d">古籍</a>
-
+     {{if eq $cateName ""}}
+           <span style="width:44px;">不限</span>
+      {{else}}
+          <a style="width:44px;" href="{{$webDomain}}/famous/">不限</a>
+      {{end}}
+                    {{range $i,$cate :=.topCategory}}
+                        {{if eq $cateName $cate.CatName}}
+                            <span style="width:44px;">{{$cate.CatName}}</span>
+                            {{else}}
+                               <a style=" width:44px;" href="{{$webDomain}}/famous/?c={{$cate.CatName}}">{{$cate.CatName}}</a>
+                            {{end}}
+                    {{end}}
                 </div>
             </div>
 
-            <div class="son2" style=" border:0px; margin-top:0px;">
+            {{if .subCategory}}
+                <div class="son2" style=" border:0px; margin-top:0px;">
                 <div class="sleft">
                     <span style="width:48px;">分类：</span>
                 </div>
                 <div class="sright" style=" width:580px;">
-
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f">不限</a>
-
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e5%8a%b1%e5%bf%97">励志</a>
-
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e5%93%b2%e7%90%86">哲理</a>
-                    <span style="width:44px;">青春</span>
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e6%97%b6%e5%85%89">时光</a>
-
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e6%a2%a6%e6%83%b3">梦想</a>
-
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e8%af%bb%e4%b9%a6">读书</a>
-
-                    <a style="width:44px;" href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e6%88%98%e4%ba%89">战争</a>
-
+                    {{if eq $tName ""}}
+                        <span style="width:44px;">不限</span>
+                    {{else}}
+                        <a style="width:44px;" href="{{$webDomain}}/famous/?c={{$cateName}}">不限</a>
+                    {{end}}
+                    {{range $i,$category :=.subCategory}}
+                        {{if eq $tName $category.CatName}}
+                            <span style="width:44px;">{{$category.CatName}}</span>
+                        {{else}}
+                         <a style="width:44px;" href="{{$webDomain}}/famous/?c={{$cateName}}&t={{$category.CatName}}">{{$category.CatName}}</a>
+                         {{end}}
+                   {{end}}
                 </div>
             </div>
-
+           {{end}}
         </div>
         <div class="sons" style=" padding-bottom:12px;">
-
+            {{range $i,$famous := .famousData}}
             <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_f65c48d99ca7.aspx">雨打梨花深闭门，孤负青春，虚负青春。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_826758a2d666.aspx">唐寅《一剪梅·雨打梨花深闭门》</a>
+                <a style=" float:left;" target="_blank" href="{{$famous.LinkUrl}}">{{$famous.Content}}</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="{{$famous.LinkUrl}}">{{$famous.AncientTitle}}</a>
             </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_16a8503dcff7.aspx">休对故人思故国，且将新火试新茶。诗酒趁年华。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_b8148e70fea6.aspx">苏轼《望江南·超然台作》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_981ed116afdd.aspx">劝君莫惜金缕衣，劝君惜取少年时。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_d5cea0c3607d.aspx">杜秋娘《金缕衣》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_9d322d3a8a96.aspx">欲买桂花同载酒，终不似、少年游。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_79730f08af17.aspx">刘过《唐多令·芦叶满汀洲》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_3a94e15c7e47.aspx">白日放歌须纵酒，青春作伴好还乡。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_519029b7355c.aspx">杜甫《闻官军收河南河北》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_3f918b7325ed.aspx">韶华不为少年留。恨悠悠。几时休。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_cf1f67cae9d7.aspx">秦观《江城子·西城杨柳弄春柔》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_f07b036c5a43.aspx">盛年不重来，一日难再晨。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_404930bd804c.aspx">陶渊明《杂诗·人生无根蒂》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_a649f2718125.aspx">江南几度梅花发，人在天涯鬓已斑。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_55cc72cbb763.aspx">刘著《鹧鸪天·雪照山城玉指寒》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_a560a9eea531.aspx">及时当勉励，岁月不待人。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_404930bd804c.aspx">陶渊明《杂诗·人生无根蒂》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_9ca01a991b6b.aspx">恰同学少年，风华正茂；书生意气，挥斥方遒。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_7055921827d2.aspx">毛泽东《沁园春·长沙》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_d897c2667941.aspx">春未绿，鬓先丝。人间别久不成悲。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_315b942a4952.aspx">姜夔《鹧鸪天·元夕有所梦》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_5bffd2944d56.aspx">谁道人生无再少？门前流水尚能西！休将白发唱黄鸡。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_a9a16104dd1b.aspx">苏轼《浣溪沙·游蕲水清泉寺》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_16c8c5da4d99.aspx">草木也知愁，韶华竟白头。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_0ada71494eb7.aspx">曹雪芹《唐多令·柳絮》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_a7946d48a991.aspx">酒债寻常行处有，人生七十古来稀。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_9cf6267ab916.aspx">杜甫《曲江二首》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_85458216e0c9.aspx">花门楼前见秋草，岂能贫贱相看老。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_60e54be43423.aspx">岑参《凉州馆中与诸判官夜集》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_2e5970b40914.aspx">三千丈清愁鬓发，五十年春梦繁华。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_cfd72a88d570.aspx">乔吉《折桂令·客窗清明》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_98138e9dc432.aspx">青春须早为，岂能长少年。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_42a35d95ff08.aspx">孟郊《劝学》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_db1ed314beff.aspx">绿杨芳草长亭路。年少抛人容易去。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_2a96e54dae55.aspx">晏殊《玉楼春·春恨》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_851e9c81c696.aspx">洛阳城里春光好，洛阳才子他乡老。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_0a6be1a23404.aspx">韦庄《菩萨蛮》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_2a1628a6458d.aspx">少年易学老难成，一寸光阴不可轻。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_f060d31d9dd1.aspx">朱熹《偶成》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_2415c5e623b8.aspx">过眼年华，动人幽意，相逢几番春换。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_32150e94748b.aspx">王沂孙《法曲献仙音·聚景亭梅次草窗韵》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_a2a5d8a74be9.aspx">旧游无处不堪寻。无寻处，惟有少年心。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_79a946bc76ce.aspx">章良能《小重山·柳暗花明春事深》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_19f85269bb07.aspx">镜中已觉星星误。人不负春春自负。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_161d000d2ff5.aspx">辛弃疾《玉楼春·风前欲劝春光住》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_a125605d91e4.aspx">一身报国有万死，双鬓向人无再青。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_b76a890f230f.aspx">陆游《夜泊水村》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_cea74fa4828a.aspx">人老去西风白发，蝶愁来明日黄花。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_1fa99e2a3390.aspx">张可久《折桂令·九日》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_e6efb7559a2c.aspx">却将万字平戎策，换得东家种树书。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_78fb60bae93d.aspx">辛弃疾《鹧鸪天·有客慨然谈功名因追念少年时事戏作》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_337359ae2c63.aspx">季子正年少，匹马黑貂裘。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_678308609fb3.aspx">辛弃疾《水调歌头·舟次扬州和人韵》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_b1efa952cc81.aspx">况是青春日将暮，桃花乱落如红雨。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_9453922891d5.aspx">李贺《将进酒》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_2f2012ed6c86.aspx">故国神游，多情应笑我，早生华发。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_5fb51378286c.aspx">苏轼《念奴娇·赤壁怀古》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_7ea84c177eb3.aspx">白头空负雪边春，着意问春春不语。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_1c7ddb9cc90b.aspx">刘镇《玉楼春·东山探梅》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_4ada7799749c.aspx">乍见翻疑梦，相悲各问年。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_ee15f96f22e5.aspx">司空曙《云阳馆与韩绅宿别》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_a74bc1e6c3c7.aspx">狎兴生疏，酒徒萧索，不似少年时。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_861b0d2902a0.aspx">柳永《少年游·长安古道马迟迟》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_8a05155f711d.aspx">正单衣试酒，恨客里、光阴虚掷。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_e550c4be4735.aspx">周邦彦《六丑·落花》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_830367b53343.aspx">去国十年老尽、少年心。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_eb3986d3adc4.aspx">黄庭坚《虞美人·宜州见梅作》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_92cda398e23d.aspx">壮岁从戎，曾是气吞残虏。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_500e5366ccc2.aspx">陆游《谢池春·壮岁从戎》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_45bb403bad38.aspx">莫见长安行乐处，空令岁月易蹉跎。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_67ca0b01f1c4.aspx">李颀《送魏万之京》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_fa6c8e0af700.aspx">明朝万一西风动，争向朱颜不耐秋。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_3d609450dbd7.aspx">晏几道《鹧鸪天·守得莲开结伴游》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_8fa50f3cd5c1.aspx">万事一身伤老矣，戎葵凝笑墙东。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_cbdd83b0a8c6.aspx">陈与义《临江仙·高咏楚词酬午日》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_54bba52732f1.aspx">到家应是，童稚牵衣，笑我华颠。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_a722d095e1f2.aspx">吴激《诉衷情·夜寒茅店不成眠》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_09efb2b55bdc.aspx">青春几何时，黄鸟鸣不歇。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_473924349394.aspx">李白《江南春怀》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_ebb901ed539f.aspx">渐老多忧百事忙，天寒日短更心伤。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_c855636397c7.aspx">李觏《秋晚悲怀》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_022af0a476ad.aspx">幽兰旋老，杜若还生，水乡尚寄旅。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_42c98cda665c.aspx">吴文英《莺啼序·春晚感怀》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_fc81dd02808e.aspx">秋鬓含霜白，衰颜倚酒红。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_f9a4a3fa6796.aspx">尹式《别宋常侍》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_c7f275e5894a.aspx">天涯失乡路，江外老华发。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_473924349394.aspx">李白《江南春怀》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_d42c81004fcc.aspx">白发悲明镜，青春换敝裘。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_375bf11ad277.aspx">岑参《武威春暮闻宇文判官西使还已到晋昌》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_bca20723e8d2.aspx">十五入汉宫，花颜笑春红。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_1b343dfc5a48.aspx">李白《怨歌行》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_8d0dc667b5f3.aspx">早知恁么。悔当初、不把雕鞍锁。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_37afbc0eb0b6.aspx">柳永《定风波·自春来》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_ccbcde8f9bf1.aspx">发短愁催白，颜衰酒借红。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_f083d4aaae52.aspx">陈师道《除夜对酒赠少章》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;border-bottom:1px dashed #DAD9D1; padding-bottom:7px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_7ad8d5a5a713.aspx">南去北来徒自老，故人稀。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_48c8f182cd6a.aspx">贺铸《钓船归·绿净春深好染衣》</a>
-            </div>
-
-            <div class="cont" style=" margin-top:12px;">
-                <a style=" float:left;" target="_blank" href="/mingju/juv_b0bbeeaa20df.aspx">吟怀未许老重阳，霜雪无端入鬓长。</a><span style=" color:#65645F; float:left; margin-left:5px; margin-right:10px;">——</span><a style=" float:left;" target="_blank" href="/shiwenv_919458a6be89.aspx">序灯《九日吴山宴集值雨次韵》</a>
-            </div>
-
+            {{end}}
         </div>
 
-
-        <form id="FromPage" method="get" action="/mingju/Default.aspx" onsubmit="return PageSubmit()">
+{{if gt .countPage 1}}
+        <form id="FromPage" method="get" action="{{.pageUrl}}" onsubmit="return PageSubmit()">
             <div class="pagesright">
+                {{if le .nextPage .countPage}}
+                    <a id="amore" class="amore" href="{{.pageUrl}}&page={{.nextPage}}">下一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">下一页</a>
+                {{end}}
 
-                <a class="amore" href="/mingju/default.aspx?p=2&c=%e4%ba%ba%e7%94%9f&t=%e9%9d%92%e6%98%a5">下一页</a>
+                {{if gt .page 1}}
+                    <a href="{{.pageUrl}}&page={{.prevPage}}">上一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
+                {{end}}
 
-                <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
-
-                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ 2页</span>
-                <span class="curent"><input id="putpage" name="p" value="1" autocomplete="off" onblur="SubPage()" /></span>
-                <label id="temppage" style="display:none;">1</label>
-                <label id="sumPage" style="display:none;">2</label>
-                <input type="hidden" name="t" value="青春" />
-                <input type="hidden" name="c" value="人生" />
+                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ {{.countPage}}页</span>
+                <span class="curent"><input id="putpage" name="p" value="{{.page}}" autocomplete="off" onblur="SubPage()" /></span>
+                <label id="temppage" style="display:none;">{{.page}}</label>
+                <label id="sumPage" style="display:none;">{{.countPage}}</label>
+                <input type="hidden" name="t" value="{{.tName}}" />
+                <input type="hidden" name="c" value="{{.cateName}}" />
             </div>
         </form>
+{{end}}
+
     </div>
 
     <div class="right">

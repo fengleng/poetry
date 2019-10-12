@@ -95,3 +95,9 @@ func PreContentHtml(content string) string {
 	}
 	return content
 }
+
+//获取当前URL
+func GetPageUrl(url string) (pageUrl string) {
+	pageUrl = regexp.MustCompile("[&|?]page=\\d").ReplaceAllString(url, "")
+	return
+}

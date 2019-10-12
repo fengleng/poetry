@@ -15,6 +15,7 @@ import (
 	"poetry/app/models"
 	"poetry/config/define"
 	"poetry/libary/template"
+	"poetry/tools"
 	"strconv"
 	"strings"
 )
@@ -68,7 +69,7 @@ func FamousIndex(w http.ResponseWriter, req *http.Request) {
 	}
 	//没有子分类，则根据父分类查询名句列表
 	if len(cateName) > 0 && len(tName) == 0 {
-		catId := make([]int, len(subCategory))
+		catId = make([]int, len(subCategory))
 		for k, subCat := range subCategory {
 			catId[k] = subCat.Id
 		}
@@ -99,7 +100,7 @@ func FamousIndex(w http.ResponseWriter, req *http.Request) {
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["nextPage"] = page + 1
 	assign["prevPage"] = page - 1
-	assign["pageUrl"] = ""
+	assign["pageUrl"] = tools.GetPageUrl(req.URL.String())
 	assign["urlPath"] = ""
 	template.NewHtml(w).Display("famous/index.html", assign)
 	return

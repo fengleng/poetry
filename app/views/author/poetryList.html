@@ -78,6 +78,7 @@
             </div>
         {{end}}
 
+        {{if gt .countPage 1}}
         <form id="FromPage" method="get" action="{{.pageUrl}}" onsubmit="return PageSubmit()">
             <div class="pagesright">
 
@@ -100,6 +101,8 @@
                 <input type="hidden" name="value" value="{{.authorInfo.Author}}" />
             </div>
         </form>
+        {{end}}
+
     </div>
     <div class="right"></div>
 </div>

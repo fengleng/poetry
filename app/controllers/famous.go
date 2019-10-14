@@ -99,7 +99,7 @@ func FamousIndex(w http.ResponseWriter, req *http.Request) {
 	assign["nextPage"] = page + 1
 	assign["prevPage"] = page - 1
 	assign["pageUrl"] = tools.GetPageUrl(req.URL.String())
-	assign["urlPath"] = ""
+	assign["urlPath"] = define.PageFamous
 	template.NewHtml(w).Display("famous/index.html", assign)
 	return
 ErrorPage:

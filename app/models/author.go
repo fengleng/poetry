@@ -57,7 +57,28 @@ func (a *Author) GetAuthorInfoByName(name string) (data Author, err error) {
 
 //根据诗词总数倒序查询作者列表
 func (a *Author) GetListByOrderCountDesc(offset, limit int) (data []Author, err error) {
-	fields := []string{"id", "author"}
+	fields := []string{"id", "author", "poetry_count", "author_intro", "photo_file_name", "photo_url"}
 	_, err = orm.NewOrm().QueryTable(AuthorTable).OrderBy("-poetry_count").Limit(limit, offset).All(&data, fields...)
+	return
+}
+
+//根据朝代ID查询作者列表
+func (a *Author) GetListByDynastyId(dynastyId int, offset, limit int) (data []Author, err error) {
+	fields := []string{"id", "author", "poetry_count", "author_intro", "photo_file_name", "photo_url"}
+	if dynastyId > 0 {
+		_, err = orm.NewOrm().QueryTable(AuthorTable).Filter("dynasty_id", dynastyId).OrderBy("-poetry_count").Limit(limit, offset).All(&data, fields...)
+	} else {
+		_, err = orm.NewOrm().QueryTable(AuthorTable).OrderBy("-poetry_count").Limit(limit, offset).All(&data, fields...)
+	}
+	return
+}
+
+//根据朝代ID查询作者总数
+func (a *Author) GetCountByDynastyId(dynastyId int) (count int64, err error) {
+	if dynastyId > 0 {
+		count, err = orm.NewOrm().QueryTable(AuthorTable).Filter("dynasty_id", dynastyId).Count()
+	} else {
+		count, err = orm.NewOrm().QueryTable(AuthorTable).Count()
+	}
 	return
 }

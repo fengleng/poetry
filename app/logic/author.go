@@ -41,6 +41,16 @@ func (a *AuthorLogic) GetListByOrderCountDesc(offset, limit int) (data []models.
 	return models.NewAuthor().GetListByOrderCountDesc(offset, limit)
 }
 
+//根据朝代ID查询作者列表
+func (a *AuthorLogic) GetListByDynastyId(dynastyId int, offset, limit int) (data []models.Author, err error) {
+	return models.NewAuthor().GetListByDynastyId(dynastyId, offset, limit)
+}
+
+//根据朝代ID查询作者总数
+func (a *AuthorLogic) GetCountByDynastyId(dynastyId int) (count int64, err error) {
+	return models.NewAuthor().GetCountByDynastyId(dynastyId)
+}
+
 //根据作者名字获取作者基础信息
 func (a *AuthorLogic) GetAuthorInfoByName(name string) (data models.Author, err error) {
 	name = strings.TrimSpace(name)

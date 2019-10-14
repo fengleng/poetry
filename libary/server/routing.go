@@ -39,6 +39,7 @@ func InitRouting(mux *http.ServeMux) {
 	mux.HandleFunc("/shiwen/", CallMiddleWare(controllers.ShiWenDetail))                   //诗词详情页,上线后在nginx上做的转发
 
 	//作者相关
+	mux.HandleFunc("/author/list/", CallMiddleWare(controllers.AuthorList))      //作者列表页
 	mux.HandleFunc("/author/detail", CallMiddleWare(controllers.AuthorDetail))   //作者详情页
 	mux.HandleFunc("/author/poetryList", CallMiddleWare(controllers.PoetryList)) //作者诗词列表页
 

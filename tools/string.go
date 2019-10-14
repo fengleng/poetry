@@ -8,6 +8,7 @@ package tools
 
 import (
 	"net/http"
+	"net/url"
 	"poetry/config/define"
 	"regexp"
 	"strings"
@@ -99,7 +100,14 @@ func PreContentHtml(content string) string {
 }
 
 //获取当前URL
-func GetPageUrl(url string) (pageUrl string) {
-	pageUrl = regexp.MustCompile("[&|?]page=\\d").ReplaceAllString(url, "")
+func GetPageUrl(urlStr string) (pageUrl string) {
+	urlPath, _ := url.Parse(urlStr)
+	if len(urlPath.Query()) == 0 {
+		return urlStr + "?time=t88299332"
+	}
+	pageUrl = regexp.MustCompile("[&|?]page=\\d").ReplaceAllString(urlStr, "")
+	if strings.Contains(pageUrl, "?") == false {
+		pageUrl = strings.Replace(pageUrl, "&", "?", 1)
+	}
 	return
 }

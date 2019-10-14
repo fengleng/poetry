@@ -36,6 +36,11 @@ func (d *dynastyLogic) GetAll(offset, limit int) (data []models.Dynasty, err err
 	return d.model.GetAll(offset, limit)
 }
 
+//根据朝代名字查询朝代信息
+func (d *dynastyLogic) GetDynastyDataByName(dynastyName string) (dynastyRow models.Dynasty, err error) {
+	return d.model.GetDynastyDataByName(dynastyName)
+}
+
 //根据作者数据获取朝代ID
 func (d *dynastyLogic) GetDynastyIds(authorData map[int]models.Author) (dynastyList map[int]string) {
 	dynastyList = make(map[int]string)

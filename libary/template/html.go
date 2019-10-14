@@ -58,6 +58,11 @@ func subLen(str string, subLen int) string {
 	return string(content)
 }
 
+//获取字符串长度
+func StrLen(str string) int {
+	return utf8.RuneCountInString(str)
+}
+
 //显示模板页
 func (h *Html) Display(page string, data map[string]interface{}) {
 	htmlPath := []string{
@@ -78,7 +83,7 @@ func (h *Html) Display(page string, data map[string]interface{}) {
 	}
 	tpl := template.New(pageName)
 	//切记：加的自定义函数在Parse之前
-	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped, "subLen": subLen})
+	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped, "subLen": subLen, "strLen": StrLen})
 	tpl = template.Must(tpl.ParseFiles(
 		h.templateFiles...,
 	))

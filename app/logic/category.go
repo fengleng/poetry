@@ -73,12 +73,60 @@ func (c *categoryLogic) GetCateInfoByName(categoryName string, showPosition int)
 	return
 }
 
-//根据Pid查询子分类
-func (c *categoryLogic) GetSubCategoryData(pid, showPosition, offset, limit int) (data []models.Category, err error) {
-	return models.NewCategory().GetSubCategoryData(pid, showPosition, offset, limit)
+//根据Pid查询子分类,如果pid为0，则查询所有子分类
+func (c *categoryLogic) GetAllSubCateData(pid, showPosition, offset, limit int) (data []models.Category, err error) {
+	return models.NewCategory().GetAllSubCateData(pid, showPosition, offset, limit)
 }
 
 //根据分类名字和PID查询分类信息
 func (c *categoryLogic) GetCateInfoByNameAndPid(pid int, cateName string) (data models.Category, err error) {
 	return models.NewCategory().GetCateInfoByNameAndPid(pid, cateName)
+}
+
+//根据 category,pid 查询子分类 查二级分类
+func (c *categoryLogic) FindSubCateByPid(cateMap []models.Category, pid int) (catId []int, subCategory []models.Category) {
+	catId = make([]int, 0)
+	for _, cate := range cateMap {
+		if cate.Pid == pid {
+			subCategory = append(subCategory, cate)
+			catId = append(catId, cate.Id)
+		}
+	}
+	return
+}
+
+//在[]models.Category中根据名字找出对应的分类信息
+func (c *categoryLogic) FindCateListByName(cateList []models.Category, name string) (cateInfo models.Category) {
+	for _, cate := range cateList {
+		if cate.CatName == name {
+			cateInfo = cate
+			break
+		}
+	}
+	return
+}
+
+//处理子分类，把父分类名字加在子分类上,每个父分类显示 10个子分类
+func (c *categoryLogic) ProcSubCategory(topCategory []models.Category, subAllCate []models.Category) (subList []*define.PCategory) {
+	topCateMap := make(map[int]models.Category, len(topCategory))
+	for _, category := range topCategory {
+		topCateMap[category.Id] = category
+	}
+	topCateArrMap := make(map[int][]*define.PCategory)
+	limit := 10
+	for _, category := range subAllCate {
+		cate := &define.PCategory{
+			Model: category,
+			PName: topCateMap[category.Pid].CatName,
+			Pid:   category.Pid,
+		}
+		if len(topCateArrMap[category.Pid]) > limit {
+			continue
+		}
+		topCateArrMap[category.Pid] = append(topCateArrMap[category.Pid], cate)
+	}
+	for _, category := range topCateArrMap {
+		subList = append(subList, category...)
+	}
+	return
 }

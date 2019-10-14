@@ -73,6 +73,8 @@ func RemoveLinkHtml(content string) string {
 	content = compile.ReplaceAllString(content, "")
 	compile = regexp.MustCompile(`</a>`)
 	content = compile.ReplaceAllString(content, "")
+	compile = regexp.MustCompile(`<a href="https://so.gushiwen.org/\w+\.\w+"\s*>`)
+	content = compile.ReplaceAllString(content, "")
 	return content
 }
 

@@ -35,7 +35,7 @@ func NewAncientCatalogue() *AncientCatalogue {
 
 //根据URL数组 查询目录列表
 func (a *AncientCatalogue) GetCatalogListByPaths(paths []string) (data []AncientCatalogue, err error) {
-	fields := []string{"id", "book_id", "catalog_title"}
+	fields := []string{"id", "book_id", "catalog_title", "link_url"}
 	_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("link_url__in", paths).All(&data, fields...)
 	return
 }

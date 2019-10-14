@@ -51,7 +51,8 @@
                         {{if eq $tName $category.CatName}}
                             <span style="width:44px;">{{$category.CatName}}</span>
                         {{else}}
-                         <a style="width:44px;" href="{{$webDomain}}/famous/?c={{$cateName}}&t={{$category.CatName}}">{{$category.CatName}}</a>
+                            {{$len :=$category.CatName|strLen}}
+                         <a style="{{if ge $len 3}}width:66px;{{else}}width:44px;{{end}}" href="{{$webDomain}}/famous/?c={{$cateName}}&t={{$category.CatName}}">{{$category.CatName}}</a>
                          {{end}}
                    {{end}}
                 </div>
@@ -100,122 +101,23 @@
                 主题
             </div>
             <div class="cont">
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85">抒情</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3">四季</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4">山水</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94">天气</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9">人物</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f">人生</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb">生活</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5">节日</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8a%a8%e7%89%a9">动物</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9">植物</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e9%a3%9f%e7%89%a9">食物</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d">古籍</a>
+                {{range $i,$cate :=.topCategory}}
+                    <a href="{{$webDomain}}/famous/?c={{$cate.CatName}}">{{$cate.CatName}}</a>
+               {{end}}
             </div>
         </div>
 
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/site/production/p0c0e.js?qlatnki=nr"></script>
-        </div>
         <div class="sons">
             <div class="title">
                 <div class="titleleft"></div>
                 分类
             </div>
             <div class="cont">
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e7%88%b1%e6%83%85">爱情</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e5%8f%8b%e6%83%85">友情</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e7%a6%bb%e5%88%ab">离别</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e6%80%9d%e5%bf%b5">思念</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e6%80%9d%e4%b9%a1">思乡</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e4%bc%a4%e6%84%9f">伤感</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e5%ad%a4%e7%8b%ac">孤独</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e9%97%ba%e6%80%a8">闺怨</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e6%82%bc%e4%ba%a1">悼亡</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e6%80%80%e5%8f%a4">怀古</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e7%88%b1%e5%9b%bd">爱国</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%8a%92%e6%83%85&t=%e6%84%9f%e6%81%a9">感恩</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3&t=%e6%98%a5%e5%a4%a9">春天</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3&t=%e5%a4%8f%e5%a4%a9">夏天</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3&t=%e7%a7%8b%e5%a4%a9">秋天</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%9b%9b%e5%ad%a3&t=%e5%86%ac%e5%a4%a9">冬天</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e5%ba%90%e5%b1%b1">庐山</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e6%b3%b0%e5%b1%b1">泰山</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e6%b1%9f%e6%b2%b3">江河</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e9%95%bf%e6%b1%9f">长江</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e9%bb%84%e6%b2%b3">黄河</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e8%a5%bf%e6%b9%96">西湖</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%b1%b1%e6%b0%b4&t=%e7%80%91%e5%b8%83">瀑布</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e5%86%99%e9%a3%8e">写风</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e5%86%99%e4%ba%91">写云</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e5%86%99%e9%9b%a8">写雨</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e5%86%99%e9%9b%aa">写雪</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e5%bd%a9%e8%99%b9">彩虹</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e5%a4%aa%e9%98%b3">太阳</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e6%9c%88%e4%ba%ae">月亮</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%a4%a9%e6%b0%94&t=%e6%98%9f%e6%98%9f">星星</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9&t=%e5%a5%b3%e5%ad%90">女子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9&t=%e7%88%b6%e4%ba%b2">父亲</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9&t=%e6%af%8d%e4%ba%b2">母亲</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9&t=%e8%80%81%e5%b8%88">老师</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%89%a9&t=%e5%84%bf%e7%ab%a5">儿童</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e5%8a%b1%e5%bf%97">励志</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e5%93%b2%e7%90%86">哲理</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e9%9d%92%e6%98%a5">青春</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e6%97%b6%e5%85%89">时光</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e6%a2%a6%e6%83%b3">梦想</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e8%af%bb%e4%b9%a6">读书</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e4%ba%ba%e7%94%9f&t=%e6%88%98%e4%ba%89">战争</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb&t=%e4%b9%a1%e6%9d%91">乡村</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb&t=%e7%94%b0%e5%9b%ad">田园</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb&t=%e8%be%b9%e5%a1%9e">边塞</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e7%94%9f%e6%b4%bb&t=%e5%86%99%e6%a1%a5">写桥</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e6%98%a5%e8%8a%82">春节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e5%85%83%e5%ae%b5%e8%8a%82">元宵节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e5%af%92%e9%a3%9f%e8%8a%82">寒食节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e6%b8%85%e6%98%8e%e8%8a%82">清明节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e7%ab%af%e5%8d%88%e8%8a%82">端午节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e4%b8%83%e5%a4%95%e8%8a%82">七夕节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e4%b8%ad%e7%a7%8b%e8%8a%82">中秋节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e8%8a%82%e6%97%a5&t=%e9%87%8d%e9%98%b3%e8%8a%82">重阳节</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8a%a8%e7%89%a9&t=%e5%86%99%e9%b8%9f">写鸟</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8a%a8%e7%89%a9&t=%e5%86%99%e9%a9%ac">写马</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8a%a8%e7%89%a9&t=%e5%86%99%e7%8c%ab">写猫</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e6%a2%85%e8%8a%b1">梅花</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e6%a2%a8%e8%8a%b1">梨花</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e6%a1%83%e8%8a%b1">桃花</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e8%8d%b7%e8%8a%b1">荷花</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e8%8f%8a%e8%8a%b1">菊花</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e6%9f%b3%e6%a0%91">柳树</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e5%8f%b6%e5%ad%90">叶子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e6%a4%8d%e7%89%a9&t=%e7%ab%b9%e5%ad%90">竹子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e9%a3%9f%e7%89%a9&t=%e5%86%99%e9%85%92">写酒</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e9%a3%9f%e7%89%a9&t=%e5%86%99%e8%8c%b6">写茶</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e9%a3%9f%e7%89%a9&t=%e8%8d%94%e6%9e%9d">荔枝</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%ae%ba%e8%af%ad">论语</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%8f%b2%e8%ae%b0">史记</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%ba%84%e5%ad%90">庄子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%ad%9f%e5%ad%90">孟子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e4%b8%ad%e5%ba%b8">中庸</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%b7%a6%e4%bc%a0">左传</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%85%ad%e9%9f%ac">六韬</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e7%b4%a0%e4%b9%a6">素书</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e6%98%93%e4%bc%a0">易传</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%a2%a8%e5%ad%90">墨子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%8d%80%e5%ad%90">荀子</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%ae%ba%e8%a1%a1">论衡</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e4%b8%89%e7%95%a5">三略</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%af%b4%e8%8b%91">说苑</a>
-                <a href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e6%96%87%e5%ad%90">文子</a>
+                {{range $i,$category :=.allSubList}}
+                <a  href="{{$webDomain}}/famous/?c={{$category.PName}}&t={{$category.Model.CatName}}">{{$category.Model.CatName}}</a>
+              {{end}}
             </div>
         </div>
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/common/site/izgy4.js?n=ixqkhkrr"></script>
-        </div>
-
     </div>
 
 </div>

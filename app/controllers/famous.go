@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/sirupsen/logrus"
 	"math"
 	"net/http"
 	"poetry/app/bootstrap"
@@ -59,6 +58,10 @@ func FamousIndex(w http.ResponseWriter, req *http.Request) {
 		}
 		//查二级分类
 		subCategory, err = cateLogic.GetSubCategoryData(cateNameInfo.Id, define.FamousShowPosition, 0, 100)
+		catId = make([]int, len(subCategory))
+		for k, subCat := range subCategory {
+			catId[k] = subCat.Id
+		}
 	}
 	//根据子分类ID查询名句列表
 	if len(cateName) > 0 && len(tName) > 0 {
@@ -66,13 +69,6 @@ func FamousIndex(w http.ResponseWriter, req *http.Request) {
 			goto ErrorPage
 		}
 		catId = []int{subCateInfo.Id}
-	}
-	//没有子分类，则根据父分类查询名句列表
-	if len(cateName) > 0 && len(tName) == 0 {
-		catId = make([]int, len(subCategory))
-		for k, subCat := range subCategory {
-			catId[k] = subCat.Id
-		}
 	}
 	// 查名句列表
 	countNum = logic.NewFamousLogic().GetCountByCatIds(catId)
@@ -84,10 +80,6 @@ func FamousIndex(w http.ResponseWriter, req *http.Request) {
 	if famousData, err = logic.NewFamousLogic().GetListByCatId(catId, (page-1)*limit, limit); err != nil {
 		goto ErrorPage
 	}
-	logrus.Infof("famousData:%+v\n\n", famousData)
-	logrus.Infof("topCategory %+v:", topCategory)
-	logrus.Infof("subCategory %+v\n\n", subCategory)
-
 	assign = make(map[string]interface{})
 	assign["famousData"] = famousData
 	assign["topCategory"] = topCategory

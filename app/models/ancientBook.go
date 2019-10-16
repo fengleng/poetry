@@ -57,6 +57,27 @@ func (a *AncientBook) GetBookListByLimit(offset, limit int) (data []AncientBook,
 	return
 }
 
+//根据分类ID查询书籍列表
+func (a *AncientBook) GetBookListLimitByCatId(catId []int, offset, limit int) (data []AncientBook, err error) {
+	fields := []string{"id", "book_title", "cat_id", "book_introduction", "song_url", "song_file_path", "famous_total", "cover_chart", "cover_chart_path"}
+	if len(catId) > 0 {
+		_, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("cat_id__in", catId).Limit(limit, offset).All(&data, fields...)
+	} else {
+		_, err = orm.NewOrm().QueryTable(AncientBookTable).Limit(limit, offset).All(&data, fields...)
+	}
+	return
+}
+
+//根据分类ID查询书籍总数
+func (a *AncientBook) GetBookCountByCatId(catId []int) (num int64, err error) {
+	if len(catId) > 0 {
+		num, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("cat_id__in", catId).Count()
+	} else {
+		num, err = orm.NewOrm().QueryTable(AncientBookTable).Count()
+	}
+	return
+}
+
 //根据ID查询书名列表
 func (a *AncientBook) GetBookListByIds(bookIds []int) (data []AncientBook, err error) {
 	fields := []string{"id", "book_title", "link_url_crc32"}

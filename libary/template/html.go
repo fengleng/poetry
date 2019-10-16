@@ -63,6 +63,11 @@ func StrLen(str string) int {
 	return utf8.RuneCountInString(str)
 }
 
+//去除某些特殊符号
+func TrimSymbol(str string) string {
+	return strings.Trim(str, "：")
+}
+
 //显示模板页
 func (h *Html) Display(page string, data map[string]interface{}) {
 	htmlPath := []string{
@@ -83,7 +88,7 @@ func (h *Html) Display(page string, data map[string]interface{}) {
 	}
 	tpl := template.New(pageName)
 	//切记：加的自定义函数在Parse之前
-	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped, "subLen": subLen, "strLen": StrLen})
+	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped, "subLen": subLen, "strLen": StrLen, "trimSymbol": TrimSymbol})
 	tpl = template.Must(tpl.ParseFiles(
 		h.templateFiles...,
 	))

@@ -21,6 +21,16 @@ func (a *AncientBookLogic) GetBookListByLimit(offset, limit int) (data []models.
 	return models.NewAncientBook().GetBookListByLimit(offset, limit)
 }
 
+//根据分类ID查询书籍列表
+func (a *AncientBookLogic) GetBookListLimitByCatId(catId []int, offset, limit int) (data []models.AncientBook, err error) {
+	return models.NewAncientBook().GetBookListLimitByCatId(catId, offset, limit)
+}
+
+//根据分类ID查询书籍总数
+func (a *AncientBookLogic) GetBookCountByCatId(catId []int) (num int64, err error) {
+	return models.NewAncientBook().GetBookCountByCatId(catId)
+}
+
 //根据ID查询书名列表
 func (a *AncientBookLogic) GetBookListByIds(bookIds []int) (result bookMp, err error) {
 	var bookData []models.AncientBook

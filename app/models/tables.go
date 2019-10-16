@@ -20,4 +20,5 @@ const (
 	AuthorDataTable       = "poetry_author_data"          //作者资料信息表
 	FamousSentenceTable   = "poetry_famous_sentence"      //名句表
 	AncientCatalogueTable = "poetry_ancient_book_catalog" //古籍-书名目录表
+	AncientClassifyTable  = "poetry_ancient_category"     //古籍-栏目分类表
 )

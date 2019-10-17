@@ -52,7 +52,8 @@ func unescaped(x string) template.HTML {
 //截取字符串
 func subLen(str string, subLen int) string {
 	if subLen > utf8.RuneCountInString(str) {
-		subLen = utf8.RuneCountInString(str)
+		//subLen = utf8.RuneCountInString(str)
+		return str
 	}
 	content := []rune(str)[0:subLen]
 	return string(content)

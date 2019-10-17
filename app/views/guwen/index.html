@@ -10,7 +10,7 @@
 <div class="main3">
     <div class="left">
         <div class="titletype">
-            <div class="son1"><h1>不限<span>{{.page}} / {{.countPage}}页</span></h1></div>
+            <div class="son1"><h1>{{if $typeStr}}{{$typeStr}}{{else}}不限{{end}}<span>{{.page}} / {{.countPage}}页</span></h1></div>
             {{range $i,$classify := .allClassify}}
             <div class="son2">
                   <div class="sleft">
@@ -36,19 +36,19 @@
 
     {{range $i,$book := .bookList}}
         <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor{{$book.Id}}">{{$book.BookIntroduction}} {{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}</textarea>
+            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor{{$book.Id}}">{{$book.BookIntroduction}} {{$webDomain}}/guwen/detail/{{$book.Id}}</textarea>
         </div>
         <div class="sonspic">
             <div class="cont" style="margin-top:13px;">
                 <div class="divimg" style="margin-top:2px;">
-                    <a href="{{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}" target="_blank">
+                    <a href="{{$webDomain}}/guwen/detail/{{$book.Id}}" target="_blank">
                         <img src="{{$book.CoverChart}}" width="105" height="150" alt="{{$book.BookTitle}}"/>
                     </a>
                 </div>
                 <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="{{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}"><b>{{$book.BookTitle}}</b></a>
+                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="{{$webDomain}}/guwen/detail/{{$book.Id}}"><b>{{$book.BookTitle}}</b></a>
                     <a style="margin-left:5px;" href="javascript:PlayBook({{$book.Id}})">
-                        <img id="speakerimgBook2" src="{{$cdnDomain}}/static/images/speaker.png"   alt="" width="16" height="16"/>
+                        <img id="speakerimgBook{{$book.Id}}" src="{{$cdnDomain}}/static/images/speaker.png"   alt="" width="16" height="16"/>
                     </a>
                     <span id="bookPlay{{$book.Id}}" style=" display:none;width:1px; height:1px;"></span>
                 </p>
@@ -91,83 +91,11 @@
                 古籍
             </div>
             <div class="cont">
-                <a href="/guwen/book_2.aspx">论语</a>
-                <a href="/guwen/book_5.aspx">史记</a>
-                <a href="/guwen/book_6.aspx">周易</a>
-                <a href="/guwen/book_7.aspx">易传</a>
-                <a href="/guwen/book_11.aspx">孟子</a>
-                <a href="/guwen/book_19.aspx">左传</a>
-                <a href="/guwen/book_20.aspx">大学</a>
-                <a href="/guwen/book_21.aspx">中庸</a>
-                <a href="/guwen/book_22.aspx">尚书</a>
-                <a href="/guwen/book_23.aspx">礼记</a>
-                <a href="/guwen/book_24.aspx">周礼</a>
-                <a href="/guwen/book_25.aspx">仪礼</a>
-                <a href="/guwen/book_26.aspx">庄子</a>
-                <a href="/guwen/book_28.aspx">老子</a>
-                <a href="/guwen/book_11.aspx">孟子</a>
-                <a href="/guwen/book_29.aspx">墨子</a>
-                <a href="/guwen/book_30.aspx">荀子</a>
-                <a href="/guwen/book_32.aspx">列子</a>
-                <a href="/guwen/book_34.aspx">管子</a>
-                <a href="/guwen/book_36.aspx">吴子</a>
-                <a href="/guwen/book_39.aspx">素书</a>
-                <a href="/guwen/book_45.aspx">孝经</a>
-                <a href="/guwen/book_55.aspx">将苑</a>
-                <a href="/guwen/book_56.aspx">六韬</a>
-                <a href="/guwen/book_57.aspx">反经</a>
-                <a href="/guwen/book_71.aspx">冰鉴</a>
-                <a href="/guwen/book_74.aspx">论衡</a>
-                <a href="/guwen/book_78.aspx">智囊</a>
-                <a href="/guwen/book_40.aspx">汉书</a>
-                <a href="/guwen/book_41.aspx">后汉书</a>
-                <a href="/guwen/book_31.aspx">韩非子</a>
-                <a href="/guwen/book_33.aspx">淮南子</a>
-                <a href="/guwen/book_35.aspx">尉缭子</a>
-                <a href="/guwen/book_1.aspx">山海经</a>
-                <a href="/guwen/book_15.aspx">三字经</a>
-                <a href="/guwen/book_16.aspx">百家姓</a>
-                <a href="/guwen/book_17.aspx">千字文</a>
-                <a href="/guwen/book_27.aspx">鬼谷子</a>
-                <a href="/guwen/book_37.aspx">伤寒论</a>
-                <a href="/guwen/book_42.aspx">商君书</a>
-                <a href="/guwen/book_53.aspx">战国策</a>
-                <a href="/guwen/book_54.aspx">三国志</a>
-                <a href="/guwen/book_59.aspx">司马法</a>
-                <a href="/guwen/book_60.aspx">逸周书</a>
-                <a href="/guwen/book_49.aspx">搜神记</a>
-                <a href="/guwen/book_63.aspx">金刚经</a>
-                <a href="/guwen/book_66.aspx">地藏经</a>
-                <a href="/guwen/book_68.aspx">弟子规</a>
-                <a href="/guwen/book_75.aspx">菜根谭</a>
-                <a href="/guwen/book_77.aspx">水经注</a>
-                <a href="/guwen/book_3.aspx">孙子兵法</a>
-                <a href="/guwen/book_4.aspx">三十六计</a>
-                <a href="/guwen/book_8.aspx">资治通鉴</a>
-                <a href="/guwen/book_9.aspx">续资治通</a>
-                <a href="/guwen/book_10.aspx">黄帝内经</a>
-                <a href="/guwen/book_12.aspx">本草纲目</a>
-                <a href="/guwen/book_13.aspx">了凡四训</a>
-                <a href="/guwen/book_14.aspx">梦溪笔谈</a>
-                <a href="/guwen/book_18.aspx">世说新语</a>
-                <a href="/guwen/book_38.aspx">天工开物</a>
-                <a href="/guwen/book_43.aspx">文心雕龙</a>
-                <a href="/guwen/book_44.aspx">吕氏春秋</a>
-                <a href="/guwen/book_46.aspx">孔子家语</a>
-                <a href="/guwen/book_47.aspx">颜氏家训</a>
-                <a href="/guwen/book_48.aspx">孙膑兵法</a>
-                <a href="/guwen/book_51.aspx">笑林广记</a>
-                <a href="/guwen/book_52.aspx">百战奇略</a>
-                <a href="/guwen/book_58.aspx">公孙龙子</a>
-                <a href="/guwen/book_114.aspx">声律启蒙</a>
+                {{range $i,$book := .rRemBookList}}
+                <a href="{{$webDomain}}/guwen/detail/{{$book.Id}}" target="_blank">{{subLen $book.BookTitle 5}}</a>
+                {{end}}
             </div>
         </div>
-
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/common/site/izgy4.js?n=ixqkhkrr"></script>
-        </div>
-
     </div>
 </div>
 
@@ -176,6 +104,7 @@
     window.onload = function () {
         setIframeHeight(document.getElementById('external-frame'));
     };
+    var cdnDomain = "{{$cdnDomain}}";
 </script>
 <script defer="defer" src="{{.cdnDomain}}/static/js/skinso20190931.js" type="text/javascript"></script>
 </body>

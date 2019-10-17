@@ -45,7 +45,9 @@ func InitRouting(mux *http.ServeMux) {
 
 	//古文相关
 	mux.HandleFunc("/guwen/", CallMiddleWare(controllers.GuWenIndex))         //古文首页
+	mux.HandleFunc("/guwen/bookplay", CallMiddleWare(controllers.BookPlay))   //古文播放声音
 	mux.HandleFunc("/guwen/detail/", CallMiddleWare(controllers.GuWenDetail)) //古文详情页
+	mux.HandleFunc("/guwen/book/", CallMiddleWare(controllers.GuWenBook))     //目录详情页
 
 	//名句相关
 	mux.HandleFunc("/famous/", CallMiddleWare(controllers.FamousIndex)) //名句首页

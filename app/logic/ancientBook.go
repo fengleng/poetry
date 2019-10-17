@@ -63,6 +63,7 @@ func (a *AncientBookLogic) GetBookListByIds(bookIds []int) (result bookMp, err e
 	}
 	result = make(bookMp, len(bookData))
 	for _, book := range bookData {
+		book.CoverChart = a.GetBookCoverImage(book)
 		result[int(book.Id)] = book
 	}
 	return

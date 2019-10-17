@@ -39,3 +39,14 @@ func (a *AncientCatalogue) GetCatalogListByPaths(paths []string) (data []Ancient
 	_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("link_url__in", paths).All(&data, fields...)
 	return
 }
+
+//根据bookId和目录分类ID查询目录具体列表
+func (a *AncientCatalogue) GetCatalogListByBookIdCids(bookId int, categoryIds []int) (data []AncientCatalogue, err error) {
+	fields := []string{"id", "book_id", "catalog_title", "link_url", "catalog_catgory_id"}
+	if len(categoryIds) > 0 {
+		_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("book_id", bookId).Filter("catalog_catgory_id__in", categoryIds).All(&data, fields...)
+	} else {
+		_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("book_id", bookId).All(&data, fields...)
+	}
+	return
+}

@@ -1335,11 +1335,11 @@ function PlayBook(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookPlay' + id).style.display = "block";
-                document.getElementById('speakerimgBook' + id).src = "https://song.gushiwen.org/siteimg/speakerOk.png";
+                document.getElementById('speakerimgBook' + id).src = cdnDomain+"/static/images/speakerOk.png";
                 document.getElementById("bookPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/guwen/bookplay.aspx?id=" + id, false);
+        xmlhttp.open("GET", "/guwen/bookplay?id=" + id, false);
         xmlhttp.send();
     }
     else {
@@ -1354,11 +1354,11 @@ function PlayBook(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBook' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgBook' + id).src = cdnDomain+"/static/images/speaker.png";
                 document.getElementById("bookPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/guwen/bookplay.aspx?id=0", false);
+        xmlhttp.open("GET", "/guwen/bookplay?id=0", false);
         xmlhttp.send();
     }
 }

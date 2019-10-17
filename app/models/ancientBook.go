@@ -80,7 +80,7 @@ func (a *AncientBook) GetBookCountByCatId(catId []int) (num int64, err error) {
 
 //根据ID查询书名列表
 func (a *AncientBook) GetBookListByIds(bookIds []int) (data []AncientBook, err error) {
-	fields := []string{"id", "book_title", "link_url_crc32"}
+	fields := []string{"id", "book_title", "cat_id", "book_introduction", "link_url_crc32", "song_url", "song_file_path", "famous_total", "cover_chart", "cover_chart_path"}
 	_, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("id__in", bookIds).All(&data, fields...)
 	return
 }

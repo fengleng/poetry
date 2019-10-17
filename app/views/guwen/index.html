@@ -10,15 +10,15 @@
 <div class="main3">
     <div class="left">
         <div class="titletype">
-            <div class="son1"><h1>不限<span>1 / 34页</span></h1></div>
+            <div class="son1"><h1>不限<span>{{.page}} / {{.countPage}}页</span></h1></div>
             {{range $i,$classify := .allClassify}}
             <div class="son2">
                   <div class="sleft">
                       {{$cName:=$classify.ClassifyName|trimSymbol}}
                       {{if eq $typeStr $cName}}
-                          <span style="color:#B00815;">{{$classify.ClassifyName}}</span>
+                          <span style="color:#B00815;">{{$classify.ClassifyName}}：</span>
                           {{else}}
-                              <a style="float:left; margin-top:14px; font-size:14px;" href="/guwen/?type={{$classify.ClassifyName|trimSymbol}}&first=1">{{$classify.ClassifyName}}</a>
+                              <a style="float:left; margin-top:14px; font-size:14px;" href="/guwen/?type={{$classify.ClassifyName|trimSymbol}}">{{$classify.ClassifyName}}：</a>
                           {{end}}
                 </div>
                   <div class="sright">
@@ -26,7 +26,7 @@
                           {{if eq $typeStr $class.CatName}}
                           <span style="width:auto; margin-right:16px;">{{$class.CatName}}</span>
                       {{else}}
-                          <a style=" width:auto; margin-right:16px;" href="/guwen/?type={{$class.CatName}}&first=0">{{$class.CatName}}</a>
+                          <a style=" width:auto; margin-right:16px;" href="/guwen/?type={{$class.CatName}}">{{$class.CatName}}</a>
                           {{end}}
                   {{end}}
                 </div>
@@ -34,249 +34,53 @@
             {{end}}
         </div>
 
-
+    {{range $i,$book := .bookList}}
         <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor2">《论语》是儒家学派的经典著作之一，由孔子的弟子及其再传弟子编撰而成。它以语录体和对话文体为主，记录了孔子及其弟子言行，集中体现了孔子的政治主张、伦理思想、道德观念及教育原则等。与《大学》《中庸》《孟子》《诗经》《尚书》《礼记》《易经》《春秋》并称“四书五经”。通行本《论语》共二十篇。https://so.gushiwen.org/guwen/book_2.aspx</textarea>
+            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor{{$book.Id}}">{{$book.BookIntroduction}} {{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}</textarea>
         </div>
         <div class="sonspic">
             <div class="cont" style="margin-top:13px;">
                 <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_2.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/lunyu.jpg" width="105" height="150" alt="论语"/></a>
+                    <a href="{{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}" target="_blank">
+                        <img src="{{$book.CoverChart}}" width="105" height="150" alt="{{$book.BookTitle}}"/>
+                    </a>
                 </div>
                 <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_2.aspx"><b>论语</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(2)"><img id="speakerimgBook2" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay2" style=" display:none;width:1px; height:1px;"></span>
+                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="{{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}"><b>{{$book.BookTitle}}</b></a>
+                    <a style="margin-left:5px;" href="javascript:PlayBook({{$book.Id}})">
+                        <img id="speakerimgBook2" src="{{$cdnDomain}}/static/images/speaker.png"   alt="" width="16" height="16"/>
+                    </a>
+                    <span id="bookPlay{{$book.Id}}" style=" display:none;width:1px; height:1px;"></span>
                 </p>
-                <p style=" margin:0px;">《论语》是儒家学派的经典著作之一，由孔子的弟子及其再传弟子编撰而成。它以语录体和对话文体为主，记录了孔子及其弟子言行，集中体现了孔子的政治主张、伦理思想、道德观念及教育原则等。与《大学》《中庸》《孟子》《诗经》《尚书》《礼记》《易经》《春秋》并称“四书五经”。通行本《论语》共二十篇。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%ae%ba%e8%af%ad">► 129条名句</a> </p>
+                <p style=" margin:0px;">{{$book.BookIntroduction|unescaped}}
+                    {{if gt $book.FamousTotal 0}}<a target="_blank" href="/famous/?c=古籍&t={{$book.BookTitle}}">► {{$book.FamousTotal}}条名句</a>{{end}}
+                </p>
             </div>
             <div class="tool">
-                <div class="shoucang"><img id="likeImg2" name="0" onload="selectLikeGuwen(2)" onclick="changeLikeGuwen(2,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(2)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d2%e3%80%8a%e8%ae%ba%e8%af%ad%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor4">《三十六计》或称“三十六策”，是指中国古代三十六个兵法策略，语源于南北朝，成书于明清。它是根据我国古代卓越的军事思想和丰富的斗争经验总结而成的兵书，是中华民族悠久文化遗产之一。https://so.gushiwen.org/guwen/book_4.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_4.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/sanshiliuji.jpg" width="105" height="150" alt="三十六计"/></a>
+                <div class="toolpinglun">
+                    <a href="javascript:copyAuthor({{$book.Id}})"><img src="{{$cdnDomain}}/static/images/copy.png" alt="复制" width="18" height="18" /></a>
                 </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_4.aspx"><b>三十六计</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(4)"><img id="speakerimgBook4" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay4" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《三十六计》或称“三十六策”，是指中国古代三十六个兵法策略，语源于南北朝，成书于明清。它是根据我国古代卓越的军事思想和丰富的斗争经验总结而成的兵书，是中华民族悠久文化遗产之一。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e4%b8%89%e5%8d%81%e5%85%ad%e8%ae%a1">► 1条名句</a> </p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg4" name="0" onload="selectLikeGuwen(4)" onclick="changeLikeGuwen(4,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(4)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d4%e3%80%8a%e4%b8%89%e5%8d%81%e5%85%ad%e8%ae%a1%e3%80%8b" target="_blank">完善</a></div>
             </div>
         </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor5">《史记》是由司马迁撰写的中国第一部纪传体通史。记载了上自上古传说中的黄帝时代，下至汉武帝元狩元年间共3000多年的历史（哲学、政治、经济、军事等）。《史记》最初没有固定书名，或称“太史公书”，或称“太史公传”，也省称“太史公”。“史记”本是古代史书通称，从三国时期开始，“史记”由史书的通称逐渐成为“太史公书”的专称。《史记》与后来的《汉书》（班固）、《后汉书》（范晔、司马彪）、《三国志》（陈寿）合称“前四史”。刘向等人认为此书“善序事理，辩而不华，质而不俚”。与司马光的《资治通鉴》并称“史学双璧”。https://so.gushiwen.org/guwen/book_5.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_5.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/shiji.jpg" width="105" height="150" alt="史记"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_5.aspx"><b>史记</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(5)"><img id="speakerimgBook5" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay5" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《史记》是由司马迁撰写的中国第一部纪传体通史。记载了上自上古传说中的黄帝时代，下至汉武帝元狩元年间共3000多年的历史（哲学、政治、经济、军事等）。《史记》最初没有固定书名，或称“太史公书”，或称“太史公传”，也省称“太史公”。“史记”本是古代史书通称，从三国时期开始，“史记”由史书的通称逐渐成为“太史公书”的专称。《史记》与后来的《汉书》（班固）、《后汉书》（范晔、司马彪）、《三国志》（陈寿）合称“前四史”。刘向等人认为此书“善序事理，辩而不华，质而不俚”。与司马光的《资治通鉴》并称“史学双璧”。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e5%8f%b2%e8%ae%b0">► 57条名句</a> </p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg5" name="0" onload="selectLikeGuwen(5)" onclick="changeLikeGuwen(5,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(5)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d5%e3%80%8a%e5%8f%b2%e8%ae%b0%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor3">《孙子兵法》又称《孙武兵法》、《吴孙子兵法》、《孙子兵书》、《孙武兵书》等，是中国现存最早的兵书，也是世界上最早的军事著作，早于克劳塞维茨《战争论》约2300年，被誉为“兵学圣典”。共有六千字左右，一共十三篇。作者为春秋时祖籍齐国乐安的吴国将军孙武。《孙子兵法》是中国古代军事文化遗产中的璀璨瑰宝，优秀传统文化的重要组成部分，是古代军事思想精华的集中体现。https://so.gushiwen.org/guwen/book_3.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_3.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/sunzibingfa.jpg" width="105" height="150" alt="孙子兵法"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_3.aspx"><b>孙子兵法</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(3)"><img id="speakerimgBook3" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay3" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《孙子兵法》又称《孙武兵法》、《吴孙子兵法》、《孙子兵书》、《孙武兵书》等，是中国现存最早的兵书，也是世界上最早的军事著作，早于克劳塞维茨《战争论》约2300年，被誉为“兵学圣典”。共有六千字左右，一共十三篇。作者为春秋时祖籍齐国乐安的吴国将军孙武。《孙子兵法》是中国古代军事文化遗产中的璀璨瑰宝，优秀传统文化的重要组成部分，是古代军事思想精华的集中体现。</p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg3" name="0" onload="selectLikeGuwen(3)" onclick="changeLikeGuwen(3,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(3)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d3%e3%80%8a%e5%ad%99%e5%ad%90%e5%85%b5%e6%b3%95%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor1">《山海经》是中国志怪古籍，大体是战国中后期到汉代初中期的楚国或巴蜀人所作。也是一部荒诞不经的奇书。该书作者不详，古人认为该书是“战国好奇之士取《穆王传》 , 杂录《庄》 、 《列》 、 《离骚》 、 《周书》 、 《晋乘》以成者” 。现代学者也均认为成书并非一时，作者亦非一人。《山海经》全书现存18篇，其余篇章内容早佚。原共22篇约32650字。共藏山经5篇、海外经4篇、海内经5篇、大荒经4篇。《汉书&#183;艺文志》作13篇，未把晚出的大荒经和海内经计算在内。山海经内容主要是民间传说中的地理知识，包括山川、道里、民族、物产、药物、祭祀、巫医等。保存了包括夸父逐日、女娲补天、精卫填海、大禹治水等不少脍炙人口的远古神话传说和寓言故事。https://so.gushiwen.org/guwen/book_1.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_1.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/shanhaijing.jpg" width="105" height="150" alt="山海经"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_1.aspx"><b>山海经</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(1)"><img id="speakerimgBook1" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay1" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《山海经》是中国志怪古籍，大体是战国中后期到汉代初中期的楚国或巴蜀人所作。也是一部荒诞不经的奇书。该书作者不详，古人认为该书是“战国好奇之士取《穆王传》 , 杂录《庄》 、 《列》 、 《离骚》 、 《周书》 、 《晋乘》以成者” 。现代学者也均认为成书并非一时，作者亦非一人。《山海经》全书现存18篇，其余篇章内容早佚。原共22篇约32650字。共藏山经5篇、海外经4篇、海内经5篇、大荒经4篇。《汉书&#183;艺文志》作13篇，未把晚出的大荒经和海内经计算在内。山海经内容主要是民间传说中的地理知识，包括山川、道里、民族、物产、药物、祭祀、巫医等。保存了包括夸父逐日、女娲补天、精卫填海、大禹治水等不少脍炙人口的远古神话传说和寓言故事。</p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg1" name="0" onload="selectLikeGuwen(1)" onclick="changeLikeGuwen(1,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(1)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d1%e3%80%8a%e5%b1%b1%e6%b5%b7%e7%bb%8f%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor6">《周易》即《易经》，《三易》之一（另有观点：认为易经即三易，而非周易），是传统经典之一，相传系周文王姬昌所作，内容包括《经》和《传》两个部分。《经》主要是六十四卦和三百八十四爻，卦和爻各有说明（卦辞、爻辞），作为占卜之用。《周易》没有提出阴阳与太极等概念，讲阴阳与太极的是被道家与阴阳家所影响的《易传》。《传》包含解释卦辞和爻辞的七种文辞共十篇，统称《十翼》》，相传为孔子所撰。https://so.gushiwen.org/guwen/book_6.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_6.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/zhouyi.jpg" width="105" height="150" alt="周易"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_6.aspx"><b>周易</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(6)"><img id="speakerimgBook6" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay6" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《周易》即《易经》，《三易》之一（另有观点：认为易经即三易，而非周易），是传统经典之一，相传系周文王姬昌所作，内容包括《经》和《传》两个部分。《经》主要是六十四卦和三百八十四爻，卦和爻各有说明（卦辞、爻辞），作为占卜之用。《周易》没有提出阴阳与太极等概念，讲阴阳与太极的是被道家与阴阳家所影响的《易传》。《传》包含解释卦辞和爻辞的七种文辞共十篇，统称《十翼》》，相传为孔子所撰。</p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg6" name="0" onload="selectLikeGuwen(6)" onclick="changeLikeGuwen(6,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(6)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d6%e3%80%8a%e5%91%a8%e6%98%93%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor28">《老子》，又称《道德真经》《道德经》《五千言》《老子五千文》，是中国古代先秦诸子分家前的一部著作，为其时诸子所共仰，传说是春秋时期的老子李耳（似是作者、注释者、传抄者的集合体）所撰写，是道家哲学思想的重要来源。道德经分上下两篇，原文上篇《德经》、下篇《道经》，不分章，后改为《道经》37章在前，第38章之后为《德经》，并分为81章。是中国历史上首部完整的哲学著作。https://so.gushiwen.org/guwen/book_28.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_28.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/laozi.jpg" width="105" height="150" alt="老子"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_28.aspx"><b>老子</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(28)"><img id="speakerimgBook28" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay28" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《老子》，又称《道德真经》《道德经》《五千言》《老子五千文》，是中国古代先秦诸子分家前的一部著作，为其时诸子所共仰，传说是春秋时期的老子李耳（似是作者、注释者、传抄者的集合体）所撰写，是道家哲学思想的重要来源。道德经分上下两篇，原文上篇《德经》、下篇《道经》，不分章，后改为《道经》37章在前，第38章之后为《德经》，并分为81章。是中国历史上首部完整的哲学著作。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%80%81%e5%ad%90">► 105条名句</a> </p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg28" name="0" onload="selectLikeGuwen(28)" onclick="changeLikeGuwen(28,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(28)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d28%e3%80%8a%e8%80%81%e5%ad%90%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor10">《黄帝内经》分《灵枢》、《素问》两部分，起源于轩辕黄帝，后又经医家、医学理论家联合增补发展创作，一般认为集结成书于春秋战国时期。在以黄帝、岐伯、雷公对话、问答的形式阐述病机病理的同时，主张不治已病，而治未病，同时主张养生、摄生、益寿、延年。是中国传统医学四大经典著作之一(《黄帝内经》、《难经》、《伤寒杂病论》、《神农本草经》)，是我国医学宝库中现存成书最早的一部医学典籍。是研究人的生理学、病理学、诊断学、治疗原则和药物学的医学巨著。在理论上建立了中医学上的“阴阳五行学说”、“脉象学说”“藏象学说”等。https://so.gushiwen.org/guwen/book_10.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_10.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/huangdineijing.jpg" width="105" height="150" alt="黄帝内经"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_10.aspx"><b>黄帝内经</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(10)"><img id="speakerimgBook10" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay10" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《黄帝内经》分《灵枢》、《素问》两部分，起源于轩辕黄帝，后又经医家、医学理论家联合增补发展创作，一般认为集结成书于春秋战国时期。在以黄帝、岐伯、雷公对话、问答的形式阐述病机病理的同时，主张不治已病，而治未病，同时主张养生、摄生、益寿、延年。是中国传统医学四大经典著作之一(《黄帝内经》、《难经》、《伤寒杂病论》、《神农本草经》)，是我国医学宝库中现存成书最早的一部医学典籍。是研究人的生理学、病理学、诊断学、治疗原则和药物学的医学巨著。在理论上建立了中医学上的“阴阳五行学说”、“脉象学说”“藏象学说”等。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e9%bb%84%e5%b8%9d%e5%86%85%e7%bb%8f">► 8条名句</a> </p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg10" name="0" onload="selectLikeGuwen(10)" onclick="changeLikeGuwen(10,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(10)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d10%e3%80%8a%e9%bb%84%e5%b8%9d%e5%86%85%e7%bb%8f%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor27">《鬼谷子》，又名《捭阖策》。据传是由鬼谷先生后学者根据先生言论整理而成。该书侧重于权谋策略及言谈辩论技巧。《鬼谷子》共有十四篇，其中第十三、十四篇已失传。https://so.gushiwen.org/guwen/book_27.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_27.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/guiguzi.jpg" width="105" height="150" alt="鬼谷子"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_27.aspx"><b>鬼谷子</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(27)"><img id="speakerimgBook27" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay27" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《鬼谷子》，又名《捭阖策》。据传是由鬼谷先生后学者根据先生言论整理而成。该书侧重于权谋策略及言谈辩论技巧。《鬼谷子》共有十四篇，其中第十三、十四篇已失传。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e9%ac%bc%e8%b0%b7%e5%ad%90">► 5条名句</a> </p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg27" name="0" onload="selectLikeGuwen(27)" onclick="changeLikeGuwen(27,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(27)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d27%e3%80%8a%e9%ac%bc%e8%b0%b7%e5%ad%90%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <div style=" width:1px; height:1px; overflow:hidden;">
-            <textarea style=" background-color:#F0EFE2; border:0px;overflow:hidden;" cols="1" rows="1" id="txtareAuthor8">《资治通鉴》，简称“通鉴”，是北宋司马光主编的一部多卷本编年体史书，共294卷，历时19年告成。它以时间为纲，事件为目，从周威烈王二十三年（公元前403年）写起，到五代的后周世宗显德六年（公元959年）征淮南停笔，涵盖16朝1362年的历史。它是中国第一部编年体通史，在中国官修史书中占有极重要的地位。https://so.gushiwen.org/guwen/book_8.aspx</textarea>
-        </div>
-        <div class="sonspic">
-            <div class="cont" style="margin-top:13px;">
-                <div class="divimg" style="margin-top:2px;">
-                    <a href="/guwen/book_8.aspx" target="_blank"><img src="https://song.gushiwen.org/bookPic/zizhitongjian.jpg" width="105" height="150" alt="资治通鉴"/></a>
-                </div>
-                <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="/guwen/book_8.aspx"><b>资治通鉴</b></a>
-                    <a style="margin-left:5px;" href="javascript:PlayBook(8)"><img id="speakerimgBook8" src="https://song.gushiwen.org/siteimg/speaker.png" / alt="" width="16" height="16"/></a>
-                    <span id="bookPlay8" style=" display:none;width:1px; height:1px;"></span>
-                </p>
-                <p style=" margin:0px;">《资治通鉴》，简称“通鉴”，是北宋司马光主编的一部多卷本编年体史书，共294卷，历时19年告成。它以时间为纲，事件为目，从周威烈王二十三年（公元前403年）写起，到五代的后周世宗显德六年（公元959年）征淮南停笔，涵盖16朝1362年的历史。它是中国第一部编年体通史，在中国官修史书中占有极重要的地位。<a target="_blank" href="/mingju/Default.aspx?p=1&c=%e5%8f%a4%e7%b1%8d&t=%e8%b5%84%e6%b2%bb%e9%80%9a%e9%89%b4">► 19条名句</a> </p>
-            </div>
-            <div class="tool">
-                <div class="shoucang"><img id="likeImg8" name="0" onload="selectLikeGuwen(8)" onclick="changeLikeGuwen(8,'http://so.gushiwen.org/guwen/default.aspx')" src="https://song.gushiwen.org/siteimg/shoucang.png" alt="收藏" width="18" height="18" /></div>
-                <div class="toolpinglun"><a href="https://so.gushiwen.org/app/"><img src="https://song.gushiwen.org/siteimg/download.png" alt="下载" width="18" height="18" /></a></div>
-                <div class="toolpinglun"><a href="javascript:copyAuthor(8)"><img src="https://song.gushiwen.org/siteimg/copy.png" alt="复制" width="18" height="18" /></a></div>
-                <div class="jiucuo"><a href="/jiucuo.aspx?u=%e5%8f%a4%e7%b1%8d8%e3%80%8a%e8%b5%84%e6%b2%bb%e9%80%9a%e9%89%b4%e3%80%8b" target="_blank">完善</a></div>
-            </div>
-        </div>
-
-        <form id="FromPage" method="get" action="/guwen/Default.aspx" onsubmit="return PageSubmit()">
+    {{end}}
+        <form id="FromPage" method="get" action="{{.pageUrl}}" onsubmit="return PageSubmit()">
             <div class="pagesright">
+                {{if le .nextPage .countPage}}
+                    <a id="amore" class="amore" href="{{.pageUrl}}&page={{.nextPage}}">下一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">下一页</a>
+                {{end}}
 
-                <a class="amore" href="/guwen/default.aspx?p=2">下一页</a>
-
-                <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
-
-                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ 34页</span>
-                <span class="curent"><input id="putpage" name="p" value="1" autocomplete="off" onblur="SubPage()" /></span>
-                <label id="temppage" style="display:none;">1</label>
-                <label id="sumPage" style="display:none;">34</label>
-                <input type="hidden" name="type" value="" />
+                {{if gt .page 1}}
+                    <a href="{{.pageUrl}}&page={{.prevPage}}">上一页</a>
+                {{else}}
+                    <a style=" color:#808080;background-color:#e7e6d8;">上一页</a>
+                {{end}}
+                <span style=" background-color:#E1E0C7; border:0px; margin-top:22px; width:auto;">/ {{.countPage}}页</span>
+                <span class="curent"><input id="putpage" name="page" value="{{.page}}" autocomplete="off" onblur="SubPage()" /></span>
+                <label id="temppage" style="display:none;">{{.page}}</label>
+                <label id="sumPage" style="display:none;">{{.countPage}}</label>
+                <input type="hidden" name="type" value="{{.typeStr}}" />
             </div>
         </form>
     </div>

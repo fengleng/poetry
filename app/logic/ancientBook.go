@@ -6,7 +6,10 @@
 */
 package logic
 
-import "poetry/app/models"
+import (
+	"poetry/app/models"
+	"poetry/config/define"
+)
 
 type AncientBookLogic struct {
 }
@@ -23,7 +26,28 @@ func (a *AncientBookLogic) GetBookListByLimit(offset, limit int) (data []models.
 
 //根据分类ID查询书籍列表
 func (a *AncientBookLogic) GetBookListLimitByCatId(catId []int, offset, limit int) (data []models.AncientBook, err error) {
-	return models.NewAncientBook().GetBookListLimitByCatId(catId, offset, limit)
+	if data, err = models.NewAncientBook().GetBookListLimitByCatId(catId, offset, limit); err != nil {
+		return
+	}
+	for k, book := range data {
+		book.CoverChart = a.GetBookCoverImage(book)
+		data[k] = book
+	}
+	return
+}
+
+//获取封面图地址
+func (a *AncientBookLogic) GetBookCoverImage(book models.AncientBook) (coverImage string) {
+	if len(book.CoverChartPath) > 0 {
+		coverImage = define.CdnStoreDomain + "/" + book.CoverChartPath
+	}
+	if coverImage == "" && len(book.CoverChart) > 0 {
+		coverImage = book.CoverChart
+	}
+	if coverImage == "" {
+		coverImage = define.CdnStoreDomain + "/default.png"
+	}
+	return
 }
 
 //根据分类ID查询书籍总数

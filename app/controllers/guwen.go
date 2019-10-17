@@ -7,12 +7,14 @@
 package controllers
 
 import (
-	"github.com/sirupsen/logrus"
+	"math"
 	"net/http"
+	"poetry/app/bootstrap"
 	"poetry/app/logic"
 	"poetry/app/models"
 	"poetry/config/define"
 	templateHtml "poetry/libary/template"
+	"poetry/tools"
 	"strconv"
 	"strings"
 )
@@ -21,12 +23,11 @@ import (
 func GuWenIndex(w http.ResponseWriter, req *http.Request) {
 	var (
 		allClassify   []*define.GuWenClassify //所有分类数据
-		bookList      []models.AncientBook    //书籍列表
+		bookList      []models.AncientBook    //古籍列表
 		classifyLogic *logic.AncientClassifyLogic
 		bookLogic     *logic.AncientBookLogic
 		catIds        []int
-		typeStr       string
-		typeClass     models.AncientClassify
+		countPage     int
 		page          int
 		limit         = 10
 		count         int64
@@ -35,8 +36,7 @@ func GuWenIndex(w http.ResponseWriter, req *http.Request) {
 	)
 	classifyLogic = logic.NewAncientClassify()
 	bookLogic = logic.NewAncientBook()
-	typeStr = strings.TrimSpace(req.FormValue("type"))
-	first := req.FormValue("first")
+	typeStr := strings.TrimSpace(req.FormValue("type"))
 	if pageStr := req.FormValue("page"); len(pageStr) > 0 {
 		page, _ = strconv.Atoi(pageStr)
 	}
@@ -44,44 +44,33 @@ func GuWenIndex(w http.ResponseWriter, req *http.Request) {
 	if allClassify, err = classifyLogic.GetAllClassify(20); err != nil {
 		goto ErrorPage
 	}
-	//搜索子分类
-	if len(typeStr) > 0 && first == "0" {
-		typeClass = classifyLogic.FindClassifyListByCateName(allClassify, typeStr)
-		if typeClass.Id > 0 {
-			catIds = []int{typeClass.Id}
+	//搜索分类ID
+	catIds = classifyLogic.FindCatIdListByCateName(allClassify, typeStr)
+	if (len(typeStr) > 0 && len(catIds) > 0) || (len(typeStr) == 0) {
+		count, _ = bookLogic.GetBookCountByCatId(catIds)
+		if count > 0 {
+			countPage = int(math.Ceil(float64(count) / float64(limit)))
 		}
-	}
-	//搜索顶级分类
-	if len(typeStr) > 0 && first == "1" {
-		if typeClass, err = classifyLogic.GetCategoryDataByName(typeStr); err != nil {
+		if page > countPage || page == 0 {
+			page = 1
+		}
+		if bookList, err = bookLogic.GetBookListLimitByCatId(catIds, (page-1)*limit, limit); err != nil {
 			goto ErrorPage
 		}
-		catIds = classifyLogic.FindPidByClassifyData(allClassify, typeClass.Id)
 	}
-	if len(typeStr) > 0 && len(catIds) == 0 {
-		goto ClassPage
-	}
-	count, _ = bookLogic.GetBookCountByCatId(catIds)
-	if bookList, err = bookLogic.GetBookListLimitByCatId(catIds, (page-1)*limit, limit); err != nil {
-		goto ErrorPage
-	}
-	//todo 明天继续古文列表
-	logrus.Infoln("%+v", bookList)
 	assign = make(map[string]interface{})
 	assign["allClassify"] = allClassify
 	assign["bookList"] = bookList
 	assign["count"] = count
+	assign["countPage"] = countPage
 	assign["page"] = page
+	assign["nextPage"] = page + 1
+	assign["prevPage"] = page - 1
 	assign["typeStr"] = typeStr
+	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
+	assign["webDomain"] = bootstrap.G_Conf.WebDomain
+	assign["pageUrl"] = tools.GetPageUrl(req.URL.String())
 	assign["urlPath"] = define.PageGuWen
-	templateHtml.NewHtml(w).Display("guwen/index.html", assign)
-	return
-ClassPage:
-	assign = make(map[string]interface{})
-	assign["allClassify"] = allClassify
-	assign["typeStr"] = typeStr
-	assign["urlPath"] = define.PageGuWen
-	assign["bookList"] = bookList
 	templateHtml.NewHtml(w).Display("guwen/index.html", assign)
 	return
 ErrorPage:

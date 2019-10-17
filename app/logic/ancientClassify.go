@@ -40,7 +40,7 @@ func (a *AncientClassifyLogic) GetAllClassify(subLimit int) (allClassify []*defi
 	for i, classify := range classifyData {
 		allClassify[i] = &define.GuWenClassify{
 			Id:           classify.Id,
-			ClassifyName: classify.CatName,
+			ClassifyName: strings.Trim(classify.CatName, "："),
 			Pid:          int(classify.Pid),
 			Sort:         classify.Sort,
 		}
@@ -55,30 +55,28 @@ func (a *AncientClassifyLogic) GetAllClassify(subLimit int) (allClassify []*defi
 	return
 }
 
-//根据分类名在所有分类中查找信息，返回具体分类数据
-func (a *AncientClassifyLogic) FindClassifyListByCateName(allClassify []*define.GuWenClassify, classStr string) models.AncientClassify {
-	ret := models.AncientClassify{}
-	if len(allClassify) == 0 {
-		return ret
+//根据分类名在所有分类中查找信息，返回具体子分类ID
+func (a *AncientClassifyLogic) FindCatIdListByCateName(allClassify []*define.GuWenClassify, classStr string) (subClassIdList []int) {
+	if len(allClassify) == 0 || len(classStr) == 0 {
+		return
 	}
 	for _, classify := range allClassify {
 		if strings.EqualFold(classify.ClassifyName, classStr) {
-			ret.Id = classify.Id
-			ret.CatName = classify.ClassifyName
+			subClassIdList = a.FindCatIdListByPid(allClassify, classify.Id)
 			break
 		}
 		for _, subClass := range classify.SubClassify {
 			if strings.EqualFold(subClass.CatName, classStr) {
-				ret = subClass
+				subClassIdList = []int{subClass.Id}
 				break
 			}
 		}
 	}
-	return ret
+	return
 }
 
 //在所有分类中，根据pid查找所有子分类Id
-func (a *AncientClassifyLogic) FindPidByClassifyData(allClassify []*define.GuWenClassify, pid int) (subClassIdList []int) {
+func (a *AncientClassifyLogic) FindCatIdListByPid(allClassify []*define.GuWenClassify, pid int) (subClassIdList []int) {
 	if pid == 0 {
 		return
 	}

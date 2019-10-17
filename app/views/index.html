@@ -117,7 +117,7 @@
             </div>
             <div class="cont">
                 {{range $i,$book :=.ancientBookData}}
-                <a href="{{$webDomain}}/guwen/detail/?id={{$book.LinkUrlCrc32}}" target="_blank">{{$book.BookTitle}}</a>
+                <a href="{{$webDomain}}/guwen/detail/{{$book.LinkUrlCrc32}}" target="_blank">{{$book.BookTitle}}</a>
                {{end}}
                 <a href="{{$webDomain}}/guwen/" target="_blank">更多>></a>
             </div>

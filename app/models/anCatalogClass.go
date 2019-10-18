@@ -34,3 +34,9 @@ func (a *AnCatalogClass) GetClassListByBookId(bookId int) (data []AnCatalogClass
 	_, err = orm.NewOrm().QueryTable(AnCataClassTable).Filter("book_id", bookId).OrderBy("sort").All(&data, "id", "cat_name")
 	return
 }
+
+//根据ID查询目录分类信息
+func (a *AnCatalogClass) GetClassDataById(id int) (data AnCatalogClass, err error) {
+	_, err = orm.NewOrm().QueryTable(AnCataClassTable).Filter("id", id).All(&data, "id", "cat_name")
+	return
+}

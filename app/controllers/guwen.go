@@ -8,7 +8,6 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"math"
 	"net/http"
 	"poetry/app/bootstrap"
@@ -137,11 +136,6 @@ func GuWenDetail(w http.ResponseWriter, req *http.Request) {
 	if catalogList, err = logic.NewAncientCatalogueLogic().GetAllCatalogByBookId(int(bookId)); err != nil {
 		goto ErrorPage
 	}
-	//todo  明天继续古籍详情页
-	logrus.Infof("%+v", bookData)
-	logrus.Infof("catalogList:%+v", catalogList)
-	logrus.Infoln("err:", err)
-
 	assign = make(map[string]interface{})
 	assign["bookData"] = bookData[int(bookId)]
 	assign["catalogList"] = catalogList
@@ -158,14 +152,78 @@ ErrorPage:
 //目录详情页
 func GuWenBook(w http.ResponseWriter, req *http.Request) {
 	var (
-		dirId uint64
-		err   error
+		dirId          uint64
+		err            error
+		catalogData    models.AncientCatalogue //当前目录信息
+		clogClassData  models.AnCatalogClass   //当前目录分类信息
+		logAuthorData  models.AncientAuthor    //作者信息
+		prevLogList    []models.AncientCatalogue
+		prevLog        models.AncientCatalogue //上一章信息
+		nextLogList    []models.AncientCatalogue
+		nextLog        models.AncientCatalogue   //下一章信息
+		contentData    models.AncientBookContent //正文内容
+		catalogueLogic *logic.AncientCatalogueLogic
+		assign         map[string]interface{}
 	)
 	if dirId, err = logic.NewShiWenLogic().GetCrcIdByUrlPath(req.URL.Path); err != nil || dirId == 0 {
 		goto ErrorPage
 	}
-
+	catalogueLogic = logic.NewAncientCatalogueLogic()
+	if catalogData, err = catalogueLogic.GetDataById(int(dirId)); err != nil || catalogData.Id == 0 {
+		goto ErrorPage
+	}
+	if catalogData.CatalogCatgoryId > 0 {
+		clogClassData, _ = catalogueLogic.GetClassDataById(int(catalogData.CatalogCatgoryId))
+	}
+	if prevLogList, err = catalogueLogic.GetLogLtIdByBookId(catalogData.BookId, catalogData.Id, 0, 1); err == nil && len(prevLogList) > 0 {
+		prevLog = prevLogList[0]
+	}
+	if nextLogList, err = catalogueLogic.GetLogGtIdByBookId(catalogData.BookId, catalogData.Id, 0, 1); err == nil && len(nextLogList) > 0 {
+		nextLog = nextLogList[0]
+	}
+	if contentData, err = logic.NewAncientBookContentLogic().GetBookContentByCataLogId(int(dirId)); err != nil {
+		goto ErrorPage
+	}
+	if contentData.AuthorId > 0 {
+		logAuthorData, _ = logic.NewAncientAuthorLogic().GetAuthorById(int(contentData.AuthorId))
+	}
+	assign = make(map[string]interface{})
+	assign["prevLog"] = prevLog
+	assign["nextLog"] = nextLog
+	assign["clogClassData"] = clogClassData
+	assign["catalogData"] = catalogData
+	assign["contentData"] = contentData
+	assign["logAuthorData"] = logAuthorData
+	assign["dirId"] = dirId
+	assign["urlPath"] = define.PageGuWen
+	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
+	assign["webDomain"] = bootstrap.G_Conf.WebDomain
+	templateHtml.NewHtml(w).Display("guwen/book.html", assign)
+	return
 ErrorPage:
 	templateHtml.NewHtml(w).DisplayErrorPage(err)
+	return
+}
+
+//ajax 根据ID返回译注数据
+func GuWenShowYizhu(w http.ResponseWriter, req *http.Request) {
+	var (
+		id          int
+		err         error
+		contentData models.AncientBookContent
+	)
+	if idStr := req.FormValue("id"); len(idStr) > 0 {
+		id, err = strconv.Atoi(idStr)
+	}
+	if id == 0 {
+		goto NilContent
+	}
+	if contentData, err = logic.NewAncientBookContentLogic().GetBookContentById(id); err != nil {
+		goto NilContent
+	}
+	contentData.Translation = tools.PreContentHtml(contentData.Translation)
+	tools.OutputString(w, contentData.Translation)
+NilContent:
+	tools.OutputString(w, "")
 	return
 }

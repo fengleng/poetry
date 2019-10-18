@@ -23,6 +23,7 @@ type AncientBook struct {
 	FamousTotal      int    `orm:"column(famous_total)"`
 	CoverChart       string `orm:"column(cover_chart)"`
 	CoverChartPath   string `orm:"column(cover_chart_path)"`
+	Status           int    `orm:"column(status)"`
 	AddDate          int64  `orm:"column(add_date)"`
 }
 
@@ -53,7 +54,7 @@ func (a *AncientBook) GetBookByTitleANDUrlCrc32(title string, urlCrc uint32) (da
 //根据偏移量查询古籍-书名列表
 func (a *AncientBook) GetBookListByLimit(offset, limit int) (data []AncientBook, err error) {
 	fields := []string{"id", "book_title", "link_url_crc32"}
-	_, err = orm.NewOrm().QueryTable(AncientBookTable).Limit(limit, offset).All(&data, fields...)
+	_, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("status", 1).Limit(limit, offset).All(&data, fields...)
 	return
 }
 
@@ -61,9 +62,9 @@ func (a *AncientBook) GetBookListByLimit(offset, limit int) (data []AncientBook,
 func (a *AncientBook) GetBookListLimitByCatId(catId []int, offset, limit int) (data []AncientBook, err error) {
 	fields := []string{"id", "book_title", "cat_id", "book_introduction", "link_url_crc32", "song_url", "song_file_path", "famous_total", "cover_chart", "cover_chart_path"}
 	if len(catId) > 0 {
-		_, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("cat_id__in", catId).Limit(limit, offset).All(&data, fields...)
+		_, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("cat_id__in", catId).Filter("status", 1).Limit(limit, offset).All(&data, fields...)
 	} else {
-		_, err = orm.NewOrm().QueryTable(AncientBookTable).Limit(limit, offset).All(&data, fields...)
+		_, err = orm.NewOrm().QueryTable(AncientBookTable).Limit(limit, offset).Filter("status", 1).All(&data, fields...)
 	}
 	return
 }
@@ -71,9 +72,9 @@ func (a *AncientBook) GetBookListLimitByCatId(catId []int, offset, limit int) (d
 //根据分类ID查询书籍总数
 func (a *AncientBook) GetBookCountByCatId(catId []int) (num int64, err error) {
 	if len(catId) > 0 {
-		num, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("cat_id__in", catId).Count()
+		num, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("status", 1).Filter("cat_id__in", catId).Count()
 	} else {
-		num, err = orm.NewOrm().QueryTable(AncientBookTable).Count()
+		num, err = orm.NewOrm().QueryTable(AncientBookTable).Filter("status", 1).Count()
 	}
 	return
 }

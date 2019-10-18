@@ -53,3 +53,23 @@ func (a *AncientCatalogueLogic) GetAllCatalogByBookId(bookId int) (data []define
 	}
 	return
 }
+
+//根据目录ID查询目录信息
+func (a *AncientCatalogueLogic) GetDataById(logId int) (data models.AncientCatalogue, err error) {
+	return models.NewAncientCatalogue().GetDataById(logId)
+}
+
+//根据bookId和id查询比id小的目录信息，用于获取上一章的内容
+func (a *AncientCatalogueLogic) GetLogLtIdByBookId(bookId, id int64, offset, limit int) (data []models.AncientCatalogue, err error) {
+	return models.NewAncientCatalogue().GetLogLtIdByBookId(bookId, id, offset, limit)
+}
+
+//根据bookId和id查询比id大的目录信息，用于获取下一章的内容
+func (a *AncientCatalogueLogic) GetLogGtIdByBookId(bookId, id int64, offset, limit int) (data []models.AncientCatalogue, err error) {
+	return models.NewAncientCatalogue().GetLogGtIdByBookId(bookId, id, offset, limit)
+}
+
+//根据目录分类ID查询目录分类信息
+func (a *AncientCatalogueLogic) GetClassDataById(id int) (data models.AnCatalogClass, err error) {
+	return models.NewAnCatalogClass().GetClassDataById(id)
+}

@@ -50,3 +50,24 @@ func (a *AncientCatalogue) GetCatalogListByBookIdCids(bookId int, categoryIds []
 	}
 	return
 }
+
+//根据目录ID查询目录信息
+func (a *AncientCatalogue) GetDataById(id int) (data AncientCatalogue, err error) {
+	fields := []string{"id", "book_id", "catalog_title", "link_url", "catalog_catgory_id"}
+	_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("id", id).All(&data, fields...)
+	return
+}
+
+//根据bookId和id查询比id小的目录信息，用于获取上一章的内容
+func (a *AncientCatalogue) GetLogLtIdByBookId(bookId, id int64, offset, limit int) (data []AncientCatalogue, err error) {
+	fields := []string{"id", "book_id", "catalog_title", "link_url", "catalog_catgory_id"}
+	_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("book_id", bookId).Filter("id__lt", id).Limit(limit, offset).OrderBy("-id").All(&data, fields...)
+	return
+}
+
+//根据bookId和id查询比id大的目录信息，用于获取下一章的内容
+func (a *AncientCatalogue) GetLogGtIdByBookId(bookId, id int64, offset, limit int) (data []AncientCatalogue, err error) {
+	fields := []string{"id", "book_id", "catalog_title", "link_url", "catalog_catgory_id"}
+	_, err = orm.NewOrm().QueryTable(AncientCatalogueTable).Filter("book_id", bookId).Filter("id__gt", id).Limit(limit, offset).OrderBy("id").All(&data, fields...)
+	return
+}

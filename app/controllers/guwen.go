@@ -124,9 +124,8 @@ func GuWenDetail(w http.ResponseWriter, req *http.Request) {
 		bookId      uint64
 		bookData    map[int]models.AncientBook
 		catalogList []define.GuWenCatalogList
-
-		assign map[string]interface{}
-		err    error
+		assign      map[string]interface{}
+		err         error
 	)
 	if bookId, err = logic.NewShiWenLogic().GetCrcIdByUrlPath(req.URL.Path); err != nil {
 		goto ErrorPage
@@ -138,6 +137,7 @@ func GuWenDetail(w http.ResponseWriter, req *http.Request) {
 	if catalogList, err = logic.NewAncientCatalogueLogic().GetAllCatalogByBookId(int(bookId)); err != nil {
 		goto ErrorPage
 	}
+	//todo  明天继续古籍详情页
 	logrus.Infof("%+v", bookData)
 	logrus.Infof("catalogList:%+v", catalogList)
 	logrus.Infoln("err:", err)
@@ -157,5 +157,15 @@ ErrorPage:
 
 //目录详情页
 func GuWenBook(w http.ResponseWriter, req *http.Request) {
+	var (
+		dirId uint64
+		err   error
+	)
+	if dirId, err = logic.NewShiWenLogic().GetCrcIdByUrlPath(req.URL.Path); err != nil || dirId == 0 {
+		goto ErrorPage
+	}
 
+ErrorPage:
+	templateHtml.NewHtml(w).DisplayErrorPage(err)
+	return
 }

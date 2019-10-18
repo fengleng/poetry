@@ -31,6 +31,6 @@ func NewAnCatalogClass() *AnCatalogClass {
 
 //根据书ID查询目录分类列表
 func (a *AnCatalogClass) GetClassListByBookId(bookId int) (data []AnCatalogClass, err error) {
-	_, err = orm.NewOrm().QueryTable(AnCataClassTable).Filter("book_id", bookId).OrderBy("-sort").All(&data, "id", "cat_name")
+	_, err = orm.NewOrm().QueryTable(AnCataClassTable).Filter("book_id", bookId).OrderBy("sort").All(&data, "id", "cat_name")
 	return
 }

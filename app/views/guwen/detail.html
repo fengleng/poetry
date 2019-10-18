@@ -35,134 +35,31 @@
             </div>
         </div>
         <div class="sons">
-
+           {{range $i,$log := .catalogList}}
+               {{if $log.ClassName}}
             <div class="bookcont">
-                <div class="bookMl"><strong>胜战计</strong></div>
-                <div style=" clear:both; overflow:hidden; height:auto;">
-
-                    <span><a href="/guwen/bookv_52.aspx">瞒天过海</a></span>
-
-                    <span><a href="/guwen/bookv_53.aspx">围魏救赵</a></span>
-
-                    <span><a href="/guwen/bookv_54.aspx">借刀杀人</a></span>
-
-                    <span><a href="/guwen/bookv_55.aspx">以逸待劳</a></span>
-
-                    <span><a href="/guwen/bookv_56.aspx">趁火打劫</a></span>
-
-                    <span><a href="/guwen/bookv_57.aspx">声东击西</a></span>
-
-                </div>
+            <div class="bookMl"><strong>{{$log.ClassName}}</strong></div>
+                    <div class="bookcont">
+                        <div style=" clear:both; overflow:hidden; height:auto;">
+                           {{range $j,$sublog := $log.SubCatalog}}
+                              <span><a href="/guwen/book/{{$sublog.Id}}">{{$sublog.CatalogTitle}}</a></span>
+                           {{end}}
+                        </div>
+                    </div>
             </div>
-
-            <div class="bookcont">
-                <div class="bookMl"><strong>敌战计</strong></div>
-                <div style=" clear:both; overflow:hidden; height:auto;">
-
-                    <span><a href="/guwen/bookv_58.aspx">无中生有</a></span>
-
-                    <span><a href="/guwen/bookv_59.aspx">暗渡陈仓</a></span>
-
-                    <span><a href="/guwen/bookv_60.aspx">隔岸观火</a></span>
-
-                    <span><a href="/guwen/bookv_61.aspx">笑里藏刀</a></span>
-
-                    <span><a href="/guwen/bookv_62.aspx">李代桃僵</a></span>
-
-                    <span><a href="/guwen/bookv_63.aspx">顺手牵羊</a></span>
-
-                </div>
-            </div>
-
-            <div class="bookcont">
-                <div class="bookMl"><strong>攻战计</strong></div>
-                <div style=" clear:both; overflow:hidden; height:auto;">
-
-                    <span><a href="/guwen/bookv_64.aspx">打草惊蛇</a></span>
-
-                    <span><a href="/guwen/bookv_65.aspx">借尸还魂</a></span>
-
-                    <span><a href="/guwen/bookv_66.aspx">调虎离山</a></span>
-
-                    <span><a href="/guwen/bookv_67.aspx">欲擒故纵</a></span>
-
-                    <span><a href="/guwen/bookv_68.aspx">抛砖引玉</a></span>
-
-                    <span><a href="/guwen/bookv_69.aspx">擒贼擒王</a></span>
-
-                </div>
-            </div>
-
-            <div class="bookcont">
-                <div class="bookMl"><strong>混战计</strong></div>
-                <div style=" clear:both; overflow:hidden; height:auto;">
-
-                    <span><a href="/guwen/bookv_70.aspx">釜底抽薪</a></span>
-
-                    <span><a href="/guwen/bookv_71.aspx">混水摸鱼</a></span>
-
-                    <span><a href="/guwen/bookv_72.aspx">金蝉脱壳</a></span>
-
-                    <span><a href="/guwen/bookv_73.aspx">关门捉贼</a></span>
-
-                    <span><a href="/guwen/bookv_74.aspx">远交近攻</a></span>
-
-                    <span><a href="/guwen/bookv_75.aspx">假道伐虢</a></span>
-
-                </div>
-            </div>
-
-            <div class="bookcont">
-                <div class="bookMl"><strong>并战计</strong></div>
-                <div style=" clear:both; overflow:hidden; height:auto;">
-
-                    <span><a href="/guwen/bookv_76.aspx">偷梁换柱</a></span>
-
-                    <span><a href="/guwen/bookv_77.aspx">指桑骂槐</a></span>
-
-                    <span><a href="/guwen/bookv_78.aspx">假痴不癫</a></span>
-
-                    <span><a href="/guwen/bookv_79.aspx">上屋抽梯</a></span>
-
-                    <span><a href="/guwen/bookv_80.aspx">树上开花</a></span>
-
-                    <span><a href="/guwen/bookv_81.aspx">反客为主</a></span>
-
-                </div>
-            </div>
-
+                    {{else}}
             <div class="bookcont" style=" border:0px;">
-                <div class="bookMl"><strong>败战计</strong></div>
-                <div style=" clear:both; overflow:hidden; height:auto;">
-
-                    <span><a href="/guwen/bookv_82.aspx">美人计</a></span>
-
-                    <span><a href="/guwen/bookv_83.aspx">空城计</a></span>
-
-                    <span><a href="/guwen/bookv_84.aspx">反间计</a></span>
-
-                    <span><a href="/guwen/bookv_85.aspx">苦肉计</a></span>
-
-                    <span><a href="/guwen/bookv_86.aspx">连环计</a></span>
-
-                    <span><a href="/guwen/bookv_87.aspx">走为上计</a></span>
-
-                </div>
+            <ul>
+            {{range $j,$sublog := $log.SubCatalog}}
+                  <span><a href="/guwen/book/{{$sublog.Id}}">{{$sublog.CatalogTitle}}</a></span>
+            {{end}}
+            </ul>
             </div>
-
-        </div>
-
-        <div style="height:auto; width:670px; clear:both; margin-top:20px;overflow:hidden; float:left; ">
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/site/tpw9.js?avnueb=bdn"></script>
+               {{end}}
+          {{end}}
         </div>
     </div>
-    <div class="right">
-        <div class="abcd">
-
-            <script type="text/javascript" src="//yijiuningyia.gushiwen.org/site/production/p0c0e.js?qlatnki=nr"></script>
-        </div>
-
-    </div>
+    <div class="right"></div>
 </div>
 
 {{template "footer" .}}

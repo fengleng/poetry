@@ -12,16 +12,6 @@
                  <a {{if eq .urlPath "author"}}style="margin-left:1px;background-color:#757863;border-bottom:3px solid #F0EFE2;line-height:43px; height:43px;"{{end}} href="/author/list">作者</a>
                  <a {{if eq .urlPath "guwen"}}style="margin-left:1px;background-color:#757863;border-bottom:3px solid #F0EFE2;line-height:43px; height:43px;"{{end}} href="/guwen/">古籍</a>
              </div>
-             <div class="son2">
-                 <div class="search">
-                 <form action="https://so.gushiwen.org/search.aspx" onsubmit="return selectSearch()" contentType="text/html; charset=utf-8">
-                     <input onkeydown="noajaxkeyUp()" onfocus="setInterval('showBos()',1000)" id="txtKey" name="value" type="text" value="" maxlength="40" autocomplete="off" style="height:25px; line-height:25px; float:left; padding-left:5px; width:264px; font-size:14px; clear:left; border:0px;" />
- <input type="submit" style="float:right; width:20px; height:20px; clear:right; margin-top:4px; margin-right:3px; background-image:url(https://song.gushiwen.org/siteimg/docSearch.png); background-repeat:no-repeat; background-size:20px 20px; border:0px;cursor:pointer;" value="" />
-                     <input id="b" style="display:none;" type="text" />
-                 </form>
-                 </div>
-                 <div id="box"></div>
-             </div>
          </div>
      </div>
 

@@ -7,20 +7,16 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
 	"poetry/app/bootstrap"
 	"poetry/config/define"
 	"poetry/libary/server"
 	"runtime"
-	"syscall"
-	"time"
 )
 var (
 	confFile string
@@ -49,11 +45,7 @@ func init()  {
 }
 
 func main() {
-	var (
-		httpServer *http.Server
-		serverStatus chan bool
-		err error
-	)
+	var err error
 	if err = bootstrap.InitBootstrap(confFile);err!=nil{
 		fmt.Println(err)
 		return
@@ -63,33 +55,6 @@ func main() {
 		http.Handle("/metrics", promhttp.Handler())
 		log.Fatal(http.ListenAndServe(bootstrap.G_Conf.MetricsPortStr, nil))
 	}()
-	  httpServer = server.StartHttp()
-	  serverStatus = make(chan bool,1)
-	//启动http服务
-	go func() {
-		if err = httpServer.ListenAndServe();err!=nil{
-			serverStatus<-false
-			logrus.Infoln("ListenAndServe error:",err)
-			return
-		}
-		serverStatus<-true
-		logrus.Infoln("pid is: ", os.Getpid())
-	}()
-	if status:= <-serverStatus;status==false{
-		logrus.Infoln("启动服务失败......")
-		return
-	}
-	//接收退出信号
-	quitChan := make(chan os.Signal)
-	signal.Notify(quitChan,syscall.SIGINT,syscall.SIGHUP,syscall.SIGTERM,syscall.SIGQUIT)
-	go func() {
-		<-quitChan
-		//15秒之内必须退出
-		ctx, cancelFunc := context.WithTimeout(context.Background(), 15*time.Second)
-		defer cancelFunc()
-		if  err =  httpServer.Shutdown(ctx);err!=nil{
-			logrus.Infoln("Shutdown error:",err)
-		}
-	}()
-	return
+   server.StartHttp()
+   return
 }

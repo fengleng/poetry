@@ -21,6 +21,10 @@ import (
 	"strings"
 )
 
+//每个链接都点点，
+//配置Nginx,后缀要为.html
+//配置CDN
+
 //古籍首页
 func GuWenIndex(w http.ResponseWriter, req *http.Request) {
 	var (

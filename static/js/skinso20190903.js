@@ -2320,8 +2320,8 @@ function eajaxkeyUp(num) {
         a.setAttribute("href", b);
         Ab.appendChild(a)
     }
-    jb("https://song.gushiwen.org/huaci/graybox.css");
-    jb("https://song.gushiwen.org/huaci/blackdownbar.css");
+    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/graybox.css");
+    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/blackdownbar.css");
     function s(a) {
         return b.getElementById(a)
     }

@@ -15,10 +15,9 @@ import (
 )
 
 //启动http服务
-func StartHttp() (err error) {
+func StartHttp() (server *http.Server) {
 	var (
-		mux    *http.ServeMux
-		server *http.Server
+		mux *http.ServeMux
 	)
 	logrus.Info("开始启动HTTP服务,监听端口是:", bootstrap.G_Conf.HttpPortStr)
 	mux = http.NewServeMux()
@@ -32,6 +31,5 @@ func StartHttp() (err error) {
 		WriteTimeout: time.Duration(bootstrap.G_Conf.HttpWriteTimeOut) * time.Millisecond,
 		ErrorLog:     log.New(w, "poetry", 0),
 	}
-	err = server.ListenAndServe()
 	return
 }

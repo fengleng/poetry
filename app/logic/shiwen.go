@@ -138,7 +138,7 @@ func (n *ShiWenLogic) GetNotesDetailHtml(notes *models.Notes) (html string) {
             <div style="height:30px; font-weight:bold; font-size:16px; margin-bottom:10px; clear:both;">
             <h2><span style="float:left;">%s</span></h2>
             <a style="float:left; margin-top:7px; margin-left:5px;" href="javascript:PlayFanyi(%d)">
-<img id="speakerimgFanyi%d" src="%s/static/images/speaker.png"   alt="" width="16" height="16"/>
+<img id="speakerimgFanyi%d" src="%s/images/speaker.png"   alt="" width="16" height="16"/>
 </a>
             </div>
               %s

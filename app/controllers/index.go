@@ -90,6 +90,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 	assign["title"] = define.WebTitle
 	assign["description"] = define.WebDescription
 	assign["urlPath"] = request.URL.Path
+	assign["version"] = define.StaticVersion
 	html.Display("index.html", assign)
 	return
 }

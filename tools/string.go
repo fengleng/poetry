@@ -41,7 +41,7 @@ func OutputString(w http.ResponseWriter, str string) {
 
 //词典内容，替换路径
 func ReplaceDictHtml(str string) string {
-	str = strings.Replace(str, "https://song.gushiwen.org/dict", define.CdnStaticDomain+"/static", -1)
+	str = strings.Replace(str, "https://song.gushiwen.org/dict", define.CdnStaticDomain, -1)
 	str = strings.Replace(str, "imgs", "images", -1)
 	compile := regexp.MustCompile("<img id=\"imgMp3\".*/>")
 	str = compile.ReplaceAllString(str, "")

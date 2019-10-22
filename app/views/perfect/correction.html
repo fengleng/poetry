@@ -1,0 +1,64 @@
+{{template "header" .}}
+<script src="{{.cdnDomain}}/js/xheditor/jquery-1.4.2.min.js?version={{.version}}" type="text/javascript"></script>
+<script src="{{.cdnDomain}}/js/xheditor/xheditor-zh-cn.min.js?version={{.version}}" type="text/javascript"></script>
+<script src="{{.cdnDomain}}/js/xheditor/Code.js?version={{.version}}" type="text/javascript"></script>
+<script src="{{.cdnDomain}}/js/jquery.cookie.js?version={{.version}}" type="text/javascript"></script>
+<link href="{{.cdnDomain}}/css/skinSo20191017.css?version={{.version}}" rel="stylesheet" type="text/css" />
+
+<body onclick="closeshowBos()">
+{{template "nav" .}}
+<div class="main3">
+    <form name="aspnetForm" method="post" action="/perfect/submit/" id="aspnetForm" onsubmit="return insertSubmit()">
+        <div class="xieleft" style=" width:1000px;">
+            <div style=" width:1000px; clear:both; margin-left:auto; margin-right:auto; height:40px; line-height:40px; font-size:20px; border-bottom:1px solid #C8C7BC;"><span style="float:left;line-height:30px; height:30px;color:#676767;" ><b>完善</b></span>
+            </div>
+            <div class="sontitle" style="margin-top:10px;">
+                <span style="font-size:14px;height:29px; line-height:29px;">邮箱：</span>
+                <input style="float:left;height:25px; line-height:25px; font-size:14px; line-height:25px; padding-left:5px; width:250px;" type="text" id="txttitle" name="txttitle" maxlength="25" size="25" />
+                <input style="height:27px; border:0px; width:58px; font-size:14px; line-height:18px; margin-left:10px; float:left; cursor:pointer;background-color:#5d6146;color:#fff;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;" type="submit" value="提交" />
+            </div>
+            <div class="soncont">
+          <textarea class="xheditor" id="preview" name="preview" rows="30" cols="117" style=" width:1000px; height:400px;">
+<br />
+修改建议：
+</textarea>
+
+            </div>
+        </div>
+        <script>
+            function insertSubmit() {
+                txt = document.getElementById("txttitle").value;
+                var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+                if(reg.test(txt)==false) {
+                    alert('Email格式不正确！');
+                    return false;
+                }
+                var isSubmit = $.cookie('isSubmit');
+                if(typeof(isSubmit) == "undefined"){
+                    isSubmit = 0;
+                }else{
+                    isSubmit = parseInt(isSubmit)
+                }
+                if(isSubmit > 3 ){
+                  alert("今日提交次数已达上限");
+                  return false
+                }else{
+                    isSubmit++;
+                    $.cookie('isSubmit',isSubmit);
+                    return true;
+                }
+            }
+        </script>
+    </form>
+</div>
+
+
+{{template "footer" .}}
+<script type="text/javascript">
+    window.onload = function () {
+        setIframeHeight(document.getElementById('external-frame'));
+    };
+</script>
+<script defer="defer" src="{{.cdnDomain}}/js/skinso20191021.js?version={{.version}}" type="text/javascript"></script>
+ </body>
+</html>

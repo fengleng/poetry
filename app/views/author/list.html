@@ -1,5 +1,5 @@
 {{template "header" .}}
- <link href="{{.cdnDomain}}/css/skinSo20190816.css" rel="stylesheet" type="text/css" />
+ <link href="{{.cdnDomain}}/css/skinSo20190816.css?version={{.version}}" rel="stylesheet" type="text/css" />
 
 <body onclick="closeshowBos()">
 {{template "nav" .}}
@@ -104,6 +104,6 @@
         setIframeHeight(document.getElementById('external-frame'));
     };
 </script>
-<script defer="defer" src="{{.cdnDomain}}/js/skinso20190931.js" type="text/javascript"></script>
+<script defer="defer" src="{{.cdnDomain}}/js/skinso20190931.js?version={{.version}}" type="text/javascript"></script>
 </body>
 </html>

@@ -318,55 +318,6 @@ function OnShangxi(id) {
     xmlhttp.send();
 }
 
-
-var isShangxiSend = false;
-var isSendStr = ""
-function OnNewShangxi(id,value) {
-    if(value.length == 0){
-        value = "Shangxi"
-    }
-    var xmlhttp;
-    typeStr =  document.getElementById("btn"+value + id).getAttribute("data-type")
-    if(typeStr == "1"){
-        document.getElementById("btn"+value + id).setAttribute("data-type","0")
-        document.getElementById("btn"+value + id).src = "/static/images/"+value+".png";
-        document.getElementById("notes" + id).style.display="none";
-        return
-    }
-    if(isShangxiSend==true && isSendStr == value ){
-        tmpVal = (value =="Shangxi") ? "Yiwen" :"Shangxi";
-        document.getElementById("btn"+tmpVal + id).src = "/static/images/"+tmpVal+".png";
-        document.getElementById("btn"+value + id).src = "/static/images/"+value+"2.png";
-        document.getElementById("notes" + id).style.display="block";
-        document.getElementById("btn"+value + id).setAttribute("data-type","1")
-        return
-    }
-
-    tmpVal = (value =="Shangxi") ? "Yiwen" :"Shangxi";
-    document.getElementById("btn"+tmpVal + id).src = "/static/images/"+tmpVal+".png";
-    document.getElementById("btn"+value + id).src = "/static/images/"+value+"2.png";
-    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-    }
-    else {// code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            isShangxiSend = true
-            isSendStr = value
-            document.getElementById("notes" + id).style.display="block";
-            document.getElementById("notes" + id).innerHTML = xmlhttp.responseText;
-            document.getElementById("btn"+value + id).setAttribute("data-type","1")
-            document.getElementById("btn"+tmpVal + id).setAttribute("data-type","0")
-        }
-    }
-    xmlhttp.open("GET", "/shiwen/ajaxshiwencont?id=" + id + "&value=" + value, false);
-    xmlhttp.send();
-}
-
-
-
 function OnBeisong(id, from) {
     if (getCookie('gsw2017user') == null) {
         window.parent.window.location.href = "/user/login.aspx?from=" + from;
@@ -418,7 +369,7 @@ function OnBeisong(id, from) {
 }
 
 //改变收藏
-function changeLike(id, from) {
+function changeLike(id,idkey, from) {
     if (getCookie('gsw2017user') == null) {
         window.parent.window.location.href = "/user/login.aspx?from=" + from;
     }
@@ -439,7 +390,7 @@ function changeLike(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/shiwen2017/likeding.aspx?shoucang=false&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/shiwen2017/likeding.aspx?shoucang=false&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
         else {
@@ -457,14 +408,14 @@ function changeLike(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/shiwen2017/likeding.aspx?shoucang=true&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/shiwen2017/likeding.aspx?shoucang=true&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
     }
 }
 
 //改变收藏名句
-function changeLikeMingju(id, from) {
+function changeLikeMingju(id,idkey, from) {
     if (getCookie('gsw2017user') == null) {
         window.parent.window.location.href = "/user/login.aspx?from=" + from;
     }
@@ -485,7 +436,7 @@ function changeLikeMingju(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/mingju/likeding.aspx?shoucang=false&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/mingju/likeding.aspx?shoucang=false&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
         else {
@@ -503,14 +454,14 @@ function changeLikeMingju(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/mingju/likeding.aspx?shoucang=true&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/mingju/likeding.aspx?shoucang=true&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
     }
 }
 
 //改变收藏作者
-function changeLikeAuthor(id, from) {
+function changeLikeAuthor(id,idkey, from) {
     if (getCookie('gsw2017user') == null) {
         window.parent.window.location.href = "/user/login.aspx?from=" + from;
     }
@@ -531,7 +482,7 @@ function changeLikeAuthor(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/authors/likeding.aspx?shoucang=false&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/authors/likeding.aspx?shoucang=false&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
         else {
@@ -549,14 +500,14 @@ function changeLikeAuthor(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/authors/likeding.aspx?shoucang=true&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/authors/likeding.aspx?shoucang=true&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
     }
 }
 
 //改变收藏古籍
-function changeLikeGuwen(id, from) {
+function changeLikeGuwen(id,idkey, from) {
     if (getCookie('gsw2017user') == null) {
         window.parent.window.location.href = "/user/login.aspx?from=" + from;
     }
@@ -577,7 +528,7 @@ function changeLikeGuwen(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/guwen/likeding.aspx?shoucang=false&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/guwen/likeding.aspx?shoucang=false&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
         else {
@@ -595,7 +546,7 @@ function changeLikeGuwen(id, from) {
                 }
             }
             var myDate = new Date();
-            xmlhttp.open("GET", "/guwen/likeding.aspx?shoucang=true&id=" + id + "&time=" + myDate.toLocaleTimeString(), true);
+            xmlhttp.open("GET", "/guwen/likeding.aspx?shoucang=true&id=" + idkey + "&time=" + myDate.toLocaleTimeString(), true);
             xmlhttp.send();
         }
     }
@@ -708,9 +659,9 @@ function ShowYizhuRight(id) {
 }
 
 //资料展示
-function ziliaoShow(id,id2) {
-    document.getElementById('fanyi' + id2).style.display = 'none';
-    document.getElementById('fanyiquan' + id2).style.display = 'block';
+function ziliaoShow(id) {
+    document.getElementById('fanyi' + id).style.display = 'none';
+    document.getElementById('fanyiquan' + id).style.display = 'block';
 
     var xmlhttp;
     if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -721,10 +672,15 @@ function ziliaoShow(id,id2) {
     }
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            document.getElementById("fanyiquan" + id2).innerHTML = xmlhttp.responseText;
+            document.getElementById("fanyiquan" + id).innerHTML = xmlhttp.responseText;
+
+            //如果正在播放
+            if (document.getElementById('ziliaoPlay' + id).style.display == "block") {
+                document.getElementById('speakerimgZiliaoquan' + id).src = "https://song.gushiwen.org/siteimg/speakerOk.png";
+            }
         }
     }
-    xmlhttp.open("GET", "/shiwen/ajaxshiwennotes?id=" + id, false);
+    xmlhttp.open("GET", "/authors/ajaxziliao.aspx?id=" + id, false);
     xmlhttp.send();
 }
 function ziliaoClose(id) {
@@ -733,7 +689,7 @@ function ziliaoClose(id) {
 }
 
 //译赏展示
-function fanyiShow(id) {
+function fanyiShow(id,idjm) {
     document.getElementById('fanyi' + id).style.display = 'none';
     document.getElementById('fanyiquan' + id).style.display = 'block';
 
@@ -753,14 +709,14 @@ function fanyiShow(id) {
             }
         }
     }
-    xmlhttp.open("GET", "/nocdn/ajaxfanyi.aspx?id=" + id, false);
+    xmlhttp.open("GET", "/nocdn/ajaxfanyi.aspx?id=" + idjm, false);
     xmlhttp.send();
 }
 function fanyiClose(id) {
     document.getElementById('fanyiquan' + id).style.display = 'none';
     document.getElementById('fanyi' + id).style.display = 'block';
 }
-function shangxiShow(id) {
+function shangxiShow(id,idjm) {
     document.getElementById('shangxi' + id).style.display = 'none';
     document.getElementById('shangxiquan' + id).style.display = 'block';
 
@@ -780,7 +736,7 @@ function shangxiShow(id) {
             }
         }
     }
-    xmlhttp.open("GET", "/nocdn/ajaxshangxi.aspx?id=" + id, false);
+    xmlhttp.open("GET", "/nocdn/ajaxshangxi.aspx?id=" + idjm, false);
     xmlhttp.send();
 }
 function shangxiClose(id) {
@@ -1002,7 +958,7 @@ function Play(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('toolPlay' + id).style.display = "none";
-                document.getElementById('speakerimg' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimg' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("toolPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1046,9 +1002,9 @@ function PlayShangxi(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('shangxiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgShangxi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgShangxi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 if (document.getElementById('speakerimgShangxiquan' + id)) {
-                    document.getElementById('speakerimgShangxiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                    document.getElementById('speakerimgShangxiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 }
                 document.getElementById("shangxiPlay" + id).innerHTML = xmlhttp.responseText;
             }
@@ -1091,8 +1047,8 @@ function PlayShangxiquan(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('shangxiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgShangxi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
-                document.getElementById('speakerimgShangxiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgShangxi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgShangxiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("shangxiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1121,7 +1077,7 @@ function PlayFanyi(id) {
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/shiwen/ajaxshiwenplay?id=" + id, false);
+        xmlhttp.open("GET", "/fanyiplay.aspx?id=" + id, false);
         xmlhttp.send();
     }
     else {
@@ -1136,9 +1092,9 @@ function PlayFanyi(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('fanyiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgFanyi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgFanyi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 if (document.getElementById('speakerimgFanyiquan' + id)) {
-                    document.getElementById('speakerimgFanyiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                    document.getElementById('speakerimgFanyiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 }
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
@@ -1181,8 +1137,8 @@ function PlayFanyiquan(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('fanyiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgFanyi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
-                document.getElementById('speakerimgFanyiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgFanyi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgFanyiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1211,7 +1167,7 @@ function PlayZiliao(id) {
                 document.getElementById("ziliaoPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/shiwen/ajaxshiwenplay?id=" + id, false);
+        xmlhttp.open("GET", "/ziliaoplay.aspx?id=" + id, false);
         xmlhttp.send();
     }
     else {
@@ -1226,9 +1182,9 @@ function PlayZiliao(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('ziliaoPlay' + id).style.display = "none";
-                document.getElementById('speakerimgZiliao' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgZiliao' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 if (document.getElementById('speakerimgZiliaoquan' + id)) {
-                    document.getElementById('speakerimgZiliaoquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                    document.getElementById('speakerimgZiliaoquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 }
                 document.getElementById("ziliaoPlay" + id).innerHTML = xmlhttp.responseText;
             }
@@ -1271,8 +1227,8 @@ function PlayZiliaoquan(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('ziliaoPlay' + id).style.display = "none";
-                document.getElementById('speakerimgZiliao' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
-                document.getElementById('speakerimgZiliaoquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgZiliao' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgZiliaoquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("ziliaoPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1313,7 +1269,7 @@ function PlayAuthor(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('authorPlay' + id).style.display = "none";
-                document.getElementById('speakerimgAuthor' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgAuthor' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("authorPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1335,11 +1291,11 @@ function PlayBook(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookPlay' + id).style.display = "block";
-                document.getElementById('speakerimgBook' + id).src = cdnDomain+"/static/images/speakerOk.png";
+                document.getElementById('speakerimgBook' + id).src = "https://song.gushiwen.org/siteimg/speakerOk.png";
                 document.getElementById("bookPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/guwen/bookplay?id=" + id, false);
+        xmlhttp.open("GET", "/guwen/bookplay.aspx?id=" + id, false);
         xmlhttp.send();
     }
     else {
@@ -1354,11 +1310,11 @@ function PlayBook(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBook' + id).src = cdnDomain+"/static/images/speaker.png";
+                document.getElementById('speakerimgBook' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("bookPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", "/guwen/bookplay?id=0", false);
+        xmlhttp.open("GET", "/guwen/bookplay.aspx?id=0", false);
         xmlhttp.send();
     }
 }
@@ -1395,7 +1351,7 @@ function PlayBookv(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookvPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBookv' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgBookv' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("bookvPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1436,7 +1392,7 @@ function PlayBvfanyi(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bvfanyiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBvfanyi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgBvfanyi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
                 document.getElementById("bvfanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -2308,8 +2264,8 @@ function eajaxkeyUp(num) {
         a.setAttribute("href", b);
         Ab.appendChild(a)
     }
-    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/graybox.css?version=1.0");
-    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/blackdownbar.css?version=1.0");
+    jb("https://song.gushiwen.org/huaci/graybox.css");
+    jb("https://song.gushiwen.org/huaci/blackdownbar.css");
     function s(a) {
         return b.getElementById(a)
     }
@@ -2443,7 +2399,7 @@ function eajaxkeyUp(num) {
     }
     var H = e("div");
     d.appendChild(H);
-    H.innerHTML = '<p></p><div><button id="aihuacibottombtn"></button></div><a href="/" target="_blank">&#35799;&#25991;&#32593;</a><span></span>';
+    H.innerHTML = '<p></p><div><button id="aihuacibottombtn"></button></div><a href="//www.gushiwen.org/" target="_blank">&#21476;&#35799;&#25991;&#32593;</a><span></span>';
     H.className = "aihuacibottom";
     mb = H.getElementsByTagName("a");
     a(mb[0], "mousedown",
@@ -2778,7 +2734,7 @@ function eajaxkeyUp(num) {
     a(F, "resize", pb);
     a(F, "scroll",
     function() {
-        typeof(k) != "undefined" &&  k && D[k] && setTimeout(function() {
+        k && D[k] && setTimeout(function() {
             c(d, {
                 top: t() + D[k][3] + "px"
             })
@@ -2789,7 +2745,7 @@ function eajaxkeyUp(num) {
     f.setAttribute("target", "aihuaciiframe");
     f.setAttribute("method", "post");
     if (R) f = e('<form target="aihuaciiframe" accept-charset="utf-8" method="post">');
-    f.setAttribute("action", "/dict/fancha");
+    f.setAttribute("action", "/dict/fancha.aspx");
     f.acceptCharset = "utf-8";
     i.appendChild(f);
     f.className = "aihuacitollbar";

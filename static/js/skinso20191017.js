@@ -958,7 +958,7 @@ function Play(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('toolPlay' + id).style.display = "none";
-                document.getElementById('speakerimg' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimg' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("toolPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1002,9 +1002,9 @@ function PlayShangxi(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('shangxiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgShangxi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgShangxi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 if (document.getElementById('speakerimgShangxiquan' + id)) {
-                    document.getElementById('speakerimgShangxiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                    document.getElementById('speakerimgShangxiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 }
                 document.getElementById("shangxiPlay" + id).innerHTML = xmlhttp.responseText;
             }
@@ -1047,8 +1047,8 @@ function PlayShangxiquan(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('shangxiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgShangxi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
-                document.getElementById('speakerimgShangxiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgShangxi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgShangxiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("shangxiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1092,9 +1092,9 @@ function PlayFanyi(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('fanyiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgFanyi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgFanyi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 if (document.getElementById('speakerimgFanyiquan' + id)) {
-                    document.getElementById('speakerimgFanyiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                    document.getElementById('speakerimgFanyiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 }
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
@@ -1137,8 +1137,8 @@ function PlayFanyiquan(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('fanyiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgFanyi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
-                document.getElementById('speakerimgFanyiquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgFanyi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgFanyiquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("fanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1182,9 +1182,9 @@ function PlayZiliao(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('ziliaoPlay' + id).style.display = "none";
-                document.getElementById('speakerimgZiliao' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgZiliao' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 if (document.getElementById('speakerimgZiliaoquan' + id)) {
-                    document.getElementById('speakerimgZiliaoquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                    document.getElementById('speakerimgZiliaoquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 }
                 document.getElementById("ziliaoPlay" + id).innerHTML = xmlhttp.responseText;
             }
@@ -1227,8 +1227,8 @@ function PlayZiliaoquan(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('ziliaoPlay' + id).style.display = "none";
-                document.getElementById('speakerimgZiliao' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
-                document.getElementById('speakerimgZiliaoquan' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgZiliao' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
+                document.getElementById('speakerimgZiliaoquan' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("ziliaoPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1269,7 +1269,7 @@ function PlayAuthor(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('authorPlay' + id).style.display = "none";
-                document.getElementById('speakerimgAuthor' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgAuthor' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("authorPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1310,7 +1310,7 @@ function PlayBook(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBook' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgBook' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("bookPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1351,7 +1351,7 @@ function PlayBookv(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bookvPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBookv' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgBookv' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("bookvPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -1392,7 +1392,7 @@ function PlayBvfanyi(id) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById('bvfanyiPlay' + id).style.display = "none";
-                document.getElementById('speakerimgBvfanyi' + id).src = "https://song.gushiwen.org/siteimg/speaker.png";
+                document.getElementById('speakerimgBvfanyi' + id).src = "http://poetry.cdn.13520v.com/poetry/images/speaker.png";
                 document.getElementById("bvfanyiPlay" + id).innerHTML = xmlhttp.responseText;
             }
         }
@@ -2264,8 +2264,8 @@ function eajaxkeyUp(num) {
         a.setAttribute("href", b);
         Ab.appendChild(a)
     }
-    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/graybox.css");
-    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/blackdownbar.css");
+    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/graybox.css?version=1.0");
+    jb("http://poetry.cdn.13520v.com/poetry/css/huaci/blackdownbar.css?version=1.0");
     function s(a) {
         return b.getElementById(a)
     }
@@ -2734,7 +2734,7 @@ function eajaxkeyUp(num) {
     a(F, "resize", pb);
     a(F, "scroll",
     function() {
-        k && D[k] && setTimeout(function() {
+      typeof(k)!="undefined" &&  k && D[k] && setTimeout(function() {
             c(d, {
                 top: t() + D[k][3] + "px"
             })

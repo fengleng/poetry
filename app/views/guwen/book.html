@@ -1,5 +1,5 @@
 {{template "header" .}}
-<link href="{{.cdnDomain}}/css/skinSo20191017.css" rel="stylesheet" type="text/css" />
+<link href="{{.cdnDomain}}/css/skinSo20191017.css?version={{.version}}" rel="stylesheet" type="text/css" />
 </head>
 <body onclick="closeshowBos()">
 {{template "nav" .}}
@@ -45,6 +45,6 @@
     var cdnDomain = "{{$cdnDomain}}";
 </script>
 
-<script defer="defer" src="{{.cdnDomain}}/js/skinso20191017.js" type="text/javascript"></script>
+<script defer="defer" src="{{.cdnDomain}}/js/skinso20191017.js?version={{.version}}" type="text/javascript"></script>
 </body>
 </html>

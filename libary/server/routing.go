@@ -55,6 +55,11 @@ func InitRouting(mux *http.ServeMux) {
 
 	//词典查询
 	mux.HandleFunc("/dict/fancha", CallMiddleWare(controllers.FanCha)) //词典接口
+
+	//完善
+	mux.HandleFunc("/perfect", CallMiddleWare(controllers.Correction))         //完善页面
+	mux.HandleFunc("/perfect/", CallMiddleWare(controllers.Correction))        //完善页面
+	mux.HandleFunc("/perfect/submit/", CallMiddleWare(controllers.CorrSubmit)) //完善页面提交处理
 }
 
 //初始化中间件

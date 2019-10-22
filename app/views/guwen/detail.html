@@ -1,5 +1,5 @@
 {{template "header" .}}
-<link href="{{.cdnDomain}}/css/skinSo20191017.css" rel="stylesheet" type="text/css" />
+<link href="{{.cdnDomain}}/css/skinSo20191017.css?version={{.version}}" rel="stylesheet" type="text/css" />
 
 <body onclick="closeshowBos()">
 {{template "nav" .}}
@@ -19,7 +19,7 @@
                 <h1 style="height:22px; margin-bottom:10px;">
                     <span style="font-size:20px; line-height:22px; height:22px;"><b>{{.bookData.BookTitle}}</b></span>
                     <a style="margin-left:5px;" href="javascript:PlayBook({{.bookData.Id}})">
-                        <img id="speakerimgBook{{.bookData.Id}}" src="{{$cdnDomain}}/static/images/speaker.png"  alt="" width="16" height="16"/></a>
+                        <img id="speakerimgBook{{.bookData.Id}}" src="{{$cdnDomain}}/images/speaker.png"  alt="" width="16" height="16"/></a>
                     <span id="bookPlay{{.bookData.Id}}" style=" display:none;width:1px; height:1px;"></span>
                 </h1>
                 <p style=" margin:0px;">
@@ -69,6 +69,6 @@
     };
     var cdnDomain = "{{$cdnDomain}}";
 </script>
-<script defer="defer" src="{{.cdnDomain}}/js/skinso20190931.js" type="text/javascript"></script>
+<script defer="defer" src="{{.cdnDomain}}/js/skinso20190931.js?version={{.version}}" type="text/javascript"></script>
 </body>
 </html>

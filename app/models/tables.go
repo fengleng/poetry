@@ -24,4 +24,5 @@ const (
 	AnCataClassTable        = "poetry_ancient_book_catalog_category" //古籍-书名目录分类表
 	AncientBookContentTable = "poetry_ancient_book_content"          //古籍-正文内容
 	AncientAuthorTable      = "poetry_ancient_author"                //古籍作者表
+	PerfectTable            = "poetry_perfect"                       //资料完善表
 )

@@ -48,6 +48,7 @@ func StartHttp() {
 	if err = server.ListenAndServe(); err != nil {
 		logrus.Infoln("ListenAndServe error:", err)
 		cancel()
+		os.Exit(1)
 		return
 	}
 	return

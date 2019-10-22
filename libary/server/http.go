@@ -91,7 +91,7 @@ func WriteHttpPid(pid int) {
 	}
 	pidStr := strconv.Itoa(pid)
 	go func() {
-		err := ioutil.WriteFile("server.pid", []byte(pidStr), 0777)
+		err := ioutil.WriteFile("bin/server.pid", []byte(pidStr), 0777)
 		if err != nil {
 			logrus.Infoln("WriteFile error:", err)
 		}

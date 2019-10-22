@@ -43,24 +43,28 @@ func StartHttp() {
 	WriteHttpPid(os.Getpid())
 	ctx, cancel := context.WithCancel(context.Background())
 	quitChan = make(chan os.Signal)
-	go HttpSig(server, quitChan, ctx)
+	processed := make(chan struct{})
+	go HttpSig(server, quitChan, ctx, processed)
 	//启动http服务
-	if err = server.ListenAndServe(); err != nil {
+	if err = server.ListenAndServe(); err != http.ErrServerClosed {
 		logrus.Infoln("ListenAndServe error:", err)
 		cancel()
-		os.Exit(1)
 		return
 	}
+	<-processed
 	return
 }
 
 //接收停止信号
-func HttpSig(httpServer *http.Server, quitChan chan os.Signal, cont context.Context) {
+func HttpSig(httpServer *http.Server, quitChan chan os.Signal, cont context.Context, proc chan struct{}) {
 	logrus.Infoln("HttpSig.......")
 	if httpServer == nil {
 		logrus.Infoln("server is nil")
 		return
 	}
+	defer func() {
+		close(proc)
+	}()
 	//接收退出信号
 	signal.Notify(quitChan, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGKILL)
 	for {

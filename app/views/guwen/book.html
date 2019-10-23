@@ -5,6 +5,7 @@
 {{template "nav" .}}
 {{$cdnDomain := .cdnDomain}}
 {{$webDomain := .webDomain}}
+{{$UrlSuffix:=.UrlSuffix}}
 
 <div class="main3">
     <div class="left" id="left{{.contentData.Id}}" style="width:1000px;">
@@ -23,13 +24,13 @@
             </div>
             <div class="bookvmiddle">
                  {{if .prevLog.Id}}
-                     <a href="/guwen/book/{{.prevLog.Id}}">上一章</a>
+                     <a href="/guwen/book/{{.prevLog.Id}}{{$UrlSuffix}}">上一章</a>
                 {{end}}
 
-                <a style="border:0px;line-height:27px; height:27px;" href="/guwen/detail/{{.catalogData.BookId}}">目录</a>
+                <a style="border:0px;line-height:27px; height:27px;" href="/guwen/detail/{{.catalogData.BookId}}{{$UrlSuffix}}">目录</a>
 
                 {{if .nextLog.Id}}
-                    <a href="/guwen/book/{{.nextLog.Id}}">下一章</a>
+                    <a href="/guwen/book/{{.nextLog.Id}}{{$UrlSuffix}}">下一章</a>
                 {{end}}
             </div>
          </div>

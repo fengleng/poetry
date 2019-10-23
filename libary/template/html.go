@@ -7,9 +7,12 @@
 package template
 
 import (
+	"errors"
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"html/template"
 	"io"
+	"poetry/config/define"
 	"strings"
 	"unicode/utf8"
 )
@@ -23,13 +26,21 @@ type Html struct {
 func NewHtml(writer io.Writer) *Html {
 	return &Html{
 		Writer:   writer,
-		ViewPath: "app",
+		ViewPath: define.BaseDir + "/app",
 	}
 }
 
 //显示错误页面
 func (h *Html) DisplayErrorPage(err error) {
-	h.displaySinglePage("error.html", err)
+	if err == nil {
+		err = errors.New("未知错误")
+	}
+	errStr := fmt.Errorf("%v", err).Error()
+	logrus.Println("err:", errStr)
+	h.Display404()
+	//assign := make(map[string]interface{})
+	//assign["errStr"] = errStr
+	//h.displaySinglePage("error.html", assign)
 	return
 }
 

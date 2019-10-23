@@ -5,6 +5,7 @@
 {{template "nav" .}}
 {{$cdnDomain := .cdnDomain}}
 {{$webDomain := .webDomain}}
+{{$UrlSuffix:=.UrlSuffix}}
 
 <div class="main3">
     <div class="left">
@@ -42,7 +43,7 @@
                     <div class="bookcont">
                         <div style=" clear:both; overflow:hidden; height:auto;">
                            {{range $j,$sublog := $log.SubCatalog}}
-                              <span><a href="/guwen/book/{{$sublog.Id}}">{{$sublog.CatalogTitle}}</a></span>
+                              <span><a href="/guwen/book/{{$sublog.Id}}{{$UrlSuffix}}">{{$sublog.CatalogTitle}}</a></span>
                            {{end}}
                         </div>
                     </div>
@@ -51,7 +52,7 @@
             <div class="bookcont" style=" border:0px;">
             <ul>
             {{range $j,$sublog := $log.SubCatalog}}
-                  <span><a href="/guwen/book/{{$sublog.Id}}">{{$sublog.CatalogTitle}}</a></span>
+                  <span><a href="/guwen/book/{{$sublog.Id}}{{$UrlSuffix}}">{{$sublog.CatalogTitle}}</a></span>
             {{end}}
             </ul>
             </div>

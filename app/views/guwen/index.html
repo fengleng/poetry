@@ -6,6 +6,7 @@
 {{$cdnDomain := .cdnDomain}}
 {{$webDomain := .webDomain}}
 {{$typeStr:=.typeStr}}
+{{$UrlSuffix:=.UrlSuffix}}
 
 <div class="main3">
     <div class="left">
@@ -41,12 +42,12 @@
         <div class="sonspic">
             <div class="cont" style="margin-top:13px;">
                 <div class="divimg" style="margin-top:2px;">
-                    <a href="{{$webDomain}}/guwen/detail/{{$book.Id}}" target="_blank">
+                    <a href="{{$webDomain}}/guwen/detail/{{$book.Id}}{{$UrlSuffix}}" target="_blank">
                         <img src="{{$book.CoverChart}}" width="105" height="150" alt="{{$book.BookTitle}}"/>
                     </a>
                 </div>
                 <p style="height:22px;">
-                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="{{$webDomain}}/guwen/detail/{{$book.Id}}"><b>{{$book.BookTitle}}</b></a>
+                    <a target="_blank" style="font-size:18px; line-height:22px; height:22px;" href="{{$webDomain}}/guwen/detail/{{$book.Id}}{{$UrlSuffix}}"><b>{{$book.BookTitle}}</b></a>
                     <a style="margin-left:5px;" href="javascript:PlayBook({{$book.Id}})">
                         <img id="speakerimgBook{{$book.Id}}" src="{{$cdnDomain}}/images/speaker.png"   alt="" width="16" height="16"/>
                     </a>
@@ -92,7 +93,7 @@
             </div>
             <div class="cont">
                 {{range $i,$book := .rRemBookList}}
-                <a href="{{$webDomain}}/guwen/detail/{{$book.Id}}" target="_blank">{{subLen $book.BookTitle 5}}</a>
+                <a href="{{$webDomain}}/guwen/detail/{{$book.Id}}{{$UrlSuffix}}" target="_blank">{{subLen $book.BookTitle 5}}</a>
                 {{end}}
             </div>
         </div>

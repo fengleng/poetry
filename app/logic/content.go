@@ -99,7 +99,7 @@ func (c *contentLogic) ProcContentAuthorTagData(contentList []models.Content, au
 		poetryText.Content = tools.AddHtmlLabel(poetryText.Content)
 		text.OriContent = oriContent
 		text.PoetryInfo = poetryText
-		text.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10)
+		text.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetryText.SourceUrlCrc32), 10) + define.UrlSuffix
 		author, _ = authorData[int(poetryText.AuthorId)]
 		author.Id = poetryText.AuthorId
 		author.AuthorIntro = tools.TrimRightHtml(author.AuthorIntro)

@@ -164,6 +164,7 @@ func (n *ShiWenLogic) GetNotesDetailHtml(notes *models.Notes) (html string) {
 //根据url path 获取参数ID，例：/guwen/detail/106，获取106
 func (n *ShiWenLogic) GetCrcIdByUrlPath(path string) (crcId uint64, err error) {
 	var lastI int
+	path = strings.TrimSuffix(path, ".html")
 	if lastI = strings.LastIndex(path, "/"); lastI == 0 {
 		return 0, errors.New("url params error")
 	}

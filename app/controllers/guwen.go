@@ -85,6 +85,7 @@ func GuWenIndex(w http.ResponseWriter, req *http.Request) {
 	assign["pageUrl"] = tools.GetPageUrl(req.URL.String())
 	assign["urlPath"] = define.PageGuWen
 	assign["version"] = define.StaticVersion
+	assign["UrlSuffix"] = define.UrlSuffix
 	templateHtml.NewHtml(w).Display("guwen/index.html", assign)
 	return
 ErrorPage:
@@ -148,6 +149,7 @@ func GuWenDetail(w http.ResponseWriter, req *http.Request) {
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["version"] = define.StaticVersion
+	assign["UrlSuffix"] = define.UrlSuffix
 	templateHtml.NewHtml(w).Display("guwen/detail.html", assign)
 	return
 ErrorPage:
@@ -205,6 +207,7 @@ func GuWenBook(w http.ResponseWriter, req *http.Request) {
 	assign["cdnDomain"] = bootstrap.G_Conf.CdnStaticDomain
 	assign["webDomain"] = bootstrap.G_Conf.WebDomain
 	assign["version"] = define.StaticVersion
+	assign["UrlSuffix"] = define.UrlSuffix
 	templateHtml.NewHtml(w).Display("guwen/book.html", assign)
 	return
 ErrorPage:

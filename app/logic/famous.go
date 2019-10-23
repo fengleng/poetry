@@ -101,7 +101,7 @@ func (f *FamousLogic) GetFamousRetByFamousData(famousData []models.Famous) (resu
 			famousStr.Content = famous.Content
 			famousStr.PoetryTitle = poetry.Title
 			famousStr.Ftype = 1
-			famousStr.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetry.SourceUrlCrc32), 10)
+			famousStr.LinkUrl = bootstrap.G_Conf.WebDomain + "/shiwen/" + strconv.FormatUint(uint64(poetry.SourceUrlCrc32), 10) + define.UrlSuffix
 			famousStr.AncientTitle = author.Author + "《" + poetry.Title + "》"
 			famousStr.AuthorName = author.Author
 			result = append(result, famousStr)
@@ -114,7 +114,7 @@ func (f *FamousLogic) GetFamousRetByFamousData(famousData []models.Famous) (resu
 			famousStr.Content = famous.Content
 			famousStr.AncientTitle = catLog.CatalogTitle
 			famousStr.Ftype = 2
-			famousStr.LinkUrl = bootstrap.G_Conf.WebDomain + "/guwen/book/" + strconv.FormatUint(uint64(catLog.Id), 10)
+			famousStr.LinkUrl = bootstrap.G_Conf.WebDomain + "/guwen/book/" + strconv.FormatUint(uint64(catLog.Id), 10) + define.UrlSuffix
 			famousStr.AncientTitle = "《" + book.BookTitle + "." + catLog.CatalogTitle + "》"
 			result = append(result, famousStr)
 		}

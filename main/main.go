@@ -9,7 +9,6 @@ package main
 import (
 	"fmt"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/sirupsen/logrus"
 	"log"
 	"net/http"
 	"os"
@@ -35,7 +34,6 @@ func initEnv() {
 
 func initConfFile() {
 	confFile = define.BaseDir + "/config/"+HttpEnv+"/config.json"
-	logrus.Info("加载配置文件:", confFile)
 }
 
 func init()  {

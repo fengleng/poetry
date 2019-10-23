@@ -15,6 +15,7 @@ import (
 	"os"
 	"os/signal"
 	"poetry/app/bootstrap"
+	"poetry/config/define"
 	"strconv"
 	"syscall"
 	"time"
@@ -95,7 +96,7 @@ func WriteHttpPid(pid int) {
 	}
 	pidStr := strconv.Itoa(pid)
 	go func() {
-		err := ioutil.WriteFile("bin/server.pid", []byte(pidStr), 0777)
+		err := ioutil.WriteFile(define.BaseDir+"/bin/server.pid", []byte(pidStr), 0777)
 		if err != nil {
 			logrus.Infoln("WriteFile error:", err)
 		}

@@ -34,8 +34,7 @@ func initEnv() {
 }
 
 func initConfFile() {
-	dir, _ := os.Getwd()
-	confFile = dir + "/config/"+HttpEnv+"/config.json"
+	confFile = define.BaseDir + "/config/"+HttpEnv+"/config.json"
 	logrus.Info("加载配置文件:", confFile)
 }
 

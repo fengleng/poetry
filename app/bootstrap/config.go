@@ -8,6 +8,7 @@ package bootstrap
 
 import (
 	"github.com/json-iterator/go"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"poetry/tools"
 )
@@ -34,6 +35,7 @@ func InitConfig(confFile string) (err error) {
 		conf    Config
 		content []byte
 	)
+	logrus.Info("加载配置文件:", confFile)
 	G_Json = jsoniter.ConfigCompatibleWithStandardLibrary
 	if ret, err := tools.FileExists(confFile); err != nil || ret == false {
 		goto Return

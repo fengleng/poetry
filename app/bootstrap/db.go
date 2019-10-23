@@ -19,6 +19,6 @@ func InitDb() (err error) {
 	orm.SetMaxIdleConns("default", 1000)
 	orm.SetMaxOpenConns("default", 2000)
 	orm.DefaultTimeLoc = time.UTC
-	orm.Debug = true
+	orm.Debug = false
 	return nil
 }
